@@ -1,4 +1,4 @@
-package com.wyait.manage;
+package com.wyait;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;

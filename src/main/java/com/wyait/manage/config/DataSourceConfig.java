@@ -1,5 +1,6 @@
 package com.wyait.manage.config;
 
+import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -27,7 +28,7 @@ import javax.sql.DataSource;
  */
 @Configuration
 //指明了扫描dao层，并且给dao层注入指定的SqlSessionTemplate
-@MapperScan(basePackages = "com.wyait.manage.dao", sqlSessionTemplateRef  = "testSqlSessionTemplate")
+@MapperScan(basePackages = {"com.wyait.manage.dao","com.wyait.manage2.**.mapper"}, sqlSessionTemplateRef  = "testSqlSessionTemplate")
 public class DataSourceConfig {
 
 	Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -51,13 +52,14 @@ public class DataSourceConfig {
 	@Bean(name = "testSqlSessionFactory")
 	@Primary
 	public SqlSessionFactory testSqlSessionFactory(@Qualifier("testDataSource") DataSource dataSource) throws Exception {
-		SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
+		//使用mybatisplus sqlsessionfacotory替换mybatis默认到工厂类
+		MybatisSqlSessionFactoryBean bean = new com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean();
 		bean.setDataSource(dataSource);
 		//对应mybatis.type-aliases-package配置
 		bean.setTypeAliasesPackage("com.wyait.manage.pojo");
 		logger.info("####set type aliaes to: {}","com.wyait.manage.pojo");
 		//对应mybatis.mapper-locations配置
-		bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:mapper/*.xml"));
+		bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:mapper/**/*.xml"));
 		//开启驼峰映射
 		bean.getObject().getConfiguration().setMapUnderscoreToCamelCase(true);
 		return bean.getObject();
