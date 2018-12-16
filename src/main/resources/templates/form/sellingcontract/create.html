@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro" xmlns="http://www.w3.org/1999/html">
+<head th:include="layout :: htmlhead" th:with="title='用户管理'"></head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <!--头-->
+    <div th:replace="fragments/head :: header"></div>
+
+    <div class="layui-body" style="margin: 1%">
+        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+            <legend>售货合同</legend>
+        </fieldset>
+        <form class="layui-form" id="sellingContractForm">
+            <div class="layui-form-item">
+                <label class="layui-form-label">卖方</label>
+                <div class="layui-input-block">
+                    <input type="text" name="seller" lay-verify="title" autocomplete="off" placeholder="请输入卖方" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">买方</label>
+                <div class="layui-input-block">
+                    <input type="text" name="buyer" lay-verify="title" autocomplete="off" placeholder="请输入买方" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">包装</label>
+                <div class="layui-input-block">
+                    <input type="text" name="packing" lay-verify="title" autocomplete="off" placeholder="请输入包装" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">装运唛头</label>
+                <div class="layui-input-block">
+                    <input type="text" name="packingMaiTou" lay-verify="title" autocomplete="off" placeholder="请输入装运唛头" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">装运口岸</label>
+                <div class="layui-input-block">
+                    <input type="text" name="packingKouAn" lay-verify="title" autocomplete="off" placeholder="请输入装运口岸" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">目的口岸</label>
+                <div class="layui-input-block">
+                    <input type="text" name="sendingKouAn" lay-verify="title" autocomplete="off" placeholder="目的口岸" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">装运期限</label>
+                <div class="layui-input-block">
+                   <input type="checkbox" name="packingExpiredType" value="1" /> 卖方在收到本合同第八条规定的信用证后<input type="text" name="packingExpiredDays"/>天内装运
+                </div>
+                <div class="layui-input-block">
+                    <input type="checkbox" name="packingExpiredType" value="2" />   <input type="text" name="packingExpiredDate" placeholder="yyyy-MM-dd" autocomplete="off"/>前
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">保险</label>
+                <div class="layui-input-block">
+                    <input type="checkbox" name="insuranceType" value="1" />由卖方按发票总值的110%按中国人民保险公司的保险条款保
+                    <input type="checkbox" name="insuranceType" value="2" />一切险
+                    <input type="checkbox" name="insuranceType" value="3" />陆运险
+                    <input type="checkbox" name="insuranceType" value="4" />由买方自理
+                </div>
+
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">付款条件</label>
+                <div class="layui-input-block">
+                    <input type="checkbox" name="payingType" value="1" />买方须于 <input type="text" id="payingExpiredDate" name="payingExpiredDate"  placeholder="yyyy-MM-dd" autocomplete="off"/>以前开出卖方为受益人的，100%的，不可撤销的，允许转船及分批装运的     期信用证，并须注明在上述装运日期后15天内在中国议付有效
+                </div>
+                <div class="layui-input-block">
+                    <input type="checkbox" name="payingType" value="2"   />买方在信用证上注明可接受联合运输提单或其它货运单据
+                </div>
+                <div class="layui-input-block">
+                    <input type="checkbox" name="payingType" value="3"  />T/T
+                </div>
+
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">装运单据</label>
+                <div class="layui-input-block">
+                    <input type="checkbox" name="packingForms" value="1" />提单或其它货运单据
+                    <input type="checkbox" name="packingForms"  value="2"  />发票
+                    <input type="checkbox" name="packingForms"  value="3" />装箱单
+                    <input type="checkbox" name="packingForms"  value="4"  />保险单
+                    <input type="checkbox" name="packingForms"  value="5"  />由制造厂检验部门出具的品质/数量证明
+                </div>
+
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit="" lay-filter="saveSellingContract">立即提交</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!--底部-->
+    <div th:replace="fragments/footer :: footer"></div>
+    <script src="../js/dateUtils.js"></script>
+    <script src="../js/form/sellingcontract/create.js"></script>
+
+</div>
+</body>
+</html>
