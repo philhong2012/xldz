@@ -28,8 +28,8 @@ public class FormSellingContract implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId(type = IdType.ID_WORKER)
-    private Long id;
+    @TableId(type = IdType.ID_WORKER_STR)
+    private String id;
 
     /**
      * 买方
@@ -128,7 +128,7 @@ public class FormSellingContract implements Serializable {
     /**
      * 创建部门
      */
-    private Long deptId;
+    private String deptId;
 
     /**
      * 创建日期
@@ -138,7 +138,7 @@ public class FormSellingContract implements Serializable {
     /**
      * 创建人
      */
-    private Long createUserId;
+    private String createUserId;
 
 
 }

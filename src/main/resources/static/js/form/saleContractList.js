@@ -9,7 +9,7 @@ $(function() {
 
         tableIns=table.render({
             elem: '#saleContractList'
-            ,url:'/form/getSaleContractList'
+            ,url:'/sellingcontract/list'
             ,method: 'post' //默认：get请求
             ,cellMinWidth: 80
             ,page: true,
@@ -30,8 +30,8 @@ $(function() {
                 ,{field:'seller', title: '买方',}
                 ,{field:'buyer', title: '卖方', }
                 ,{field:'signTime', title: '签订日期',align:'center'}
-                /*,{field:'isJob', title:'是否在职',width:95,align:'center',templet:'#jobTpl'}
-                ,{fixed:'right', title:'操作', width:140,align:'center', toolbar:'#optBar'}*/
+                /*,{field:'isJob', title:'是否在职',width:95,align:'center',templet:'#jobTpl'}*/
+                ,{fixed:'right', title:'操作', width:140,align:'center', toolbar:'#optBar'}
             ]]
             ,  done: function(res, curr, count){
                 //如果是异步请求数据方式，res即为你接口返回的信息。
@@ -52,13 +52,13 @@ $(function() {
             setJobUser(obj,this.value,this.name,obj.elem.checked);
         });
         //监听工具条
-        table.on('tool(userTable)', function(obj){
+        table.on('tool(saleContractList)', function(obj){
             var data = obj.data;
             if(obj.event === 'del'){
                 delUser(data,data.id,data.username);
             } else if(obj.event === 'edit'){
                 //编辑
-                getUserAndRoles(data,data.id);
+                editSellingContract(data,data.id);
             } else if(obj.event === 'recover'){
                 //恢复
                 recoverUser(data,data.id);
@@ -258,56 +258,8 @@ function openUser(id,title){
         }
     });
 }
-function getUserAndRoles(obj,id) {
-    //如果已经离职，提醒不可编辑和删除
-    if(obj.job){
-        layer.alert("该用户已经离职，不可进行编辑；</br>  如需编辑，请设置为<font style='font-weight:bold;' color='green'>在职</font>状态。");
-    }else if(obj.del){
-        layer.alert("该用户已经删除，不可进行编辑；</br>  如需编辑，请先<font style='font-weight:bold;' color='blue'>恢复</font>用户状态。");
-    }else{
-        //回显数据
-        $.get("/user/getUserAndRoles",{"id":id},function(data){
-            if(isLogin(data)){
-                if(data.msg=="ok" && data.user!=null){
-                    var existRole='';
-                    if(data.user.userRoles !=null ){
-                        $.each(data.user.userRoles, function (index, item) {
-                            existRole+=item.roleId+',';
-                        });
-                    }
-                    $("#id").val(data.user.id==null?'':data.user.id);
-                    $("#version").val(data.user.version==null?'':data.user.version);
-                    $("#username").val(data.user.username==null?'':data.user.username);
-                    $("#mobile").val(data.user.mobile==null?'':data.user.mobile);
-                    $("#email").val(data.user.email==null?'':data.user.email);
-                    //显示角色数据
-                    $("#roleDiv").empty();
-                    $.each(data.roles, function (index, item) {
-                        var roleInput=$("<input type='checkbox' name='roleId' value="+item.id+" title="+item.roleName+" lay-skin='primary'/>");
-                        var div=$("<div class='layui-unselect layui-form-checkbox' lay-skin='primary'>" +
-                            "<span>"+item.roleName+"</span><i class='layui-icon'>&#xe626;</i>" +
-                            "</div>");
-                        if(existRole!='' && existRole.indexOf(item.id)>=0){
-                            roleInput=$("<input type='checkbox' name='roleId' value="+item.id+" title="+item.roleName+" lay-skin='primary' checked='checked'/>");
-                            div=$("<div class='layui-unselect layui-form-checkbox  layui-form-checked' lay-skin='primary'>" +
-                                "<span>"+item.roleName+"</span><i class='layui-icon'>&#xe627;</i>" +
-                                "</div>");
-                        }
-                        $("#roleDiv").append(roleInput).append(div);
-                    });
-                    openUser(id,"设置用户");
-                    //重新渲染下form表单中的复选框 否则复选框选中效果无效
-                    // layui.form.render();
-                    layui.form.render('checkbox');
-                }else{
-                    //弹出错误提示
-                    layer.alert(data.msg,function () {
-                        layer.closeAll();
-                    });
-                }
-            }
-        });
-    }
+function editSellingContract(obj,id) {
+    window.location.href = '/sellingcontract/edit?id='+id;
 }
 function delUser(obj,id,name) {
     var currentUser=$("#currentUser").html();

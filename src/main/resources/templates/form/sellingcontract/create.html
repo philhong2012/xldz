@@ -13,6 +13,12 @@
         </fieldset>
         <form class="layui-form" id="sellingContractForm">
             <div class="layui-form-item">
+                <label class="layui-form-label">合同编号</label>
+                <div class="layui-input-block">
+                    <input type="text" name="code" lay-verify="title" autocomplete="off" placeholder="请输入编号" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
                 <label class="layui-form-label">卖方</label>
                 <div class="layui-input-block">
                     <input type="text" name="seller" lay-verify="title" autocomplete="off" placeholder="请输入卖方" class="layui-input">
@@ -99,6 +105,7 @@
             </div>
         </form>
     </div>
+
 
     <!--底部-->
     <div th:replace="fragments/footer :: footer"></div>
