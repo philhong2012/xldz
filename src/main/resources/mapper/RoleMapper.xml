@@ -138,7 +138,7 @@
     </collection>
   </resultMap>
 
-  <select id="findRoleAndPerms" resultType="com.wyait.manage.pojo.RolePermissionKey">
+  <select id="findRoleAndPerms" resultMap="rolePerms">
     select
     r.*,rp.role_id,rp.permit_id
     from role r
