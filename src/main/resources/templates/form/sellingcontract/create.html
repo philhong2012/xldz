@@ -12,89 +12,122 @@
             <legend>售货合同</legend>
         </fieldset>
         <form class="layui-form" id="sellingContractForm">
+            <input type="hidden" name="id"th:value="${model}?${model.id}:_" />
             <div class="layui-form-item">
                 <label class="layui-form-label">合同编号</label>
                 <div class="layui-input-block">
-                    <input type="text" name="code" lay-verify="title" autocomplete="off" placeholder="请输入编号" class="layui-input">
+                    <input type="text" name="contractNo" lay-verify="title" th:value="${model}?${model.contractNo}:_" autocomplete="off" placeholder="请输入编号" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">卖方</label>
                 <div class="layui-input-block">
-                    <input type="text" name="seller" lay-verify="title" autocomplete="off" placeholder="请输入卖方" class="layui-input">
+                    <input type="text" name="seller" lay-verify="title" autocomplete="off" placeholder="请输入卖方" th:value="${model}?${model.seller}:_"  class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">买方</label>
                 <div class="layui-input-block">
-                    <input type="text" name="buyer" lay-verify="title" autocomplete="off" placeholder="请输入买方" class="layui-input">
+                    <input type="text" name="buyer" lay-verify="title" autocomplete="off" placeholder="请输入买方" th:value="${model}?${model.buyer}:_"  class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">包装</label>
                 <div class="layui-input-block">
-                    <input type="text" name="packing" lay-verify="title" autocomplete="off" placeholder="请输入包装" class="layui-input">
+                    <input type="text" name="packing" lay-verify="title" autocomplete="off" placeholder="请输入包装" th:value="${model}?${model.packing}:_"  class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">装运唛头</label>
                 <div class="layui-input-block">
-                    <input type="text" name="packingMaiTou" lay-verify="title" autocomplete="off" placeholder="请输入装运唛头" class="layui-input">
+                    <input type="text" name="packingMaiTou" lay-verify="title" autocomplete="off" placeholder="请输入装运唛头"  th:value="${model}?${model.packingMaiTou}:_" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">装运口岸</label>
                 <div class="layui-input-block">
-                    <input type="text" name="packingKouAn" lay-verify="title" autocomplete="off" placeholder="请输入装运口岸" class="layui-input">
+                    <input type="text" name="packingKouAn" lay-verify="title" autocomplete="off" placeholder="请输入装运口岸" th:value="${model}?${model.packingKouAn}:_"  class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">目的口岸</label>
                 <div class="layui-input-block">
-                    <input type="text" name="sendingKouAn" lay-verify="title" autocomplete="off" placeholder="目的口岸" class="layui-input">
+                    <input type="text" name="sendingKouAn" lay-verify="title" autocomplete="off" placeholder="目的口岸" th:value="${model}?${model.sendingKouAn}:_"  class="layui-input">
                 </div>
             </div>
-            <div class="layui-form-item">
+            <div class="layui-form-item" th:if="${model}">
                 <label class="layui-form-label">装运期限</label>
                 <div class="layui-input-block">
-                   <input type="checkbox" name="packingExpiredType" value="1" /> 卖方在收到本合同第八条规定的信用证后<input type="text" name="packingExpiredDays"/>天内装运
+                   <input type="checkbox" name="packingExpiredType" value="1" th:checked="${model.packingExpiredType}?${model.packingExpiredType.contains('1')}:false"  /> 卖方在收到本合同第八条规定的信用证后<input type="text" th:value="${model}?${model.packingExpiredDays}:_"  name="packingExpiredDays"/>天内装运
                 </div>
                 <div class="layui-input-block">
-                    <input type="checkbox" name="packingExpiredType" value="2" />   <input type="text" name="packingExpiredDate" placeholder="yyyy-MM-dd" autocomplete="off"/>前
+                    <input type="checkbox" name="packingExpiredType" value="2"  th:checked="${model.packingExpiredType}?${model.packingExpiredType.contains('2')}:false" />   <input type="text" name="packingExpiredDate" id="packingExpiredDate" th:value="${model}?${model.packingExpiredDate}:_"  placeholder="yyyy-MM-dd" autocomplete="off"/>前
+                </div>
+            </div>
+            <div class="layui-form-item" th:unless="${model}">
+                <label class="layui-form-label">装运期限</label>
+                <div class="layui-input-block">
+                    <input type="checkbox" name="packingExpiredType" value="1"  /> 卖方在收到本合同第八条规定的信用证后<input type="text" th:value="${model}?${model.packingExpiredDays}:_"  name="packingExpiredDays"/>天内装运
+                </div>
+                <div class="layui-input-block">
+                    <input type="checkbox" name="packingExpiredType" value="2"  />   <input type="text" name="packingExpiredDate" id="packingExpiredDate" th:value="${model}?${model.packingExpiredDate}:_"  placeholder="yyyy-MM-dd" autocomplete="off"/>前
                 </div>
             </div>
 
             <div class="layui-form-item">
                 <label class="layui-form-label">保险</label>
-                <div class="layui-input-block">
-                    <input type="checkbox" name="insuranceType" value="1" />由卖方按发票总值的110%按中国人民保险公司的保险条款保
-                    <input type="checkbox" name="insuranceType" value="2" />一切险
-                    <input type="checkbox" name="insuranceType" value="3" />陆运险
-                    <input type="checkbox" name="insuranceType" value="4" />由买方自理
+                <div class="layui-input-block" th:if="${model} ">
+                    <input type="checkbox" name="insuranceType" value="1"  th:checked="${model.insuranceType}?${model.insuranceType.contains('1')}:false" />由卖方按发票总值的110%按中国人民保险公司的保险条款保
+                    <input type="checkbox" name="insuranceType" value="2" th:checked="${model.insuranceType}?${model.insuranceType.contains('2')}:false" />一切险
+                    <input type="checkbox" name="insuranceType" value="3" th:checked="${model.insuranceType}?${model.insuranceType.contains('3')}:false" />陆运险
+                    <input type="checkbox" name="insuranceType" value="4" th:checked="${model.insuranceType}?${model.insuranceType.contains('4')}:false" />由买方自理
                 </div>
-
+                <div class="layui-input-block" th:unless="${model}">
+                <input type="checkbox" name="insuranceType" value="1" />由卖方按发票总值的110%按中国人民保险公司的保险条款保
+                <input type="checkbox" name="insuranceType" value="2"  />一切险
+                <input type="checkbox" name="insuranceType" value="3" />陆运险
+                <input type="checkbox" name="insuranceType" value="4" />由买方自理
+                </div>
             </div>
-            <div class="layui-form-item">
+            <div class="layui-form-item" th:if="${model}">
                 <label class="layui-form-label">付款条件</label>
                 <div class="layui-input-block">
-                    <input type="checkbox" name="payingType" value="1" />买方须于 <input type="text" id="payingExpiredDate" name="payingExpiredDate"  placeholder="yyyy-MM-dd" autocomplete="off"/>以前开出卖方为受益人的，100%的，不可撤销的，允许转船及分批装运的     期信用证，并须注明在上述装运日期后15天内在中国议付有效
+                    <input type="checkbox" name="payingType" value="1" th:checked="(${model.payingType} )?${model.payingType.contains('1')}:false"/>买方须于 <input type="text" id="payingExpiredDate" name="payingExpiredDate" th:value="${model}?${model.payingExpiredDate}:_"    placeholder="yyyy-MM-dd" autocomplete="off"/>以前开出卖方为受益人的，100%的，不可撤销的，允许转船及分批装运的     期信用证，并须注明在上述装运日期后15天内在中国议付有效
                 </div>
                 <div class="layui-input-block">
-                    <input type="checkbox" name="payingType" value="2"   />买方在信用证上注明可接受联合运输提单或其它货运单据
+                    <input type="checkbox" name="payingType" value="2"  th:checked="(${model.payingType} )?${model.payingType.contains('2')}:false" />买方在信用证上注明可接受联合运输提单或其它货运单据
                 </div>
                 <div class="layui-input-block">
-                    <input type="checkbox" name="payingType" value="3"  />T/T
+                    <input type="checkbox" name="payingType" value="3"  th:checked="(${model.payingType} )?${model.payingType.contains('3')}:false"/>T/T
                 </div>
-
+            </div>
+            <div class="layui-form-item" th:unless="${model}">
+                <label class="layui-form-label">付款条件</label>
+                <div class="layui-input-block">
+                    <input type="checkbox" name="payingType" value="1" />买方须于 <input type="text" id="payingExpiredDate" name="payingExpiredDate" th:value="${model}?${model.payingExpiredDate}:_"    placeholder="yyyy-MM-dd" autocomplete="off"/>以前开出卖方为受益人的，100%的，不可撤销的，允许转船及分批装运的     期信用证，并须注明在上述装运日期后15天内在中国议付有效
+                </div>
+                <div class="layui-input-block">
+                    <input type="checkbox" name="payingType" value="2"  />买方在信用证上注明可接受联合运输提单或其它货运单据
+                </div>
+                <div class="layui-input-block">
+                    <input type="checkbox" name="payingType" value="3" />T/T
+                </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">装运单据</label>
-                <div class="layui-input-block">
-                    <input type="checkbox" name="packingForms" value="1" />提单或其它货运单据
-                    <input type="checkbox" name="packingForms"  value="2"  />发票
+                <div class="layui-input-block" th:if="${model}">
+                    <input type="checkbox" name="packingForms" value="1" th:checked="${model.packingForms}?${model.packingForms.contains('1')}:false"/>提单或其它货运单据
+                    <input type="checkbox" name="packingForms"  value="2" th:checked="${model.packingForms}?${model.packingForms.contains('2')}:false" />发票
+                    <input type="checkbox" name="packingForms"  value="3" th:checked="${model.packingForms}?${model.packingForms.contains('3')}:false"/>装箱单
+                    <input type="checkbox" name="packingForms"  value="4"  th:checked="${model.packingForms}?${model.packingForms.contains('4')}:false"/>保险单
+                    <input type="checkbox" name="packingForms"  value="5"  th:checked="${model.packingForms}?${model.packingForms.contains('5')}:false"/>由制造厂检验部门出具的品质/数量证明
+                </div>
+                <div class="layui-input-block" th:unless="${model}">
+                    <input type="checkbox" name="packingForms" value="1"/>提单或其它货运单据
+                    <input type="checkbox" name="packingForms"  value="2" />发票
                     <input type="checkbox" name="packingForms"  value="3" />装箱单
-                    <input type="checkbox" name="packingForms"  value="4"  />保险单
-                    <input type="checkbox" name="packingForms"  value="5"  />由制造厂检验部门出具的品质/数量证明
+                    <input type="checkbox" name="packingForms"  value="4" />保险单
+                    <input type="checkbox" name="packingForms"  value="5" />由制造厂检验部门出具的品质/数量证明
                 </div>
 
             </div>

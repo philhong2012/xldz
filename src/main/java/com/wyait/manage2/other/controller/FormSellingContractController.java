@@ -1,6 +1,7 @@
 package com.wyait.manage2.other.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.wyait.manage.entity.SaleContractDTO;
@@ -49,7 +50,17 @@ public class FormSellingContractController {
     @ResponseBody
     public String save(FormSellingContract formSellingContract) {
         logger.debug("",formSellingContract);
-        formSellingContractService.save(formSellingContract);
+        formSellingContractService.saveOrUpdate(formSellingContract);
+        UpdateWrapper<FormSellingContract> updateWrapper = new UpdateWrapper<FormSellingContract>();
+        if(formSellingContract.getPackingExpiredDate() == null) {
+            updateWrapper.set("packing_expired_date",null);//updateWrapper.set("")
+        }
+        if(formSellingContract.getPayingExpiredDate() == null) {
+            updateWrapper.set("paying_expired_date",null);//updateWrapper.set("")
+        }
+
+        //formSellingContractService.update()
+
 
         return "ok";
     }

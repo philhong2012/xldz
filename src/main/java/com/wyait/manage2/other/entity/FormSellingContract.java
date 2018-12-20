@@ -92,6 +92,11 @@ public class FormSellingContract implements Serializable {
     private String packingExpiredDays;
 
     /**
+     * 装运类型
+     */
+    private String packingExpiredType;
+
+    /**
      * 装运期限截止日期
      */
     @JsonFormat(pattern = JacksonConfig.DEFAULT_DATE_FORMAT)
