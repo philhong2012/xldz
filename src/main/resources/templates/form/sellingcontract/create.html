@@ -1,7 +1,18 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:shiro="http://www.pollix.at/thymeleaf/shiro" xmlns="http://www.w3.org/1999/html">
-<head th:include="layout :: htmlhead" th:with="title='用户管理'"></head>
+<head th:include="layout :: htmlhead_(
+'/jquery-easyui-1.6.11/themes/default/easyui.css,'
++'/jquery-easyui-1.6.11/themes/default/icon.css,'
++'/jquery-easyui-1.6.11/demo.css'
+,
+'/jquery-easyui-1.6.11/jquery.min.js,'
++'/jquery-easyui-1.6.11/jquery.easyui.min.js'
+)" th:with="title='用户管理'">
+</head>
+
+
+
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
     <!--头-->
@@ -132,12 +143,111 @@
 
             </div>
             <div class="layui-form-item">
+                <div style="margin:20px 0;">货物明细</div>
+
+                <table id="dg" class="easyui-datagrid" title="货物明细" style="width:700px;height:auto"
+                       data-options="
+                iconCls: 'icon-edit',
+                singleSelect: true,
+                toolbar: '#tb',
+                url: '/sellingcontract/list2',
+                method: 'post',
+                onClickCell: onClickCell,
+                onEndEdit: onEndEdit
+            ">
+                    <thead>
+                    <tr>
+                        <th data-options="field:'id',width:80,editor:'textbox'">Item ID</th>
+                        <th data-options="field:'contractNo',width:100,editor:'textbox'">Product</th>
+                    </tr>
+                    </thead>
+                </table>
+
+                <div id="tb" style="height:auto">
+                    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="append()">增加</a>
+                    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="removeit()">删除</a>
+                    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" onclick="accept()">接受</a>
+                    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-undo',plain:true" onclick="reject()">拒绝</a>
+                    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="getChanges()">获取变更记录</a>
+                </div>
+            </div>
+            <div class="layui-form-item">
                 <div class="layui-input-block">
                     <button class="layui-btn" lay-submit="" lay-filter="saveSellingContract">立即提交</button>
                 </div>
             </div>
         </form>
     </div>
+
+
+
+
+    <script type="text/javascript">
+        var editIndex = undefined;
+        function endEditing(){
+            if (editIndex == undefined){return true}
+            if ($('#dg').datagrid('validateRow', editIndex)){
+                $('#dg').datagrid('endEdit', editIndex);
+                editIndex = undefined;
+                return true;
+            } else {
+                return false;
+            }
+        }
+        function onClickCell(index, field){
+            if (editIndex != index){
+                if (endEditing()){
+                    $('#dg').datagrid('selectRow', index)
+                        .datagrid('beginEdit', index);
+                    var ed = $('#dg').datagrid('getEditor', {index:index,field:field});
+                    if (ed){
+                        ($(ed.target).data('textbox') ? $(ed.target).textbox('textbox') : $(ed.target)).focus();
+                    }
+                    editIndex = index;
+                } else {
+                    setTimeout(function(){
+                        $('#dg').datagrid('selectRow', editIndex);
+                    },0);
+                }
+            }
+        }
+        function onEndEdit(index, row){
+            var ed = $(this).datagrid('getEditor', {
+                index: index,
+                field: 'userId'
+            });
+            //row.productname = $(ed.target).combobox('getText');
+        }
+        function append(){
+            if (endEditing()){
+                $('#dg').datagrid('appendRow',{status:'P'});
+                editIndex = $('#dg').datagrid('getRows').length-1;
+                $('#dg').datagrid('selectRow', editIndex)
+                    .datagrid('beginEdit', editIndex);
+            }
+        }
+        function removeit(){
+            if (editIndex == undefined){return}
+            $('#dg').datagrid('cancelEdit', editIndex)
+                .datagrid('deleteRow', editIndex);
+            editIndex = undefined;
+        }
+        function accept(){
+            if (endEditing()){
+                $('#dg').datagrid('acceptChanges');
+            }
+        }
+        function reject(){
+            $('#dg').datagrid('rejectChanges');
+            editIndex = undefined;
+        }
+        function getChanges(){
+            var rows = $('#dg').datagrid('getChanges');
+            alert(rows.length+' rows are changed!');
+        }
+    </script>
+
+
 
 
     <!--底部-->
