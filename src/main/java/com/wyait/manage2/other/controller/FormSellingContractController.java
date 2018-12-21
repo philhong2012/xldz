@@ -115,4 +115,25 @@ public class FormSellingContractController {
         }
         return pdr;
     }
+
+
+
+    /**
+     * 编辑售货合同
+     * @return
+     */
+    @RequestMapping(value = "/list2", method = RequestMethod.POST)
+    @ResponseBody
+    public List<FormSellingContract> list2() {
+
+
+
+            List<FormSellingContract> formSellingContracts = formSellingContractService.list();
+            // 获取分页查询后的数据
+           // PageInfo<FormSellingContract> pageInfo = new PageInfo<>(formSellingContracts);
+
+
+        return formSellingContracts;
+    }
+
 }

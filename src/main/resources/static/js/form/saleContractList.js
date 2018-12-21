@@ -8,6 +8,7 @@ $(function() {
             ,form = layui.form;
 
         tableIns=table.render({
+            toolbar:'#toolbarDemo',
             elem: '#saleContractList'
             ,url:'/sellingcontract/list'
             ,method: 'post' //默认：get请求
@@ -50,6 +51,17 @@ $(function() {
             //console.log(this.value + ' ' + this.name + '：'+ obj.elem.checked, obj.othis);
             var data = obj.data;
             setJobUser(obj,this.value,this.name,obj.elem.checked);
+        });
+        table.on('toolbar(saleContractList)',function(obj) {
+            //alert(1);
+            //console.log("1");
+            var data = table.cache["saleContractList"];
+            var newRow = data[0];
+            data.push(newRow);
+            //tableIns.reload({data:data});
+            table.reload("saleContractList",{
+                data:data
+            });
         });
         //监听工具条
         table.on('tool(saleContractList)', function(obj){

@@ -41,8 +41,18 @@
         <!--<hr class="layui-bg-blue"/>-->
         <hr class="layui-bg-black"/>
 
+
+        <!--<script type="text/html" id="toolbarDemo">
+            <div class="layui-btn-container">
+                <button class="layui-btn layui-btn-sm" lay-event="addRow">增加一行</button>
+                <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
+                <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>
+            </div>
+        </script>-->
+
         <button class="layui-btn layui-btn-normal" onclick="window.location.href='/sellingcontract/create';">增加合同</button>
         <button class="layui-btn layui-btn-normal" onclick="alert('功能开发中。。。')">另存合同</button>
+        <button class="layui-btn layui-btn-normal" onclick="addRow();">增加一行</button>
         <!--<button class="layui-btn layui-btn-normal" onclick="nolockUser()">解锁</button>-->
 
         <table id="saleContractList" lay-filter="saleContractList"></table>
