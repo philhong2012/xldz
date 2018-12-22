@@ -152,14 +152,20 @@
                     singleSelect: true,
                     toolbar: '#tb',
                     url: '/sellingcontract/list2',
+                    queryParams:{id:'123'},
                     method: 'post',
                     onClickCell: onClickCell,
                     onEndEdit: onEndEdit
                 ">
                         <thead>
                         <tr>
-                            <th data-options="field:'id',width:80,editor:'textbox'">Item ID</th>
-                            <th data-options="field:'contractNo',width:100,editor:'textbox'">Product</th>
+                            <th data-options="field:'id',width:80,editor:'textbox',hidden:true">id</th>
+                            <th data-options="field:'goodsName',width:100,editor:'textbox'">名称</th>
+                           <th data-options="field:'goodsNameEn',width:100,editor:'textbox'">英文名称</th>
+                           <th data-options="field:'quantity',width:100,editor:{type:'numberbox'}">数量</th>
+                           <th data-options="field:'goodsUnit',width:100,editor:'textbox'">单位</th>
+                           <th data-options="field:'price',width:100,editor:{type:'numberbox',options:{precision:2}}">价格</th>
+                           <th data-options="field:'totalPrice',width:100,editor:{type:'numberbox',options:{precision:2}}">总价</th>
                         </tr>
                         </thead>
                     </table>
@@ -172,7 +178,7 @@
                         <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="getChanges()">获取变更记录</a>
                     </div>
                 </div>
-                </div>
+            </div>
             <div class="layui-form-item">
                 <div class="layui-input-block">
                     <button class="layui-btn" lay-submit="" lay-filter="saveSellingContract">立即提交</button>
@@ -185,6 +191,27 @@
 
 
     <script type="text/javascript">
+        $(function () {
+            $("body").delegate(".datagrid-cell-c1-quantity .textbox-text","change",function() {
+                //alert($(this).val());
+                var quantity = $(this).val();
+                quantity = quantity == '' ? 0: quantity;
+                var price = $(this).closest("tr.datagrid-row").find(".datagrid-cell-c1-price .textbox-text").val();
+                price = price == '' ? 0: price;
+                $(this).closest("tr.datagrid-row").find(".datagrid-cell-c1-totalPrice .textbox-text").val(price * quantity);
+            });
+
+            $("body").delegate(".datagrid-cell-c1-price .textbox-text","change",function() {
+                //alert($(this).val());
+            });
+
+            $("body").delegate(".datagrid-cell-c1-quantity .textbox-text","change",function() {
+                //alert($(this).val());
+            });
+        })
+
+
+
         var editIndex = undefined;
         function endEditing(){
             if (editIndex == undefined){return true}
@@ -226,6 +253,30 @@
                 editIndex = $('#dg').datagrid('getRows').length-1;
                 $('#dg').datagrid('selectRow', editIndex)
                     .datagrid('beginEdit', editIndex);
+                setEditing(editIndex);
+            }
+
+        }
+
+        //计算报价小计
+        function setEditing(rowIndex){
+            var editors = $('#dg').datagrid('getEditors', rowIndex);
+            var priceEditor = editors[5];
+            var amountEditor = editors[3];
+            var costEditor = editors[6];
+            priceEditor.target.bind("change", function(){
+                calculate();
+            });
+
+
+            amountEditor.target.bind("change", function(){
+                calculate();
+            });
+
+            function calculate(){
+                var cost = (priceEditor.target.val())*(amountEditor.target.val());
+                console.log(cost);
+                costEditor.target.numberbox("setValue",cost);
             }
         }
         function removeit(){
