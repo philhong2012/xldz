@@ -143,34 +143,36 @@
 
             </div>
             <div class="layui-form-item">
-                <div style="margin:20px 0;">货物明细</div>
+                <div class="layui-input-block">
+                    <div style="margin:20px 0;">货物明细</div>
 
-                <table id="dg" class="easyui-datagrid" title="货物明细" style="width:700px;height:auto"
-                       data-options="
-                iconCls: 'icon-edit',
-                singleSelect: true,
-                toolbar: '#tb',
-                url: '/sellingcontract/list2',
-                method: 'post',
-                onClickCell: onClickCell,
-                onEndEdit: onEndEdit
-            ">
-                    <thead>
-                    <tr>
-                        <th data-options="field:'id',width:80,editor:'textbox'">Item ID</th>
-                        <th data-options="field:'contractNo',width:100,editor:'textbox'">Product</th>
-                    </tr>
-                    </thead>
-                </table>
+                    <table id="dg" class="easyui-datagrid" title="货物明细" style="width:700px;height:auto"
+                           data-options="
+                    iconCls: 'icon-edit',
+                    singleSelect: true,
+                    toolbar: '#tb',
+                    url: '/sellingcontract/list2',
+                    method: 'post',
+                    onClickCell: onClickCell,
+                    onEndEdit: onEndEdit
+                ">
+                        <thead>
+                        <tr>
+                            <th data-options="field:'id',width:80,editor:'textbox'">Item ID</th>
+                            <th data-options="field:'contractNo',width:100,editor:'textbox'">Product</th>
+                        </tr>
+                        </thead>
+                    </table>
 
-                <div id="tb" style="height:auto">
-                    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="append()">增加</a>
-                    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="removeit()">删除</a>
-                    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" onclick="accept()">接受</a>
-                    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-undo',plain:true" onclick="reject()">拒绝</a>
-                    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="getChanges()">获取变更记录</a>
+                    <div id="tb" style="height:auto">
+                        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="append()">增加</a>
+                        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="removeit()">删除</a>
+                        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" onclick="accept()">接受</a>
+                        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-undo',plain:true" onclick="reject()">拒绝</a>
+                        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="getChanges()">获取变更记录</a>
+                    </div>
                 </div>
-            </div>
+                </div>
             <div class="layui-form-item">
                 <div class="layui-input-block">
                     <button class="layui-btn" lay-submit="" lay-filter="saveSellingContract">立即提交</button>
@@ -243,6 +245,7 @@
         }
         function getChanges(){
             var rows = $('#dg').datagrid('getChanges');
+            console.log(rows);
             alert(rows.length+' rows are changed!');
         }
     </script>
