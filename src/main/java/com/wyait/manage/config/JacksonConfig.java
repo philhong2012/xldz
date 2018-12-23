@@ -37,7 +37,13 @@ public class JacksonConfig {
     @Bean
     public ObjectMapper objectMapper(){
         ObjectMapper objectMapper = new ObjectMapper();
+        //忽略序列化反序列化过程中多余的字段
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
+
+
         objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+
         objectMapper.disable(DeserializationFeature.ADJUST_DATES_TO_CONTEXT_TIME_ZONE);
         JavaTimeModule javaTimeModule = new JavaTimeModule();
         javaTimeModule.addSerializer(LocalDateTime.class,new LocalDateTimeSerializer(DateTimeFormatter.ofPattern(DEFAULT_DATE_TIME_FORMAT)));

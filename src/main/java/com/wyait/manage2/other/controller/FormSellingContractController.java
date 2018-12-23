@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.wyait.manage.entity.SaleContractDTO;
+import com.wyait.manage.entity.SellingContractVO;
 import com.wyait.manage.pojo.Role;
 import com.wyait.manage.utils.PageDataResult;
 import com.wyait.manage2.other.entity.FormSellingContract;
@@ -48,21 +49,25 @@ public class FormSellingContractController {
         return "form/sellingcontract/create";
     }
 
+
+
     /**
      * 保存售货合同
      * @return
      */
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ResponseBody
-    public String save(FormSellingContract formSellingContract) {
-        logger.debug("",formSellingContract);
-        formSellingContractService.saveOrUpdate(formSellingContract);
-        UpdateWrapper<FormSellingContract> updateWrapper = new UpdateWrapper<FormSellingContract>();
-        if(formSellingContract.getPackingExpiredDate() == null) {
-            updateWrapper.set("packing_expired_date",null);//updateWrapper.set("")
+    public String save(@RequestBody SellingContractVO sellingContractVO) {
+        //logger.debug("",formSellingContract);
+        if(sellingContractVO.getContract() != null) {
+            formSellingContractService.saveOrUpdate(sellingContractVO.getContract());
         }
-        if(formSellingContract.getPayingExpiredDate() == null) {
-            updateWrapper.set("paying_expired_date",null);//updateWrapper.set("")
+
+        if(sellingContractVO.getDetails() != null) {
+            for(SellingContractDetail detail : sellingContractVO.getDetails()) {
+                detail.setSellingContractId(sellingContractVO.getContract().getId());
+            }
+            sellingContractDetailService.saveOrUpdateBatch(sellingContractVO.getDetails());
         }
 
         //formSellingContractService.update()
@@ -133,7 +138,7 @@ public class FormSellingContractController {
     public List<SellingContractDetail> list2(String id) {
 
            QueryWrapper<SellingContractDetail> wrapper = new QueryWrapper<SellingContractDetail>();
-           wrapper.eq("id",id);
+           wrapper.eq("selling_contract_id",id);
            List<SellingContractDetail> sellingContractDetails = sellingContractDetailService.list(wrapper);
             // 获取分页查询后的数据
            // PageInfo<FormSellingContract> pageInfo = new PageInfo<>(formSellingContracts);

@@ -19,8 +19,53 @@ $(function () {
         var form = layui.form;
         var layer=layui.layer;
 
+
+
+
+
+        //console.log(formData);
+        //return;
+
         //监听提交
         form.on('submit(saveSellingContract)', function(data){
+
+            var formElements = $('#sellingContractForm input:not(".textbox-text,.textbox-value")');
+            var formData = {contract:{},details:[]};
+            formElements.each(function (i,ele) {
+                if(ele.type === 'text') {
+                    formData.contract[ele.name] = $(ele).val();
+                } else if(ele.type === 'checkbox') {
+                    if(ele.checked == true) {
+                        if(formData.contract[ele.name] == null) {
+                            formData.contract[ele.name] = ","+$(ele).val()+",";
+                        } else {
+                            formData.contract[ele.name] += $(ele).val() + ",";
+                        }
+                    }
+                } else {
+                    formData.contract[ele.name] = $(ele).val();
+                }
+            });
+            //console.log(formData);
+            formData.details = getChanges();
+
+            $.ajax({
+                "url": "/sellingcontract/save",
+                "type": "post",
+                "data": JSON.stringify(formData),
+                "contentType": "application/json",
+                "dataType": "json",
+                "success": function (data) {
+                    if(data == "ok") {
+                        layer.alert("操作成功", function () {
+                            layer.closeAll();
+                            load();
+                        });
+                    }
+                }
+            });
+
+            /*return;
             $.ajax({
                 type: "POST",
                 data: $("#sellingContractForm").serialize(),
@@ -38,7 +83,7 @@ $(function () {
                 error: function (data) {
                     layer.alert("操作请求错误，请您稍后再试");
                 }
-            });
+            });*/
             return false;
         });
         form.render();
