@@ -127,8 +127,10 @@ function gen(type) {
                 window.location.href = '/exportgoodslist/gen?id='+checkStatus.data[0].id;
                 break;
             case 3: //invoice
+                window.location.href = '/forminvoice/gen?id='+checkStatus.data[0].id;
                 break;
             case 4:// packing list
+                window.location.href = '/packinglist/gen?id='+checkStatus.data[0].id;
                 break;
             case 5: //报关单
                 break;

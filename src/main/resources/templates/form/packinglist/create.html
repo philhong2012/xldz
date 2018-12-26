@@ -8,7 +8,7 @@
 ,
 '/jquery-easyui-1.6.11/jquery.min.js,'
 +'/jquery-easyui-1.6.11/jquery.easyui.min.js'
-)" th:with="title='采购合同'">
+)" th:with="title='装箱单'">
 </head>
 
 
@@ -20,7 +20,7 @@
 
     <div class="layui-body" style="margin: 1%">
         <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
-            <legend>售货合同"</legend>
+            <legend>装箱单</legend>
         </fieldset>
         <form class="layui-form" id="buyingContractForm">
             <input type="hidden" name="id"th:value="${model}?${model.id}:_" />
@@ -45,35 +45,8 @@
             </div>
 
             <div class="layui-form-item">
-                <label class="layui-form-label">签约地点</label>
-                <div class="layui-input-block">
-                    <input type="text" name="signAddress" lay-verify="title" th:value="${model}?${model.signAddress}:_" autocomplete="off" placeholder="请输入地址" class="layui-input">
-                </div>
-            </div>
-
-            <div class="layui-form-item">
-                <label class="layui-form-label">签约时间</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="signDate" id="signDate" lay-verify="title" th:value="${model}?${model.signDate}:_" autocomplete="off" placeholder="" class="layui-input">
-                </div>
-            </div>
-
-            <div class="layui-form-item">
-                <label class="layui-form-label">交货时间</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="deliveryDate" id="deliveryDate" lay-verify="title" th:value="${model}?${model.deliveryDate}:_" autocomplete="off" placeholder="" class="layui-input">
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">合同有效期</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="deliveryDate" id="validityDate" lay-verify="title" th:value="${model}?${model.validityDate}:_" autocomplete="off" placeholder="" class="layui-input">
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <div class="layui-input-block">
-                    <table id="dg" class="easyui-datagrid" title="货物明细" style="width:700px;height:auto"
-                           data-options="
+                <table id="dg" class="easyui-datagrid" title="" style="width:700px;height:auto"
+                       data-options="
                     iconCls: 'icon-edit',
                     singleSelect: true,
                     toolbar: '#tb',
@@ -82,25 +55,25 @@
                     onClickCell: onClickCell,
                     onEndEdit: onEndEdit
                 ">
-                        <thead>
-                        <tr>
-                            <th data-options="field:'id',width:80,editor:'textbox',hidden:true">id</th>
-                            <th data-options="field:'goodsName',width:100,editor:'textbox'">名称</th>
-                            <th data-options="field:'quantity',width:100,editor:{type:'numberbox'}">数量</th>
-                            <th data-options="field:'goodsUnit',width:100,editor:'textbox'">单位</th>
-                            <th data-options="field:'price',width:100,editor:{type:'numberbox',options:{precision:2}}">价格</th>
-                            <th data-options="field:'totalPrice',width:100,editor:{type:'numberbox',options:{precision:2}}">总价</th>
-                        </tr>
-                        </thead>
-                    </table>
+                    <thead>
+                    <tr>
+                        <th data-options="field:'id',width:80,editor:'textbox',hidden:true">id</th>
+                        <th data-options="field:'goodsName',width:100,editor:'textbox'">SHIPPPING MARKS</th>
+                        <th data-options="field:'goodsName',width:100,editor:{type:'numberbox'}">GOODS & DESCRIPTIONS</th>
+                        <th data-options="field:'quantity',width:100,editor:'textbox'">QUANTITYS</th>
+                        <th data-options="field:'price',width:100,editor:{type:'numberbox',options:{precision:2}}">PACKAGES</th>
+                        <th data-options="field:'grossWeight',width:100,editor:{type:'numberbox',options:{precision:2}}">GROSS WEIGHT</th>
+                        <th data-options="field:'netWeight',width:100,editor:{type:'numberbox',options:{precision:2}}">NET WEIGHT</th>
+                    </tr>
+                    </thead>
+                </table>
 
-                    <div id="tb" style="height:auto">
-                        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="append()">增加</a>
-                        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="removeit()">删除</a>
-                        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" onclick="accept()">接受</a>
-                        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-undo',plain:true" onclick="reject()">拒绝</a>
-                        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="getChanges()">获取变更记录</a>
-                    </div>
+                <div id="tb" style="height:auto">
+                    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="append()">增加</a>
+                    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="removeit()">删除</a>
+                    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" onclick="accept()">接受</a>
+                    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-undo',plain:true" onclick="reject()">拒绝</a>
+                    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="getChanges()">获取变更记录</a>
                 </div>
             </div>
             <div class="layui-form-item">
