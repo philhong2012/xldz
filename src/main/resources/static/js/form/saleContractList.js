@@ -1,5 +1,5 @@
 /**
- * 用户列表
+ * 售货合同列表
  */
 var pageCurr;
 $(function() {
@@ -24,7 +24,7 @@ $(function() {
                 ,dataName: 'list' //数据列表的字段名称，默认：data
             }
             ,cols: [[
-                {type:'numbers'}
+                {type:'checkbox'}
                 ,{field:'id', title:'ID', width:80, unresize: true, sort: true}
                 ,{field:'code', title:'合同编号'}
                 ,{field:'name', title:'合同名称'}
@@ -77,12 +77,22 @@ $(function() {
             }
         });
         //监听提交
-        form.on('submit(userSubmit)', function(data){
+        form.on('submit(buyingContractSubmit)', function(data){
             // TODO 校验
             formSubmit(data);
             return false;
         });
 
+        //头工具栏事件
+        table.on('toolbar(saleContractList)', function(obj){
+            var checkStatus = table.checkStatus(obj.config.id); //获取选中行状态
+            switch(obj.event){
+                case 'getCheckData':
+                    var data = checkStatus.data;  //获取选中行数据
+                    layer.alert(JSON.stringify(data));
+                    break;
+            };
+        });
     });
     //搜索框
     layui.use(['form','laydate'], function(){
@@ -104,6 +114,47 @@ $(function() {
         });
     });
 });
+
+function gen(type) {
+    var table = layui.table;
+    var checkStatus = table.checkStatus('saleContractList');
+    if(checkStatus.data.length > 0) {
+        switch (type) {
+            case 1: // buying contract
+                window.location.href = '/buyingcontract/gen?id='+checkStatus.data[0].id;
+                break;
+            case 2: //export goods list
+                window.location.href = '/exportgoodslist/gen?id='+checkStatus.data[0].id;
+                break;
+            case 3: //invoice
+                break;
+            case 4:// packing list
+                break;
+            case 5: //报关单
+                break;
+        }
+
+    } else if(checkStatus.data.length == 0) {
+        layer.alert("请选择销售合同！");
+        //return false;
+    }
+}
+
+
+
+
+function getCheckData() {
+    var checkStatus = table.checkStatus('saleContractList');
+    if(checkStatus != null) {
+
+    } else {
+        layer.alert("请选择销售合同！");
+        //return false;
+    }
+
+
+}
+
 //设置用户是否离职
 function setJobUser(obj,id,nameVersion,checked){
 //	var version = obj.data.version;
@@ -253,7 +304,7 @@ function addUser(){
         }
     });
 }
-function openUser(id,title){
+function genBuyingContractForm(id,title){
     if(id==null || id==""){
         $("#id").val("");
     }
@@ -264,9 +315,9 @@ function openUser(id,title){
         resize :false,
         shadeClose: true,
         area: ['550px'],
-        content:$('#setUser'),
+        content:$('#buyingContract'),
         end:function(){
-            cleanUser();
+            //cleanUser();
         }
     });
 }
