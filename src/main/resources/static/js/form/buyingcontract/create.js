@@ -9,7 +9,10 @@ $(function () {
         });
         laydate.render({
             elem: '#deliveryDate'
-        })
+        });
+        laydate.render({
+            elem: '#validityDate'
+        });
     });
 
 

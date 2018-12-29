@@ -23,7 +23,7 @@
             <legend>采购合同</legend>
         </fieldset>
         <form class="layui-form" id="buyingContractForm">
-            <input type="hidden" name="id"th:value="${model}?${model.id}:_" />
+            <input type="hidden" name="id" id="id" th:value="${model}?${model.id}:_" />
             <div class="layui-form-item">
                 <label class="layui-form-label">卖方</label>
                 <div class="layui-input-block">
@@ -67,7 +67,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">合同有效期</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="deliveryDate" id="validityDate" lay-verify="title" th:value="${model}?${model.validityDate}:_" autocomplete="off" placeholder="" class="layui-input">
+                    <input type="text" name="validityDate" id="validityDate" lay-verify="title" th:value="${model}?${model.validityDate}:_" autocomplete="off" placeholder="" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
@@ -77,7 +77,7 @@
                     iconCls: 'icon-edit',
                     singleSelect: true,
                     toolbar: '#tb',
-                    url: '/sellingcontract/list2',
+                    url: '/buyingcontract/genlist',
                     method: 'post',
                     onClickCell: onClickCell,
                     onEndEdit: onEndEdit
@@ -85,7 +85,7 @@
                         <thead>
                         <tr>
                             <th data-options="field:'id',width:80,editor:'textbox',hidden:true">id</th>
-                            <th data-options="field:'goodsName',width:100,editor:'textbox'">名称</th>
+                            <th data-options="field:'goodsName',width:100,editor:'textbox'">货品规格，名称</th>
                             <th data-options="field:'quantity',width:100,editor:{type:'numberbox'}">数量</th>
                             <th data-options="field:'goodsUnit',width:100,editor:'textbox'">单位</th>
                             <th data-options="field:'price',width:100,editor:{type:'numberbox',options:{precision:2}}">价格</th>
@@ -138,7 +138,8 @@
             });
 
             $('#dg').datagrid('load', {
-                id: '[[${param.id}]]',
+                sellingContractId: '[[${param.sellingContractId}]]',
+                id:$('#id').val()
             });
 
         });

@@ -39,10 +39,18 @@ public class FormController {
         return "form/saleContractList";
     }
 
-    /**
-     * 分页查询用户列表
-     * @return ok/fail
-     */
+
+	///form/buyContractList
+
+
+    @RequestMapping("/buyContractList")
+    public String buyContractList() {
+        return "form/buyingcontract/list";
+    }
+        /**
+         * 分页查询用户列表
+         * @return ok/fail
+         */
     @RequestMapping(value = "/getSaleContractList", method = RequestMethod.POST)
     @ResponseBody
     @RequiresPermissions(value="saleContractList")

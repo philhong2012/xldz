@@ -1,18 +1,29 @@
 package com.wyait.manage2.other.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.wyait.manage.entity.BuyingContractVO;
+import com.wyait.manage.utils.PageDataResult;
+import com.wyait.manage2.other.entity.BuyingContractDetail;
 import com.wyait.manage2.other.entity.FormBuyingContract;
 import com.wyait.manage2.other.entity.FormSellingContract;
+import com.wyait.manage2.other.entity.SellingContractDetail;
+import com.wyait.manage2.other.service.IBuyingContractDetailService;
 import com.wyait.manage2.other.service.IFormBuyingContractService;
 import com.wyait.manage2.other.service.IFormSellingContractService;
 import com.wyait.manage2.other.service.ISellingContractDetailService;
-import com.wyait.manage2.other.service.impl.FormBuyingContractServiceImpl;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <p>
@@ -25,14 +36,18 @@ import org.springframework.web.servlet.ModelAndView;
 @RestController
 @RequestMapping("/buyingcontract")
 public class FormBuyingContractController {
+    Logger logger = LoggerFactory.getLogger(FormBuyingContractController.class);
     @Autowired
     IFormSellingContractService formSellingContractService;
     @Autowired
     ISellingContractDetailService sellingContractDetailService;
     @Autowired
     IFormBuyingContractService formBuyingContractService;
+
+    @Autowired
+    IBuyingContractDetailService buyingContractDetailService;
     /**
-     * 编辑售货合同
+     * 生成采购合同
      * @return
      */
     @RequestMapping(value = "/gen", method = RequestMethod.GET)
@@ -47,5 +62,113 @@ public class FormBuyingContractController {
 
         mv.addObject("model",formBuyingContract);
         return mv;
+    }
+
+    /**
+     * 生成采购合同货物详情
+     * @return
+     */
+    @RequestMapping(value = "/genlist", method = RequestMethod.POST)
+    public List<BuyingContractDetail> genlist(String sellingContractId,String id) {
+        //ModelAndView mv = new ModelAndView("form/buyingContract/save");
+        QueryWrapper<SellingContractDetail> wrapper = new QueryWrapper<>();
+        wrapper.eq("selling_contract_id",sellingContractId);
+        List<SellingContractDetail> sellingContractDetails = sellingContractDetailService.list(wrapper);
+        List<BuyingContractDetail> buyingContractDetails = new ArrayList<>();
+        if(StringUtils.isEmpty(id)) {
+
+            if (sellingContractDetails != null) {
+                for (SellingContractDetail e : sellingContractDetails) {
+                    BuyingContractDetail b = new BuyingContractDetail();
+                    b.setGoodsName(e.getGoodsName());
+                    b.setQuantity(e.getQuantity());
+                    buyingContractDetails.add(b);
+                }
+            }
+        } else {
+            QueryWrapper<BuyingContractDetail> wrapper2 = new QueryWrapper<>();
+            wrapper2.eq("buying_contract_id", id);
+            buyingContractDetails = buyingContractDetailService.list(wrapper2);
+        }
+
+        return buyingContractDetails;
+    }
+
+    /**
+     * 编辑采购合同
+     * @return
+     */
+    @RequestMapping(value = "/edit", method = RequestMethod.GET)
+    public ModelAndView edit(String id) {
+        ModelAndView mv = new ModelAndView("form/buyingContract/create");
+        FormBuyingContract formBuyingContract = formBuyingContractService.getById(id);
+        mv.addObject("model",formBuyingContract);
+        return mv;
+    }
+
+    /**
+     * 采购合同列表页面
+     * @return
+     */
+    @RequestMapping("/list")
+    public String buyingContractList() {
+        return "form/buyingcontract/list";
+    }
+
+    /**
+     * 获取采购合同列表
+     * @return
+     */
+    @RequestMapping(value = "/list", method = RequestMethod.POST)
+    @ResponseBody
+    public PageDataResult list(@RequestParam("page")Integer page,
+                               @RequestParam("limit")Integer limit,
+                                FormBuyingContract formBuyingContract) {
+        PageDataResult pdr = new PageDataResult();
+        try {
+            if (null == page) {
+                page = 1;
+            }
+            if (null == limit) {
+                limit = 10;
+            }
+            PageHelper.startPage(page, limit);
+
+            List<FormBuyingContract> formBuyingContracts = formBuyingContractService.list();
+            // 获取分页查询后的数据
+            PageInfo<FormBuyingContract> pageInfo = new PageInfo<>(formBuyingContracts);
+            // 设置获取到的总记录数total：
+            pdr.setTotals(Long.valueOf(pageInfo.getTotal()).intValue());
+
+            pdr.setList(formBuyingContracts);
+        } catch (Exception e) {
+            //e.printStackTrace();
+            logger.error("采购列表查询异常！", e);
+        }
+        return pdr;
+    }
+
+    /**
+     * 保存采购合同及详情
+     * @return
+     */
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
+    public String save(@RequestBody BuyingContractVO buyingContractVO) {
+        //ModelAndView mv = new ModelAndView("form/buyingContract/save");
+        FormBuyingContract formBuyingContract = buyingContractVO.getContract();
+
+        if(formBuyingContract != null) {
+           formBuyingContractService.saveOrUpdate(formBuyingContract);
+        }
+
+
+
+        if(buyingContractVO.getDetails() != null) {
+            for(BuyingContractDetail e : buyingContractVO.getDetails()) {
+                e.setBuyingContractId(formBuyingContract.getId());
+            }
+            buyingContractDetailService.saveOrUpdateBatch(buyingContractVO.getDetails());
+        }
+        return "ok";
     }
 }
