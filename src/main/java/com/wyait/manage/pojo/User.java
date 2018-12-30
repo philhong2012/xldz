@@ -31,6 +31,10 @@ public class User implements Serializable {
 
 	private Integer version;
 
+	private String deptId;
+
+	private String deptName;
+
 	public Integer getId() {
 		return id;
 	}
@@ -142,7 +146,23 @@ public class User implements Serializable {
 				+ ", insertUid=" + insertUid + ", insertTime=" + insertTime
 				+ ", updateTime=" + updateTime + ", isDel=" + isDel
 				+ ", isJob=" + isJob + ", mcode=" + mcode + ", sendTime="
-				+ sendTime + ", version=" + version + "]";
+				+ sendTime + ", version=" + version
+				+ "deptId=" + deptId+", deptName=" +deptName +"]";
 	}
 
+	public String getDeptId() {
+		return deptId;
+	}
+
+	public void setDeptId(String deptId) {
+		this.deptId = deptId;
+	}
+
+	public String getDeptName() {
+		return deptName;
+	}
+
+	public void setDeptName(String deptName) {
+		this.deptName = deptName;
+	}
 }

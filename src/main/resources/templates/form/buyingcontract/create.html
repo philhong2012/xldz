@@ -43,7 +43,6 @@
                     <input type="text" name="contractNo" lay-verify="title" th:value="${model}?${model.contractNo}:_" autocomplete="off" placeholder="请输入编号" class="layui-input">
                 </div>
             </div>
-
             <div class="layui-form-item">
                 <label class="layui-form-label">签约地点</label>
                 <div class="layui-input-block">
@@ -122,18 +121,21 @@
                 price = price == '' ? 0: price;
                 $(this).closest("tr.datagrid-row").find(".datagrid-cell-c1-totalPrice .textbox-text").val(price * quantity);
                 $(this).closest("tr.datagrid-row").find(".datagrid-cell-c1-totalPrice .textbox-value").val(price * quantity);
-
-               var totalPrice = getTotalPrice();
-                $("div.datagrid-footer table.datagrid-ftable div.datagrid-cell-c1-totalPrice")
-                    .each(function (n,v) {
-                    if(n == 0) {
-                        $(this).html(totalPrice);
-                    } else if(n == 1) {
-                        $(this).html(digitUppercase(totalPrice));
-                    }
-                });
+                //当行金额汇总变化时时间处理
+                onSubTotalChanged();
             });
 
+            function onSubTotalChanged() {
+                var totalPrice = getTotalPrice();
+                $("div.datagrid-footer table.datagrid-ftable div.datagrid-cell-c1-totalPrice")
+                    .each(function (n,v) {
+                        if(n == 0) {
+                            $(this).html(totalPrice);
+                        } else if(n == 1) {
+                            $(this).html(digitUppercase(totalPrice));
+                        }
+                    });
+            }
 
            function getTotalPrice() {
                var total = 0;
@@ -159,23 +161,14 @@
                 $(this).closest("tr.datagrid-row").find(".datagrid-cell-c1-totalPrice .textbox-text").val(price * quantity);
                 $(this).closest("tr.datagrid-row").find(".datagrid-cell-c1-totalPrice .textbox-value").val(price * quantity);
 
+                onSubTotalChanged();
 
-            });
-
-
-
-
-            $("body").delegate(".datagrid-cell-c1-quantity .textbox-text","change",function() {
-                //alert($(this).val());
             });
 
             $('#dg').datagrid('load', {
                 sellingContractId: '[[${param.sellingContractId}]]',
                 id:$('#id').val()
             });
-
-
-
 
         });
 
@@ -222,7 +215,7 @@
                 editIndex = $('#dg').datagrid('getRows').length-1;
                 $('#dg').datagrid('selectRow', editIndex)
                     .datagrid('beginEdit', editIndex);
-                setEditing(editIndex);
+                //setEditing(editIndex);
             }
 
         }
@@ -264,12 +257,8 @@
             editIndex = undefined;
         }
         function getChanges(){
-            //$('#dg').datagrid('updateRows');
             accept();
             var rows = $('#dg').datagrid('getRows');
-            //console.log($('#dg').datagrid('getRows'));
-            //console.log(rows);
-            //alert(rows.length+' rows are changed!');
             return rows;
         }
     </script>

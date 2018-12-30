@@ -11,7 +11,10 @@ $(function () {
         });
         laydate.render({
             elem: '#payingExpiredDate'
-        })
+        });
+        laydate.render({
+            elem: '#signDate'
+        });
     });
 
 

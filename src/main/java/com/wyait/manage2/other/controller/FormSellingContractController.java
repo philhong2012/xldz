@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.wyait.manage.entity.SaleContractDTO;
+import com.wyait.manage.entity.SearchEntityVO;
 import com.wyait.manage.entity.SellingContractVO;
 import com.wyait.manage.pojo.Role;
 import com.wyait.manage.utils.PageDataResult;
@@ -98,7 +99,7 @@ public class FormSellingContractController {
     @ResponseBody
     public PageDataResult list(@RequestParam("page")Integer page,
                                @RequestParam("limit")Integer limit,
-                               FormSellingContract formSellingContract) {
+                               SearchEntityVO searchEntityVO) {
         PageDataResult pdr = new PageDataResult();
         try {
             if (null == page) {
@@ -108,21 +109,41 @@ public class FormSellingContractController {
                 limit = 10;
             }
             PageHelper.startPage(page, limit);
+            QueryWrapper<FormSellingContract> queryWrapper = new QueryWrapper<>();
+            if(searchEntityVO != null) {
+                if(StringUtils.isNotEmpty(searchEntityVO.getCode())) {
+                    queryWrapper.like("contract_no",searchEntityVO.getCode());
+                }
+                if(StringUtils.isNotEmpty(searchEntityVO.getName())) {
+                    //queryWrapper.eq("cont")
+                }
+                if(searchEntityVO.getStartCreateTime() != null) {
+                    queryWrapper.gt("create_time",searchEntityVO.getStartCreateTime());
+                }
+                if(searchEntityVO.getEndCreateTime() != null) {
+                    queryWrapper.lt("create_time",searchEntityVO.getEndCreateTime());
+                }
 
-            List<FormSellingContract> formSellingContracts = formSellingContractService.list();
+                if(searchEntityVO.getStartSignDate() != null) {
+
+                    queryWrapper.gt("sign_date",searchEntityVO.getStartSignDate());
+                }
+
+                if(searchEntityVO.getEndSignDate() != null) {
+                    queryWrapper.lt("sign_date",searchEntityVO.getEndSignDate());
+                }
+            }
+
+            List<FormSellingContract> formSellingContracts = formSellingContractService.list(queryWrapper);
             // 获取分页查询后的数据
             PageInfo<FormSellingContract> pageInfo = new PageInfo<>(formSellingContracts);
             // 设置获取到的总记录数total：
             pdr.setTotals(Long.valueOf(pageInfo.getTotal()).intValue());
 
             pdr.setList(formSellingContracts);
-            logger.debug("用户列表查询=pdr:" + pdr);
 
-            //1074138657696358402
-            //1074138657696358400
          } catch (Exception e) {
-            //e.printStackTrace();
-            logger.error("用户列表查询异常！", e);
+            logger.error("error", e);
         }
         return pdr;
     }

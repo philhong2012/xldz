@@ -26,11 +26,12 @@ $(function() {
             ,cols: [[
                 {type:'checkbox'}
                 ,{field:'id', title:'ID', width:80, unresize: true, sort: true}
-                ,{field:'code', title:'合同编号'}
-                ,{field:'name', title:'合同名称'}
+                ,{field:'contractNo', title:'合同编号'}
+
                 ,{field:'seller', title: '买方',}
                 ,{field:'buyer', title: '卖方', }
-                ,{field:'signTime', title: '签订日期',align:'center'}
+                ,{field:'signDate', title: '签订日期',align:'center'}
+                ,{field:'createTime',title:'创建时间',align:'center'}
                 /*,{field:'isJob', title:'是否在职',width:95,align:'center',templet:'#jobTpl'}*/
                 ,{fixed:'right', title:'操作', width:140,align:'center', toolbar:'#optBar'}
             ]]
@@ -100,10 +101,10 @@ $(function() {
             ,laydate = layui.laydate;
         //日期
         laydate.render({
-            elem: '#insertTimeStart'
+            elem: '#startSignDate'
         });
         laydate.render({
-            elem: '#insertTimeEnd'
+            elem: '#endSignDate'
         });
         //TODO 数据校验
         //监听搜索框

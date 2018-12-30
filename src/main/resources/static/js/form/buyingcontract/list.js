@@ -26,7 +26,7 @@ $(function() {
                 {type:'checkbox'}
                 ,{field:'id', title:'ID', width:80, unresize: true, sort: true}
                 ,{field:'code', title:'合同编号'}
-                ,{field:'name', title:'合同名称'}
+
                 ,{field:'seller', title: '买方',}
                 ,{field:'buyer', title: '卖方', }
                 ,{field:'signTime', title: '签订日期',align:'center'}
@@ -56,6 +56,14 @@ $(function() {
                 //恢复
             }
         });
+
+        //监听搜索框
+        form.on('submit(searchSubmit)', function(data){
+            //重新加载table
+            load(data);
+            return false;
+        });
+
         //监听提交
         form.on('submit(buyingContractSubmit)', function(data){
             // TODO 校验
@@ -69,10 +77,10 @@ $(function() {
             ,laydate = layui.laydate;
         //日期
         laydate.render({
-            elem: '#insertTimeStart'
+            elem: '#startSignDate'
         });
         laydate.render({
-            elem: '#insertTimeEnd'
+            elem: '#endSignDate'
         });
         //TODO 数据校验
         //监听搜索框

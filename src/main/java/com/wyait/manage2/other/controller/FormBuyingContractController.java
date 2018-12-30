@@ -7,6 +7,8 @@ import com.github.pagehelper.PageInfo;
 import com.wyait.common.utils.NumberUtils;
 import com.wyait.manage.entity.BuyingContractVO;
 import com.wyait.manage.entity.DataGridVO;
+import com.wyait.manage.entity.SearchEntityVO;
+import com.wyait.manage.pojo.User;
 import com.wyait.manage.utils.PageDataResult;
 import com.wyait.manage2.other.entity.BuyingContractDetail;
 import com.wyait.manage2.other.entity.FormBuyingContract;
@@ -18,6 +20,7 @@ import com.wyait.manage2.other.service.IFormSellingContractService;
 import com.wyait.manage2.other.service.ISellingContractDetailService;
 import jdk.nashorn.internal.runtime.NumberToString;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +29,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -137,6 +141,16 @@ public class FormBuyingContractController {
      * 编辑采购合同
      * @return
      */
+    @RequestMapping(value = "/create", method = RequestMethod.GET)
+    public String create() {
+        return "form/buyingContract/create";
+    }
+
+
+    /**
+     * 编辑采购合同
+     * @return
+     */
     @RequestMapping(value = "/edit", method = RequestMethod.GET)
     public ModelAndView edit(String id) {
         ModelAndView mv = new ModelAndView("form/buyingContract/create");
@@ -162,7 +176,7 @@ public class FormBuyingContractController {
     @ResponseBody
     public PageDataResult list(@RequestParam("page")Integer page,
                                @RequestParam("limit")Integer limit,
-                                FormBuyingContract formBuyingContract) {
+                                SearchEntityVO searchEntityVO) {
         PageDataResult pdr = new PageDataResult();
         try {
             if (null == page) {
@@ -173,7 +187,33 @@ public class FormBuyingContractController {
             }
             PageHelper.startPage(page, limit);
 
-            List<FormBuyingContract> formBuyingContracts = formBuyingContractService.list();
+            QueryWrapper<FormBuyingContract> queryWrapper = new QueryWrapper<>();
+            if(searchEntityVO != null) {
+                if(StringUtils.isNotEmpty(searchEntityVO.getCode())) {
+                    queryWrapper.like("code",searchEntityVO.getCode());
+                }
+                if(StringUtils.isNotEmpty(searchEntityVO.getName())) {
+                    //queryWrapper.eq("cont")
+                }
+                if(searchEntityVO.getStartCreateTime() != null) {
+                    queryWrapper.gt("create_time",searchEntityVO.getStartCreateTime());
+                }
+                if(searchEntityVO.getEndCreateTime() != null) {
+                    queryWrapper.lt("create_time",searchEntityVO.getEndCreateTime());
+                }
+
+                if(searchEntityVO.getStartSignDate() != null) {
+
+                    queryWrapper.gt("sign_date",searchEntityVO.getStartSignDate());
+                }
+
+                if(searchEntityVO.getEndSignDate() != null) {
+                    queryWrapper.lt("sign_date",searchEntityVO.getEndSignDate());
+                }
+            }
+
+
+            List<FormBuyingContract> formBuyingContracts = formBuyingContractService.list(queryWrapper);
             // 获取分页查询后的数据
             PageInfo<FormBuyingContract> pageInfo = new PageInfo<>(formBuyingContracts);
             // 设置获取到的总记录数total：
@@ -196,11 +236,18 @@ public class FormBuyingContractController {
         //ModelAndView mv = new ModelAndView("form/buyingContract/save");
         FormBuyingContract formBuyingContract = buyingContractVO.getContract();
 
+        User u = (User) SecurityUtils.getSubject().getPrincipal();
+        if(StringUtils.isNotEmpty(formBuyingContract.getId())) {
+            formBuyingContract.setUpdateUserId(u.getId().toString());
+            formBuyingContract.setUpdateTime(LocalDateTime.now());
+        } else {
+            formBuyingContract.setCreateUserId(u.getId().toString());
+            formBuyingContract.setCreateTime(LocalDateTime.now());
+        }
+
         if(formBuyingContract != null) {
            formBuyingContractService.saveOrUpdate(formBuyingContract);
         }
-
-
 
         if(buyingContractVO.getDetails() != null) {
             for(BuyingContractDetail e : buyingContractVO.getDetails()) {
