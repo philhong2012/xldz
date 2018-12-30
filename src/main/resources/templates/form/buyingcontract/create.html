@@ -80,16 +80,17 @@
                     url: '/buyingcontract/genlist',
                     method: 'post',
                     onClickCell: onClickCell,
-                    onEndEdit: onEndEdit
+                    onEndEdit: onEndEdit,
+                    showFooter:true
                 ">
                         <thead>
                         <tr>
                             <th data-options="field:'id',width:80,editor:'textbox',hidden:true">id</th>
                             <th data-options="field:'goodsName',width:100,editor:'textbox'">货品规格，名称</th>
-                            <th data-options="field:'quantity',width:100,editor:{type:'numberbox'}">数量</th>
-                            <th data-options="field:'goodsUnit',width:100,editor:'textbox'">单位</th>
+                            <th data-options="field:'quantity',width:50,editor:{type:'numberbox'}">数量</th>
+                            <th data-options="field:'goodsUnit',width:50,editor:'textbox'">单位</th>
                             <th data-options="field:'price',width:100,editor:{type:'numberbox',options:{precision:2}}">价格</th>
-                            <th data-options="field:'totalPrice',width:100,editor:{type:'numberbox',options:{precision:2}}">总价</th>
+                            <th data-options="field:'totalPrice',width:300,editor:{type:'numberbox',options:{precision:2}}">总价</th>
                         </tr>
                         </thead>
                     </table>
@@ -121,7 +122,33 @@
                 price = price == '' ? 0: price;
                 $(this).closest("tr.datagrid-row").find(".datagrid-cell-c1-totalPrice .textbox-text").val(price * quantity);
                 $(this).closest("tr.datagrid-row").find(".datagrid-cell-c1-totalPrice .textbox-value").val(price * quantity);
+
+               var totalPrice = getTotalPrice();
+                $("div.datagrid-footer table.datagrid-ftable div.datagrid-cell-c1-totalPrice")
+                    .each(function (n,v) {
+                    if(n == 0) {
+                        $(this).html(totalPrice);
+                    } else if(n == 1) {
+                        $(this).html(digitUppercase(totalPrice));
+                    }
+                });
             });
+
+
+           function getTotalPrice() {
+               var total = 0;
+               $("div.datagrid-body div.datagrid-cell-c1-totalPrice").each(function (index,ele) {
+
+                   if($(this).hasClass("datagrid-editable")) {
+                      total += parseFloat($(this).find(".textbox-value").val());
+                   } else {
+                       total += parseFloat($(this).html());
+                   }
+               });
+
+               return total;
+           }
+
 
             $("body").delegate(".datagrid-cell-c1-price .textbox-text","change",function() {
                 //alert($(this).val());
@@ -131,7 +158,12 @@
                 quantity = quantity == '' ? 0: quantity;
                 $(this).closest("tr.datagrid-row").find(".datagrid-cell-c1-totalPrice .textbox-text").val(price * quantity);
                 $(this).closest("tr.datagrid-row").find(".datagrid-cell-c1-totalPrice .textbox-value").val(price * quantity);
+
+
             });
+
+
+
 
             $("body").delegate(".datagrid-cell-c1-quantity .textbox-text","change",function() {
                 //alert($(this).val());
@@ -141,6 +173,9 @@
                 sellingContractId: '[[${param.sellingContractId}]]',
                 id:$('#id').val()
             });
+
+
+
 
         });
 

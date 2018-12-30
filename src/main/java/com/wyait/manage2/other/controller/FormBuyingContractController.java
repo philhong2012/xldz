@@ -4,7 +4,9 @@ package com.wyait.manage2.other.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.wyait.common.utils.NumberUtils;
 import com.wyait.manage.entity.BuyingContractVO;
+import com.wyait.manage.entity.DataGridVO;
 import com.wyait.manage.utils.PageDataResult;
 import com.wyait.manage2.other.entity.BuyingContractDetail;
 import com.wyait.manage2.other.entity.FormBuyingContract;
@@ -14,6 +16,7 @@ import com.wyait.manage2.other.service.IBuyingContractDetailService;
 import com.wyait.manage2.other.service.IFormBuyingContractService;
 import com.wyait.manage2.other.service.IFormSellingContractService;
 import com.wyait.manage2.other.service.ISellingContractDetailService;
+import jdk.nashorn.internal.runtime.NumberToString;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,8 +25,11 @@ import org.springframework.web.bind.annotation.*;
 
 import org.springframework.web.servlet.ModelAndView;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -69,7 +75,7 @@ public class FormBuyingContractController {
      * @return
      */
     @RequestMapping(value = "/genlist", method = RequestMethod.POST)
-    public List<BuyingContractDetail> genlist(String sellingContractId,String id) {
+    public DataGridVO<BuyingContractDetail> genlist(String sellingContractId, String id) {
         //ModelAndView mv = new ModelAndView("form/buyingContract/save");
         QueryWrapper<SellingContractDetail> wrapper = new QueryWrapper<>();
         wrapper.eq("selling_contract_id",sellingContractId);
@@ -81,6 +87,7 @@ public class FormBuyingContractController {
                 for (SellingContractDetail e : sellingContractDetails) {
                     BuyingContractDetail b = new BuyingContractDetail();
                     b.setGoodsName(e.getGoodsName());
+                    b.setGoodsUnit(e.getGoodsUnit());
                     b.setQuantity(e.getQuantity());
                     buyingContractDetails.add(b);
                 }
@@ -91,7 +98,39 @@ public class FormBuyingContractController {
             buyingContractDetails = buyingContractDetailService.list(wrapper2);
         }
 
-        return buyingContractDetails;
+
+        //计算总额
+
+        BigDecimal totalPrice = new BigDecimal(0);
+        if (buyingContractDetails != null) {
+            for (BuyingContractDetail e : buyingContractDetails) {
+                totalPrice = totalPrice.add(e.getTotalPrice() == null?
+                        BigDecimal.ZERO:e.getTotalPrice());
+
+            }
+        }
+
+        DataGridVO<BuyingContractDetail>  detailDataGridVO = new DataGridVO<>();
+        detailDataGridVO.setRows(buyingContractDetails);
+
+
+
+
+        List<Map<String,String>> footerSection = new ArrayList<>();
+
+        Map<String,String> footer1 = new HashMap<>();
+        footer1.put("price","人民币");
+        footer1.put("totalPrice",totalPrice.toString());
+        Map<String,String> footer2 = new HashMap<>();
+        footer2.put("price","价税合计:人民币(大写)");
+        footer2.put("totalPrice",NumberUtils.digitUppercase(Double.parseDouble(totalPrice.toString()) ));
+
+        footerSection.add(footer1);
+        footerSection.add(footer2);
+
+        detailDataGridVO.setFooter(footerSection);
+
+        return detailDataGridVO;
     }
 
     /**
