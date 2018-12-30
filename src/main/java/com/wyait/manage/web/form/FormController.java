@@ -44,8 +44,15 @@ public class FormController {
 
 
     @RequestMapping("/buyContractList")
-    public String buyContractList() {
+    public String buyContractList()
+    {
         return "form/buyingcontract/list";
+    }
+
+    @RequestMapping("/exportGoodsList")
+    public String exportGoodsList()
+    {
+        return "form/exportgoodslist/list";
     }
         /**
          * 分页查询用户列表

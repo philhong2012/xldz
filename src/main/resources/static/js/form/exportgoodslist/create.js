@@ -18,8 +18,8 @@ $(function () {
         var layer=layui.layer;
 
         //监听提交
-        form.on('submit(saveBuyingContract)', function(data){
-            var formElements = $('#buyingContractForm input:not(".textbox-text,.textbox-value")');
+        form.on('submit(saveExportGoodsList)', function(data){
+            var formElements = $('#exportGoodsListForm input:not(".textbox-text,.textbox-value")');
             var formData = {contract:{},details:[]};
             formElements.each(function (i,ele) {
                 if(ele.type === 'text') {
@@ -38,7 +38,7 @@ $(function () {
             });
             formData.details = getChanges();
             $.ajax({
-                "url": "/buyingcontract/save",
+                "url": "/exportgoodslist/save",
                 "type": "post",
                 "data": JSON.stringify(formData),
                 "contentType": "application/json",

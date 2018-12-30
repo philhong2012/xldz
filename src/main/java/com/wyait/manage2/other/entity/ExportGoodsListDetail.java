@@ -1,8 +1,13 @@
 package com.wyait.manage2.other.entity;
 
+import java.beans.Transient;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.io.Serializable;
+
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -22,6 +27,7 @@ public class ExportGoodsListDetail implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @TableId(type = IdType.ID_WORKER_STR)
     private String id;
 
     /**
@@ -33,6 +39,11 @@ public class ExportGoodsListDetail implements Serializable {
      * 售货合同id
      */
     private String exportGoodsListId;
+    /**
+     * 货源
+     */
+    @TableField(exist = false)
+    private String producer;
 
     /**
      * 货物名称

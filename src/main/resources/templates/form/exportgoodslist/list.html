@@ -50,21 +50,13 @@
             </div>
         </script>-->
 
-        <button class="layui-btn layui-btn-normal" onclick="window.location.href='/sellingcontract/create';">增加合同</button>
+        <!--<button class="layui-btn layui-btn-normal" onclick="window.location.href='/sellingcontract/create';">增加合同</button>
         <button class="layui-btn layui-btn-normal" onclick="alert('功能开发中。。。')">另存合同</button>
-        <button class="layui-btn layui-btn-normal" onclick="genBuyingContractForm();">生成采购合同</button>
+        <button class="layui-btn layui-btn-normal" onclick="genBuyingContractForm();">生成采购合同</button-->>
         <!--<button class="layui-btn layui-btn-normal" onclick="nolockUser()">解锁</button>-->
 
         <table id="saleContractList" lay-filter="saleContractList"></table>
-        <div style="display:none;" id="currentUser"><shiro:principal property="id"></shiro:principal></div>
 
-        <script type="text/html" id="jobTpl">
-            {{#  if(!d.job){ }}
-            <input type="checkbox" name="{{d.username}}_{{d.version}}" value="{{d.id}}" lay-skin="switch" lay-text="在职|离职" lay-filter="isJobTpl" checked="checked" />
-            {{#  } else { }}
-            <input type="checkbox" name="{{d.username}}_{{d.version}}" value="{{d.id}}" lay-skin="switch" lay-text="在职|离职" lay-filter="isJobTpl"/>
-            {{#  } }}
-        </script>
 
         <script type="text/html" id="optBar">
             <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
