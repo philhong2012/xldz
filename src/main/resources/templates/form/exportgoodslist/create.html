@@ -24,6 +24,9 @@
         </fieldset>
         <form class="layui-form" id="exportGoodsListForm">
             <input type="hidden" name="id" id="id" th:value="${model}?${model.id}:_" />
+            <input type="hidden" name="buyer" id="buyer" th:value="${model}?${model.buyer}:_" />
+            <input type="hidden" name="seller" id="seller" th:value="${model}?${model.seller}:_" />
+
             <div class="layui-form-item">
                 <label class="layui-form-label">出口合同编号</label>
                 <div class="layui-input-block">
@@ -32,9 +35,9 @@
             </div>
 
             <div class="layui-form-item">
-                <label class="layui-form-label">收购合同编号</label>
+                <label class="layui-form-label">采购合同号</label>
                 <div class="layui-input-block">
-                    <input type="text" name="buyingContractNo" lay-verify="title" th:value="${model}?${model.buyingContractNo}:_" autocomplete="off" placeholder="请输入地址" class="layui-input">
+                    <input type="text" name="buyingContractNo" lay-verify="title" th:value="${model}?${model.buyingContractNo}:_" autocomplete="off" placeholder="请输入编号" class="layui-input">
                 </div>
             </div>
 

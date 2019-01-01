@@ -25,11 +25,11 @@ $(function() {
             ,cols: [[
                 {type:'checkbox'}
                 ,{field:'id', title:'ID', width:80, unresize: true, sort: true}
-                ,{field:'code', title:'合同编号'}
+                ,{field:'sellingContractNo', title:'合同编号'}
 
                 ,{field:'seller', title: '买方',}
                 ,{field:'buyer', title: '卖方', }
-                ,{field:'signTime', title: '签订日期',align:'center'}
+                ,{field:'createTime', title: '创建日期',align:'center'}
                 /*,{field:'isJob', title:'是否在职',width:95,align:'center',templet:'#jobTpl'}*/
                 ,{fixed:'right', title:'操作', width:140,align:'center', toolbar:'#optBar'}
             ]]
@@ -49,9 +49,10 @@ $(function() {
         table.on('tool(exportGoodsList)', function(obj){
             var data = obj.data;
             if(obj.event === 'del'){
+                deleteData(data,data.id);
             } else if(obj.event === 'edit'){
                 //编辑
-                editSellingContract(data,data.id);
+                edit(data,data.id);
             } else if(obj.event === 'recover'){
                 //恢复
             }
@@ -93,8 +94,26 @@ $(function() {
 });
 
 
-function editSellingContract(obj,id) {
+function edit(obj, id) {
     window.location.href = '/exportgoodslist/edit?id='+id;
+}
+
+function deleteData(obj,id) {
+    $.ajax({
+        "url": "/exportgoodslist/delete?id="+id,
+        "type": "post",
+        "data": null,
+        "contentType": "application/json",
+        "success": function (data) {
+            if(data == "ok") {
+                layer.alert("操作成功", function () {
+                    layer.closeAll();
+                    tableIns.reload();
+                });
+            }
+        }
+    });
+
 }
 
 

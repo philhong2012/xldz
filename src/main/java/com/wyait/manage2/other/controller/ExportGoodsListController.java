@@ -73,46 +73,12 @@ public class ExportGoodsListController {
         if(formSellingContract != null) {
             exportGoodsList.setSellingContractId(formSellingContract.getId());
             exportGoodsList.setSellingContractNo(formSellingContract.getContractNo());
-
-
-            Map<String,Object> queryCriteria = new HashMap<>();
-            queryCriteria.put("selling_contract_id",sellingContractId);
-            Collection<SellingContractDetail> sellingContractDetails = sellingContractDetailService.listByMap(queryCriteria);
-
-
-
-            /*QueryWrapper<FormBuyingContract> queryWrapper = new QueryWrapper<>();
-            queryWrapper.eq("sell_contract_id",sellingContractId);
-
-            List<FormBuyingContract> buyingContracts = formBuyingContractService.list(queryWrapper);
-            if(buyingContracts != null) {
-                FormBuyingContract buyingContract = buyingContracts.get(0);
-                exportGoodsList.setBuyingContractId(buyingContract.getId());
-                exportGoodsList.setBuyingContractNo(buyingContract.getContractNo());
-
-                QueryWrapper<BuyingContractDetail> buyingContractDetailQueryWrapper = new QueryWrapper<>();
-                buyingContractDetailQueryWrapper.eq("buying_contract_id",buyingContract.getId());
-
-                List<BuyingContractDetail> buyingContractDetails = buyingContractDetailService.list(buyingContractDetailQueryWrapper);
-
-                if(buyingContractDetails != null) {
-                    *//*for(SellingContractDetail e : sellingContractDetails) {
-                        ExportGoodsListDetail egDetail = new ExportGoodsListDetail();
-                        egDetail.setGoodsName(e.getGoodsName());
-                        egDetail.setGoodsUnit(e.getGoodsName());
-                        egDetail.setQuantity(e.getQuantity());
-                        egDetail.setSellingPrice(e.getPrice());
-                        egDetail.setSubtotalSellingPrice(e.getTotalPrice());
-                        egDetails.add(egDetail);
-                    } *//*
-                }
-
-
-            }*/
+            exportGoodsList.setPackingKouAn(formSellingContract.getPackingMaiTou());
+            exportGoodsList.setSendingKouAn(formSellingContract.getSendingKouAn());
+            exportGoodsList.setBuyer(formSellingContract.getBuyer());
+            exportGoodsList.setSeller(formSellingContract.getSeller());
 
         }
-
-
 
         mv.addObject("model",exportGoodsList);
         return mv;
@@ -315,5 +281,18 @@ public class ExportGoodsListController {
         return "ok";
     }
 
+
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    public String save(String id) {
+        QueryWrapper<ExportGoodsListDetail> exportGoodsListDetailQueryWrapper = new QueryWrapper<>();
+        exportGoodsListDetailQueryWrapper.eq("export_goods_list_id",id);
+
+        exportGoodsListDetailService.remove(exportGoodsListDetailQueryWrapper);
+
+        exportGoodsListService.removeById(id);
+
+
+        return "ok";
+    }
 
 }

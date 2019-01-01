@@ -4,6 +4,9 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.io.Serializable;
+
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -26,7 +29,13 @@ public class PackingList implements Serializable {
     /**
      * 主键
      */
+    @TableId(type = IdType.ID_WORKER_STR)
     private String id;
+
+    //@TableField(exist = false)
+    private String buyer;
+    //@TableField(exist = false)
+    private String seller;
 
     /**
      * 编码

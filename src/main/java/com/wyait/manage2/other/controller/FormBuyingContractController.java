@@ -68,6 +68,7 @@ public class FormBuyingContractController {
         if(formSellingContract != null) {
             formBuyingContract.setBuyer(formSellingContract.getSeller());
             formBuyingContract.setContractNo(formSellingContract.getContractNo());
+            formBuyingContract.setCode(formSellingContract.getContractNo());
         }
 
         mv.addObject("model",formBuyingContract);
@@ -257,4 +258,5 @@ public class FormBuyingContractController {
         }
         return "ok";
     }
+
 }

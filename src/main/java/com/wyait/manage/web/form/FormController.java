@@ -60,6 +60,12 @@ public class FormController {
     {
         return "form/invoice/list";
     }
+
+    @RequestMapping("/packingList")
+    public String packingList()
+    {
+        return "form/packinglist/list";
+    }
         /**
          * 分页查询用户列表
          * @return ok/fail

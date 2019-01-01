@@ -27,7 +27,8 @@ public class ExportGoodsList implements Serializable {
 
     @TableId(type = IdType.ID_WORKER_STR)
     private String id;
-
+    private String buyer;
+    private String seller;
     /**
      * 收购合同id
      */
