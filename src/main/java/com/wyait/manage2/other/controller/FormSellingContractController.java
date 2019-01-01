@@ -13,6 +13,7 @@ import com.wyait.manage.pojo.Role;
 import com.wyait.manage.pojo.User;
 import com.wyait.manage.utils.PageDataResult;
 import com.wyait.manage2.other.entity.FormSellingContract;
+import com.wyait.manage2.other.entity.PackingListDetail;
 import com.wyait.manage2.other.entity.SellingContractDetail;
 import com.wyait.manage2.other.service.IFormSellingContractService;
 import com.wyait.manage2.other.service.ISellingContractDetailService;
@@ -189,4 +190,18 @@ public class FormSellingContractController {
         return sellingContractDetails;
     }
 
+
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    public String save(String id) {
+        //formInvoiceService.remove();
+        QueryWrapper<SellingContractDetail> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("selling_contract_id",id);
+
+        sellingContractDetailService.remove(queryWrapper);
+
+        formSellingContractService.removeById(id);
+
+
+        return "ok";
+    }
 }

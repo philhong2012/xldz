@@ -237,5 +237,15 @@ public class FormInvoiceController {
         return "ok";
     }
 
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    public String save(String id) {
+        //formInvoiceService.remove();
+
+        formInvoiceService.removeById(id);
+
+
+        return "ok";
+    }
+
 
 }

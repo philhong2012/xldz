@@ -49,6 +49,7 @@ $(function() {
         table.on('tool(buyingContractList)', function(obj){
             var data = obj.data;
             if(obj.event === 'del'){
+                deleteData(data,data.id);
             } else if(obj.event === 'edit'){
                 //编辑
                 editSellingContract(data,data.id);
@@ -97,6 +98,24 @@ function editSellingContract(obj,id) {
     window.location.href = '/buyingcontract/edit?id='+id;
 }
 
+
+function deleteData(obj,id) {
+    $.ajax({
+        "url": "/sellingcontract/delete?id="+id,
+        "type": "post",
+        "data": null,
+        "contentType": "application/json",
+        "success": function (data) {
+            if(data == "ok") {
+                layer.alert("操作成功", function () {
+                    layer.closeAll();
+                    tableIns.reload();
+                });
+            }
+        }
+    });
+
+}
 
 function load(obj){
     //重新加载table

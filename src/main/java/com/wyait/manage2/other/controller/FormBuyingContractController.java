@@ -10,10 +10,7 @@ import com.wyait.manage.entity.DataGridVO;
 import com.wyait.manage.entity.SearchEntityVO;
 import com.wyait.manage.pojo.User;
 import com.wyait.manage.utils.PageDataResult;
-import com.wyait.manage2.other.entity.BuyingContractDetail;
-import com.wyait.manage2.other.entity.FormBuyingContract;
-import com.wyait.manage2.other.entity.FormSellingContract;
-import com.wyait.manage2.other.entity.SellingContractDetail;
+import com.wyait.manage2.other.entity.*;
 import com.wyait.manage2.other.service.IBuyingContractDetailService;
 import com.wyait.manage2.other.service.IFormBuyingContractService;
 import com.wyait.manage2.other.service.IFormSellingContractService;
@@ -256,6 +253,19 @@ public class FormBuyingContractController {
             }
             buyingContractDetailService.saveOrUpdateBatch(buyingContractVO.getDetails());
         }
+        return "ok";
+    }
+
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    public String save(String id) {
+        QueryWrapper<FormBuyingContract> formBuyingContractQueryWrapper = new QueryWrapper<>();
+        formBuyingContractQueryWrapper.eq("buying_contract_id",id);
+
+        formBuyingContractService.remove(formBuyingContractQueryWrapper);
+
+        buyingContractDetailService.removeById(id);
+
+
         return "ok";
     }
 

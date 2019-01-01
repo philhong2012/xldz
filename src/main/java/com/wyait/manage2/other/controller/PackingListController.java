@@ -250,4 +250,18 @@ public class PackingListController {
         return "ok";
     }
 
+
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    public String save(String id) {
+        //formInvoiceService.remove();
+        QueryWrapper<PackingListDetail> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("packing_list_id",id);
+
+        packingListDetailService.remove(queryWrapper);
+
+        packingListService.removeById(id);
+
+
+        return "ok";
+    }
 }

@@ -68,7 +68,7 @@ $(function() {
         table.on('tool(saleContractList)', function(obj){
             var data = obj.data;
             if(obj.event === 'del'){
-                delUser(data,data.id,data.username);
+                deleteData(data,data.id);
             } else if(obj.event === 'edit'){
                 //编辑
                 editSellingContract(data,data.id);
@@ -146,257 +146,27 @@ function gen(type) {
 
 
 
-function getCheckData() {
-    var checkStatus = table.checkStatus('saleContractList');
-    if(checkStatus != null) {
 
-    } else {
-        layer.alert("请选择销售合同！");
-        //return false;
-    }
-
-
-}
-
-//设置用户是否离职
-function setJobUser(obj,id,nameVersion,checked){
-//	var version = obj.data.version;
-    var name=nameVersion.substring(0,nameVersion.indexOf("_"));
-    var version=nameVersion.substring(nameVersion.indexOf("_")+1);
-    //console.log("name:"+name);
-    //console.log("version:"+version);
-    var isJob=checked ? 0 : 1;
-    var userIsJob=checked ? "在职":"离职";
-    //是否离职
-    layer.confirm('您确定要把用户：'+name+'设置为'+userIsJob+'状态吗？', {
-        btn: ['确认','返回'] //按钮
-    }, function(){
-        $.post("/user/setJobUser",{"id":id,"job":isJob,"version":version},function(data){
-            if(isLogin(data)){
-                if(data=="ok"){
-                    //回调弹框
-                    layer.alert("操作成功！",function(){
-                        layer.closeAll();
-                        //加载load方法
-                        load(obj);
-                    });
-                }else{
-                    layer.alert(data,function(){
-                        layer.closeAll();
-                        //加载load方法
-                        load(obj);//自定义
-                    });
-                }
-            }
-        });
-    }, function(){
-        layer.closeAll();
-        //加载load方法
-        load(obj);
-    });
-}
-//提交表单
-function formSubmit(obj){
-    var currentUser=$("#currentUser").html();
-    if(checkRole()){
-        if($("#id").val()==currentUser){
-            layer.confirm('更新自己的信息后，需要您重新登录才能生效；您确定要更新么？', {
-                btn: ['返回','确认'] //按钮
-            },function(){
-                layer.closeAll();
-            },function() {
-                layer.closeAll();//关闭所有弹框
-                submitAjax(obj,currentUser);
-            });
-        }else{
-            submitAjax(obj,currentUser);
-        }
-    }
-}
-function submitAjax(obj,currentUser){
-    $.ajax({
-        type: "POST",
-        data: $("#userForm").serialize(),
-        url: "/user/setUser",
-        success: function (data) {
-            if(isLogin(data)){
-                if (data == "ok") {
-                    layer.alert("操作成功",function(){
-                        if($("#id").val()==currentUser){
-                            //如果是自己，直接重新登录
-                            parent.location.reload();
-                        }else{
-                            layer.closeAll();
-                            cleanUser();
-                            //$("#id").val("");
-                            //加载页面
-                            load(obj);
-                        }
-                    });
-                } else {
-                    layer.alert(data,function(){
-                        layer.closeAll();
-                        //加载load方法
-                        load(obj);//自定义
-                    });
-                }
-            }
-        },
-        error: function () {
-            layer.alert("操作请求错误，请您稍后再试",function(){
-                layer.closeAll();
-                //加载load方法
-                load(obj);//自定义
-            });
-        }
-    });
-}
-
-function cleanUser(){
-    $("#username").val("");
-    $("#mobile").val("");
-    $("#email").val("");
-    $("#password").val("");
-}
-function checkRole(){
-    //选中的角色
-    var array = new Array();
-    var roleCheckd=$(".layui-form-checked");
-    //获取选中的权限id
-    for(var i=0;i<roleCheckd.length;i++){
-        array.push($(roleCheckd.get(i)).prev().val());
-    }
-    //校验是否授权
-    var roleIds = array.join(",");
-    if(roleIds==null || roleIds==''){
-        layer.alert("请您给该用户添加对应的角色！")
-        return false;
-    }
-    $("#roleIds").val(roleIds);
-    return true;
-}
-//开通用户
-function addUser(){
-    $.get("/auth/getRoles",function(data){
-        if(data!=null){
-            //显示角色数据
-            $("#roleDiv").empty();
-            $.each(data, function (index, item) {
-                // <input type="checkbox" name="roleId" title="发呆" lay-skin="primary"/>
-                var roleInput=$("<input type='checkbox' name='roleId' value="+item.id+" title="+item.roleName+" lay-skin='primary'/>");
-                //未选中
-                /*<div class="layui-unselect layui-form-checkbox" lay-skin="primary">
-                    <span>发呆</span><i class="layui-icon">&#xe626;</i>
-                    </div>*/
-                //选中
-                // <div class="layui-unselect layui-form-checkbox layui-form-checked" lay-skin="primary">
-                // <span>写作</span><i class="layui-icon">&#xe627;</i></div>
-                var div=$("<div class='layui-unselect layui-form-checkbox' lay-skin='primary'>" +
-                    "<span>"+item.roleName+"</span><i class='layui-icon'>&#xe626;</i>" +
-                    "</div>");
-                $("#roleDiv").append(roleInput).append(div);
-            })
-            openUser(null,"开通用户");
-            //重新渲染下form表单 否则复选框无效
-            layui.form.render('checkbox');
-        }else{
-            //弹出错误提示
-            layer.alert("获取角色数据有误，请您稍后再试",function () {
-                layer.closeAll();
-            });
-        }
-    });
-}
-function genBuyingContractForm(id,title){
-    if(id==null || id==""){
-        $("#id").val("");
-    }
-    layer.open({
-        type:1,
-        title: title,
-        fixed:false,
-        resize :false,
-        shadeClose: true,
-        area: ['550px'],
-        content:$('#buyingContract'),
-        end:function(){
-            //cleanUser();
-        }
-    });
-}
 function editSellingContract(obj,id) {
     window.location.href = '/sellingcontract/edit?id='+id;
 }
-function delUser(obj,id,name) {
-    var currentUser=$("#currentUser").html();
-    var version=obj.version;
-    //console.log("delUser版本:"+version);
-    if(null!=id){
-        if(currentUser==id){
-            layer.alert("对不起，您不能执行删除自己的操作！");
-        }else{
-            layer.confirm('您确定要删除'+name+'用户吗？', {
-                btn: ['确认','返回'] //按钮
-            }, function(){
-                $.post("/user/delUser",{"id":id,"version":version},function(data){
-                    if(isLogin(data)){
-                        if(data=="ok"){
-                            //回调弹框
-                            layer.alert("删除成功！",function(){
-                                layer.closeAll();
-                                //加载load方法
-                                load(obj);//自定义
-                            });
-                        }else{
-                            layer.alert(data,function(){
-                                layer.closeAll();
-                                //加载load方法
-                                load(obj);//自定义
-                            });
-                        }
-                    }
+
+function deleteData(obj,id) {
+    $.ajax({
+        "url": "/sellingcontract/delete?id="+id,
+        "type": "post",
+        "data": null,
+        "contentType": "application/json",
+        "success": function (data) {
+            if(data == "ok") {
+                layer.alert("操作成功", function () {
+                    layer.closeAll();
+                    tableIns.reload();
                 });
-            }, function(){
-                layer.closeAll();
-            });
+            }
         }
-    }
-}
-function recoverUser(obj,id) {
-    //console.log("需要恢复的用户id="+id);
-    var version=obj.version;
-    //console.log("delUser版本:"+version);
-    if(null!=id){
-        layer.confirm('您确定要恢复'+name+'用户吗？', {
-            btn: ['确认','返回'] //按钮
-        }, function(){
-            $.post("/user/recoverUser",{"id":id,"version":version},function(data){
-                if(isLogin(data)){
-                    if(data=="ok"){
-                        //回调弹框
-                        layer.alert("恢复成功！",function(){
-                            layer.closeAll();
-                            //加载load方法
-                            load(obj);//自定义
-                        });
-                    }else{
-                        layer.alert(data,function(){
-                            layer.closeAll();
-                            //加载load方法
-                            load(obj);//自定义
-                        });
-                    }
-                }
-            });
-        }, function(){
-            layer.closeAll();
-        });
-    }
-}
-//解锁用户
-function nolockUser(){
-    //TODO 给个输入框，让用户管理员输入需要解锁的用户手机号，进行解锁操作即可
-    layer.alert("TODO");
+    });
+
 }
 
 function load(obj){

@@ -48,6 +48,7 @@ $(function() {
         table.on('tool(invoiceList)', function(obj){
             var data = obj.data;
             if(obj.event === 'del'){
+                deleteData(data,data.id);
             } else if(obj.event === 'edit'){
                 //编辑
                 edit(data,data.id);
@@ -80,6 +81,24 @@ $(function() {
 
 function edit(obj,id) {
     window.location.href = '/invoice/edit?id='+id;
+}
+
+function deleteData(obj,id) {
+    $.ajax({
+        "url": "/invoice/delete?id="+id,
+        "type": "post",
+        "data": null,
+        "contentType": "application/json",
+        "success": function (data) {
+            if(data == "ok") {
+                layer.alert("操作成功", function () {
+                    layer.closeAll();
+                    tableIns.reload();
+                });
+            }
+        }
+    });
+
 }
 
 function load(obj){
