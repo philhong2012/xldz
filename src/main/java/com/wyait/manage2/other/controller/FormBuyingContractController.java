@@ -257,7 +257,8 @@ public class FormBuyingContractController {
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
-    public String save(String id) {
+    @ResponseBody
+    public String delete(String id) {
         QueryWrapper<FormBuyingContract> formBuyingContractQueryWrapper = new QueryWrapper<>();
         formBuyingContractQueryWrapper.eq("buying_contract_id",id);
 

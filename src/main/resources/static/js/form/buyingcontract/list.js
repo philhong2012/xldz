@@ -101,7 +101,7 @@ function editSellingContract(obj,id) {
 
 function deleteData(obj,id) {
     $.ajax({
-        "url": "/sellingcontract/delete?id="+id,
+        "url": "/buyingcontract/delete?id="+id,
         "type": "post",
         "data": null,
         "contentType": "application/json",

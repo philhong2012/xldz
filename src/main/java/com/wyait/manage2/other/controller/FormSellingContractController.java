@@ -81,7 +81,7 @@ public class FormSellingContractController {
             formSellingContractService.saveOrUpdate(sellingContractVO.getContract());
         }
 
-        if(sellingContractVO.getDetails() != null) {
+        if(sellingContractVO.getDetails() != null && sellingContractVO.getDetails().size() > 0) {
             for(SellingContractDetail detail : sellingContractVO.getDetails()) {
                 detail.setSellingContractId(sellingContractVO.getContract().getId());
             }
@@ -192,7 +192,8 @@ public class FormSellingContractController {
 
 
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
-    public String save(String id) {
+    @ResponseBody
+    public String delete(String id) {
         //formInvoiceService.remove();
         QueryWrapper<SellingContractDetail> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("selling_contract_id",id);

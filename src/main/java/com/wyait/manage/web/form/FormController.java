@@ -36,7 +36,7 @@ public class FormController {
             .getLogger(UserController.class);
     @RequestMapping("/saleContractList")
     public String saleContractList() {
-        return "form/saleContractList";
+        return "form/sellingcontract/list";
     }
 
 

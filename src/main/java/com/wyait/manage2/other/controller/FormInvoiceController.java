@@ -238,7 +238,8 @@ public class FormInvoiceController {
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
-    public String save(String id) {
+    @ResponseBody
+    public String delete(String id) {
         //formInvoiceService.remove();
 
         formInvoiceService.removeById(id);

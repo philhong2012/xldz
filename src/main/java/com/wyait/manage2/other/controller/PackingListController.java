@@ -252,6 +252,7 @@ public class PackingListController {
 
 
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    @ResponseBody
     public String save(String id) {
         //formInvoiceService.remove();
         QueryWrapper<PackingListDetail> queryWrapper = new QueryWrapper<>();

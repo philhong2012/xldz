@@ -283,6 +283,7 @@ public class ExportGoodsListController {
 
 
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    @ResponseBody
     public String save(String id) {
         QueryWrapper<ExportGoodsListDetail> exportGoodsListDetailQueryWrapper = new QueryWrapper<>();
         exportGoodsListDetailQueryWrapper.eq("export_goods_list_id",id);
