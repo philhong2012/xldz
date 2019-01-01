@@ -24,6 +24,7 @@
         </fieldset>
         <form class="layui-form" id="buyingContractForm">
             <input type="hidden" name="id" id="id" th:value="${model}?${model.id}:_" />
+            <input type="hidden" name="code" id="code" th:value="${model}?${model.code}:_" />
             <div class="layui-form-item">
                 <label class="layui-form-label">卖方</label>
                 <div class="layui-input-block">
@@ -88,7 +89,7 @@
                             <th data-options="field:'goodsName',width:100,editor:'textbox'">货品规格，名称</th>
                             <th data-options="field:'quantity',width:50,editor:{type:'numberbox'}">数量</th>
                             <th data-options="field:'goodsUnit',width:50,editor:'textbox'">单位</th>
-                            <th data-options="field:'price',width:100,editor:{type:'numberbox',options:{precision:2}}">价格</th>
+                            <th data-options="field:'price',width:100,editor:{type:'numberbox',options:{precision:7}}">价格</th>
                             <th data-options="field:'totalPrice',width:300,editor:{type:'numberbox',options:{precision:2}}">总价</th>
                         </tr>
                         </thead>
@@ -119,8 +120,8 @@
                 quantity = quantity == '' ? 0: quantity;
                 var price = $(this).closest("tr.datagrid-row").find(".datagrid-cell-c1-price .textbox-text").val();
                 price = price == '' ? 0: price;
-                $(this).closest("tr.datagrid-row").find(".datagrid-cell-c1-totalPrice .textbox-text").val(price * quantity);
-                $(this).closest("tr.datagrid-row").find(".datagrid-cell-c1-totalPrice .textbox-value").val(price * quantity);
+                $(this).closest("tr.datagrid-row").find(".datagrid-cell-c1-totalPrice .textbox-text").val(toFixed(floatObj.multiply(price,quantity),2));
+                $(this).closest("tr.datagrid-row").find(".datagrid-cell-c1-totalPrice .textbox-value").val(toFixed(floatObj.multiply(price,quantity),2));
                 //当行金额汇总变化时时间处理
                 onSubTotalChanged();
             });
@@ -142,13 +143,15 @@
                $("div.datagrid-body div.datagrid-cell-c1-totalPrice").each(function (index,ele) {
 
                    if($(this).hasClass("datagrid-editable")) {
-                      total += parseFloat($(this).find(".textbox-value").val());
+                      //total += parseFloat($(this).find(".textbox-value").val());
+                       total = floatObj.add(total,parseFloat($(this).find(".textbox-value").val()));
                    } else {
-                       total += parseFloat($(this).html());
+                       //total += parseFloat($(this).html());
+                       total = floatObj.add(total,parseFloat($(this).html()));
                    }
                });
 
-               return total;
+               return toFixed(total,2);
            }
 
 
@@ -158,8 +161,8 @@
                 price = price == '' ? 0: price;
                 var quantity = $(this).closest("tr.datagrid-row").find(".datagrid-cell-c1-quantity .textbox-text").val();
                 quantity = quantity == '' ? 0: quantity;
-                $(this).closest("tr.datagrid-row").find(".datagrid-cell-c1-totalPrice .textbox-text").val(price * quantity);
-                $(this).closest("tr.datagrid-row").find(".datagrid-cell-c1-totalPrice .textbox-value").val(price * quantity);
+                $(this).closest("tr.datagrid-row").find(".datagrid-cell-c1-totalPrice .textbox-text").val(toFixed(floatObj.multiply(price,quantity),2));
+                $(this).closest("tr.datagrid-row").find(".datagrid-cell-c1-totalPrice .textbox-value").val(toFixed(floatObj.multiply(price,quantity),2));
 
                 onSubTotalChanged();
 

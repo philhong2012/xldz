@@ -10,12 +10,14 @@ import com.wyait.manage.entity.SaleContractDTO;
 import com.wyait.manage.entity.SearchEntityVO;
 import com.wyait.manage.entity.SellingContractVO;
 import com.wyait.manage.pojo.Role;
+import com.wyait.manage.pojo.User;
 import com.wyait.manage.utils.PageDataResult;
 import com.wyait.manage2.other.entity.FormSellingContract;
 import com.wyait.manage2.other.entity.SellingContractDetail;
 import com.wyait.manage2.other.service.IFormSellingContractService;
 import com.wyait.manage2.other.service.ISellingContractDetailService;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -60,7 +63,20 @@ public class FormSellingContractController {
     @ResponseBody
     public String save(@RequestBody SellingContractVO sellingContractVO) {
         //logger.debug("",formSellingContract);
-        if(sellingContractVO.getContract() != null) {
+        FormSellingContract formSellingContract = sellingContractVO.getContract();
+
+        User u = (User) SecurityUtils.getSubject().getPrincipal();
+
+
+        if(formSellingContract != null) {
+
+            if(StringUtils.isNotEmpty(formSellingContract.getId())) {
+                formSellingContract.setUpdateUserId(u.getId().toString());
+                formSellingContract.setUpdateTime(LocalDateTime.now());
+            } else {
+                formSellingContract.setCreateUserId(u.getId().toString());
+                formSellingContract.setCreateTime(LocalDateTime.now());
+            }
             formSellingContractService.saveOrUpdate(sellingContractVO.getContract());
         }
 

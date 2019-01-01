@@ -29,7 +29,7 @@ $(function() {
 
                 ,{field:'seller', title: '买方',}
                 ,{field:'buyer', title: '卖方', }
-                ,{field:'signTime', title: '签订日期',align:'center'}
+                ,{field:'signDate', title: '签订日期',align:'center'}
                 /*,{field:'isJob', title:'是否在职',width:95,align:'center',templet:'#jobTpl'}*/
                 ,{fixed:'right', title:'操作', width:140,align:'center', toolbar:'#optBar'}
             ]]

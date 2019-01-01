@@ -57,7 +57,6 @@ $(function () {
                 "type": "post",
                 "data": JSON.stringify(formData),
                 "contentType": "application/json",
-                "dataType": "json",
                 "success": function (data) {
                     if(data == "ok") {
                         layer.alert("操作成功", function () {

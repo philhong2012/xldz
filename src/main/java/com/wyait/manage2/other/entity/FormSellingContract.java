@@ -145,5 +145,17 @@ public class FormSellingContract implements Serializable {
      */
     private String createUserId;
 
+    /**
+     *
+     */
+    private String updateUserId;
+
+    private String updateUserName;
+
+
+    private LocalDateTime updateTime;
+
+    private String deptName;
+
 
 }
