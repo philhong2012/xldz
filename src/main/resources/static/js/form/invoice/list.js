@@ -91,10 +91,11 @@ function deleteData(obj,id) {
         "contentType": "application/json",
         "success": function (data) {
             if(data == "ok") {
-                layer.alert("操作成功", function () {
-                    layer.closeAll();
-                    tableIns.reload();
+                layer.alert("操作成功",  {time: 1000 },function () {
+                    //layer.closeAll();
                 });
+                tableIns.reload();
+
             }
         }
     });

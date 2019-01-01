@@ -44,9 +44,9 @@ $(function () {
                /* "dataType": "json",*/
                 "success": function (data) {
                     if(data == "ok") {
-                        layer.alert("操作成功", function () {
-                            layer.closeAll();
-                            load();
+                        layer.alert("操作成功",{time: 1000 }, function () {
+                            //layer.closeAll();
+                            //load();
                         });
                     }
                 }
