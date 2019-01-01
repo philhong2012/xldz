@@ -150,14 +150,14 @@ public class ExportGoodsListController {
                     egDetail.setSubtotalSellingPrice(e.getTotalPrice());
 
                     if(buyingContract != null) {
-                        egDetail.setProducer(buyingContract.getSeller());
+                        egDetail.setGoodsProducer(buyingContract.getSeller());
                     }
                     exportGoodsListDetails.add(egDetail);
                 }
             }
         } else {
             QueryWrapper<ExportGoodsListDetail> wrapper2 = new QueryWrapper<>();
-            wrapper2.eq("buying_contract_id", id);
+            wrapper2.eq("export_goods_list_id", id);
             exportGoodsListDetails = exportGoodsListDetailService.list(wrapper2);
         }
 

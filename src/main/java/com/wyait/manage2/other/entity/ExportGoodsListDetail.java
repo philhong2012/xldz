@@ -42,8 +42,8 @@ public class ExportGoodsListDetail implements Serializable {
     /**
      * 货源
      */
-    @TableField(exist = false)
-    private String producer;
+    //@TableField(exist = false)
+    private String goodsProducer;
 
     /**
      * 货物名称

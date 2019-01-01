@@ -22,8 +22,11 @@
         <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
             <legend>COMMERCIAL INVOICE</legend>
         </fieldset>
-        <form class="layui-form" id="buyingContractForm">
-            <input type="hidden" name="id"th:value="${model}?${model.id}:_" />
+        <form class="layui-form" id="invoiceForm">
+            <input type="hidden" name="id" id="id" th:value="${model}?${model.id}:_" />
+            <input type="hidden" name="sellingContractId" id="sellingContractId" th:value="${model}?${model.sellingContractId}:_" />
+            <input type="hidden" name="code" id="code" th:value="${model}?${model.code}:_" />
+
             <div class="layui-form-item">
                 <label class="layui-form-label">卖方</label>
                 <div class="layui-input-block">
@@ -40,7 +43,14 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">合同编号</label>
                 <div class="layui-input-block">
-                    <input type="text" name="contractNo" lay-verify="title" th:value="${model}?${model.contractNo}:_" autocomplete="off" placeholder="请输入编号" class="layui-input">
+                    <input type="text" name="code" lay-verify="title" th:value="${model}?${model.code}:_" autocomplete="off" placeholder="请输入编号" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">发票日期</label>
+                <div class="layui-input-block">
+                    <input type="text" name="invoiceDate" id="invoiceDate" lay-verify="title" th:value="${model}?${model.invoiceDate}:_" autocomplete="off" placeholder="" class="layui-input">
                 </div>
             </div>
 
@@ -50,10 +60,9 @@
                     iconCls: 'icon-edit',
                     singleSelect: true,
                     toolbar: '#tb',
-                    url: '/sellingcontract/list2',
-                    method: 'post',
-                    onClickCell: onClickCell,
-                    onEndEdit: onEndEdit
+                    url: '/invoice/genlist',
+                    method: 'post'
+
                 ">
                         <thead>
                         <tr>
@@ -67,17 +76,17 @@
                         </thead>
                     </table>
 
-                    <div id="tb" style="height:auto">
+                  <!--  <div id="tb" style="height:auto">
                         <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="append()">增加</a>
                         <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="removeit()">删除</a>
                         <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" onclick="accept()">接受</a>
                         <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-undo',plain:true" onclick="reject()">拒绝</a>
                         <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="getChanges()">获取变更记录</a>
-                    </div>
+                    </div>-->
             </div>
             <div class="layui-form-item">
                 <div class="layui-input-block">
-                    <button class="layui-btn" lay-submit="" lay-filter="saveBuyingContract">立即提交</button>
+                    <button class="layui-btn" lay-submit="" lay-filter="saveInvoice">立即提交</button>
                 </div>
             </div>
         </form>
@@ -110,7 +119,8 @@
             });
 
             $('#dg').datagrid('load', {
-                id: '[[${param.id}]]',
+                sellingContractId: '[[${param.sellingContractId}]]',
+                id:$('#id').val()
             });
 
         });
@@ -216,7 +226,7 @@
     <!--底部-->
     <div th:replace="fragments/footer :: footer"></div>
     <script src="../js/dateUtils.js"></script>
-    <script src="../js/form/buyingcontract/create.js"></script>
+    <script src="../js/form/invoice/create.js"></script>
 
 </div>
 </body>

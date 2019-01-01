@@ -8,7 +8,7 @@ $(function () {
             elem: '#signDate'
         });
         laydate.render({
-            elem: '#deliveryDate'
+            elem: '#invoiceDate'
         })
     });
 
@@ -18,31 +18,30 @@ $(function () {
         var layer=layui.layer;
 
         //监听提交
-        form.on('submit(saveBuyingContract)', function(data){
-            var formElements = $('#buyingContractForm input:not(".textbox-text,.textbox-value")');
-            var formData = {contract:{},details:[]};
+        form.on('submit(saveInvoice)', function(data){
+            var formElements = $('#invoiceForm input:not(".textbox-text,.textbox-value")');
+            var formData = {};
             formElements.each(function (i,ele) {
                 if(ele.type === 'text') {
-                    formData.contract[ele.name] = $(ele).val();
+                    formData[ele.name] = $(ele).val();
                 } else if(ele.type === 'checkbox') {
                     if(ele.checked == true) {
-                        if(formData.contract[ele.name] == null) {
-                            formData.contract[ele.name] = ","+$(ele).val()+",";
+                        if(formData[ele.name] == null) {
+                            formData[ele.name] = ","+$(ele).val()+",";
                         } else {
-                            formData.contract[ele.name] += $(ele).val() + ",";
+                            formData[ele.name] += $(ele).val() + ",";
                         }
                     }
                 } else {
-                    formData.contract[ele.name] = $(ele).val();
+                    formData[ele.name] = $(ele).val();
                 }
             });
-            formData.details = getChanges();
             $.ajax({
-                "url": "/buyingcontract/save",
+                "url": "/invoice/save",
                 "type": "post",
                 "data": JSON.stringify(formData),
                 "contentType": "application/json",
-                "dataType": "json",
+               /* "dataType": "json",*/
                 "success": function (data) {
                     if(data == "ok") {
                         layer.alert("操作成功", function () {
@@ -51,6 +50,7 @@ $(function () {
                         });
                     }
                 }
+
             });
             return false;
         });

@@ -54,6 +54,12 @@ public class FormController {
     {
         return "form/exportgoodslist/list";
     }
+
+    @RequestMapping("/invoiceList")
+    public String invoiceList()
+    {
+        return "form/invoice/list";
+    }
         /**
          * 分页查询用户列表
          * @return ok/fail

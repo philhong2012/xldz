@@ -23,15 +23,7 @@
             <legend>出口货物明细单</legend>
         </fieldset>
         <form class="layui-form" id="exportGoodsListForm">
-            <input type="hidden" name="id"th:value="${model}?${model.id}:_" />
-            <div class="layui-form-item">
-                <label class="layui-form-label">部门</label>
-                <div class="layui-input-block">
-                    <input type="text" name="seller" lay-verify="title" autocomplete="off" placeholder="请输入卖方" th:value="${model}?${model.deptName}:_" class="layui-input">
-                </div>
-            </div>
-
-
+            <input type="hidden" name="id" id="id" th:value="${model}?${model.id}:_" />
             <div class="layui-form-item">
                 <label class="layui-form-label">出口合同编号</label>
                 <div class="layui-input-block">
@@ -49,7 +41,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">装运口岸</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="packingKouAn" id="signDate" lay-verify="title" th:value="${model}?${model.packingKouAn}:_" autocomplete="off" placeholder="" class="layui-input">
+                    <input type="text" name="packingKouAn" id="packingKouAn" lay-verify="title" th:value="${model}?${model.packingKouAn}:_" autocomplete="off" placeholder="" class="layui-input">
                 </div>
             </div>
 
@@ -67,7 +59,7 @@
                 </div>
             </div>
 
-            <div class="layui-form-item">
+            <div class="layui-form-item" style="overflow-x: auto">
                     <table id="dg" class="easyui-datagrid" title="货物明细" style="width:1200px;height:auto"
                            data-options="
                     iconCls: 'icon-edit',
@@ -83,9 +75,9 @@
                             <th data-options="field:'goodsName',width:80" rowspan="2">品名及规格</th>
                             <th data-options="field:'quantity',width:50" rowspan="2">数量</th>
                             <th data-options="field:'goodsUnit',width:50" rowspan="2">单位</th>
-                            <th data-options="field:'priceUnit',width:50" rowspan="2">币种</th>
+                            <th data-options="field:'sellingPriceUnit',width:50" rowspan="2">币种</th>
                             <th colspan="2">出口销售价格</th>
-                            <th data-options="field:'goodsProducer',width:80" rowspan="2">货源厂</th>
+                            <th data-options="field:'goodsProducer',width:80,editor:'textbox'" rowspan="2">货源厂</th>
                             <th colspan="3">收购价格</th>
                             <th data-options="field:'refundTax',width:100,editor:'textbox'" rowspan="2">可退税额</th>
                             <th data-options="field:'exportCost',width:100,editor:'textbox'" rowspan="2">出口成本</th>
@@ -96,9 +88,9 @@
 
                             <th data-options="field:'sellingPrice',width:100,editor:{type:'numberbox',options:{precision:2}}">单价</th>
                             <th data-options="field:'subtotalSellingPrice',width:100,editor:{type:'numberbox',options:{precision:2}}">总价</th>
-                            <th data-options="field:'buyingPrice',width:80,editor:'textbox',hidden:true">金额</th>
-                            <th data-options="field:'taxCost',width:100,editor:'textbox'">税额</th>
-                            <th data-options="field:'subtotalBuyingPrice',width:100,editor:{type:'numberbox'}">合计</th>
+                            <th data-options="field:'buyingPrice',width:80,editor:{type:'numberbox',options:{precision:2}}">金额</th>
+                            <th data-options="field:'taxCost',width:100,editor:{type:'numberbox',options:{precision:2}}">税额</th>
+                            <th data-options="field:'subtotalBuyingPrice',width:100,editor:{type:'numberbox',options:{precision:2}}">合计</th>
                         </tr>
                         </thead>
                     </table>

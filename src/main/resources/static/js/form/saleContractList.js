@@ -128,7 +128,7 @@ function gen(type) {
                 window.location.href = '/exportgoodslist/gen?sellingContractId='+checkStatus.data[0].id;
                 break;
             case 3: //invoice
-                window.location.href = '/forminvoice/gen?sellingContractId='+checkStatus.data[0].id;
+                window.location.href = '/invoice/gen?sellingContractId='+checkStatus.data[0].id;
                 break;
             case 4:// packing list
                 window.location.href = '/packinglist/gen?sellingContractId='+checkStatus.data[0].id;

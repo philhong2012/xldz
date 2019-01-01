@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
        xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
-<head th:include="layout :: htmlhead" th:with="title='用户管理'"></head>
+<head th:include="layout :: htmlhead" th:with="title='发票管理'"></head>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
     <!--头-->
@@ -9,7 +9,7 @@
 
     <div class="layui-body" style="margin: 1%">
 
-        <form id="userSearch" class="layui-form layui-form-pane" method="post" action="" style="margin-top: 20px;">
+        <form id="invoiceSearch" class="layui-form layui-form-pane" method="post" action="" style="margin-top: 20px;">
             <div class="layui-form-item">
                 <label class="layui-form-label">合同编号</label>
                 <div class="layui-input-inline">
@@ -50,21 +50,11 @@
             </div>
         </script>-->
 
-        <button class="layui-btn layui-btn-normal" onclick="window.location.href='/sellingcontract/create';">增加合同</button>
-        <button class="layui-btn layui-btn-normal" onclick="alert('功能开发中。。。')">另存合同</button>
-        <button class="layui-btn layui-btn-normal" onclick="genBuyingContractForm();">生成采购合同</button>
+        <button class="layui-btn layui-btn-normal" onclick="window.location.href='/sellingcontract/create';">另存</button>
+
         <!--<button class="layui-btn layui-btn-normal" onclick="nolockUser()">解锁</button>-->
 
-        <table id="saleContractList" lay-filter="saleContractList"></table>
-        <div style="display:none;" id="currentUser"><shiro:principal property="id"></shiro:principal></div>
-
-        <script type="text/html" id="jobTpl">
-            {{#  if(!d.job){ }}
-            <input type="checkbox" name="{{d.username}}_{{d.version}}" value="{{d.id}}" lay-skin="switch" lay-text="在职|离职" lay-filter="isJobTpl" checked="checked" />
-            {{#  } else { }}
-            <input type="checkbox" name="{{d.username}}_{{d.version}}" value="{{d.id}}" lay-skin="switch" lay-text="在职|离职" lay-filter="isJobTpl"/>
-            {{#  } }}
-        </script>
+        <table id="invoiceList" lay-filter="invoiceList"></table>
 
         <script type="text/html" id="optBar">
             <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
@@ -77,65 +67,11 @@
     </div>
 
 
-    <!--添加或编辑用户-->
-    <div id="buyingContract" class="layer_self_wrap" style="width:500px;display:none;">
-        <form id="buyingContractForm" class="layui-form layui-form-pane" method="post" action="" style="margin-top: 20px;">
-
-            <div class="layui-form-item">
-                <label class="layui-form-label">卖方</label>
-                <div class="layui-input-block">
-                    <input type="text" name="seller" lay-verify="title" autocomplete="off" placeholder="请输入卖方" th:value="${model}?${model.seller}:_"  class="layui-input">
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">买方</label>
-                <div class="layui-input-block">
-                    <input type="text" name="buyer" lay-verify="title" autocomplete="off" placeholder="请输入买方" th:value="${model}?${model.buyer}:_"  class="layui-input">
-                </div>
-            </div>
-
-            <div class="layui-form-item">
-                <label class="layui-form-label">合同编号</label>
-                <div class="layui-input-block">
-                    <input type="text" name="contractNo" lay-verify="title" th:value="${model}?${model.contractNo}:_" autocomplete="off" placeholder="请输入编号" class="layui-input">
-                </div>
-            </div>
-
-            <div class="layui-form-item">
-                <label class="layui-form-label">签约地点</label>
-                <div class="layui-input-block">
-                    <input type="text" name="signAddress" lay-verify="title" th:value="${model}?${model.signAddress}:_" autocomplete="off" placeholder="请输入地址" class="layui-input">
-                </div>
-            </div>
-
-            <div class="layui-form-item">
-                <label class="layui-form-label">签约时间</label>
-                <div class="layui-input-block">
-                    <input type="text" name="signDate" id="signDate" lay-verify="title" th:value="${model}?${model.signDate}:_" autocomplete="off" placeholder="" class="layui-date">
-                </div>
-            </div>
-
-            <div class="layui-form-item">
-                <label class="layui-form-label">交货时间</label>
-                <div class="layui-input-block">
-                    <input type="text" name="deliveryDate" id="deliveryDate" lay-verify="title" th:value="${model}?${model.deliveryDate}:_" autocomplete="off" placeholder="" class="layui-date">
-                </div>
-            </div>
-
-
-            <div class="layui-form-item">
-                <div class="layui-input-block" style="margin-left: 10px;">
-                    <button class="layui-btn"  lay-submit="" lay-filter="buyingContractSubmit">提交</button>
-                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
-                </div>
-            </div>
-        </form>
-    </div>
 
     <!--底部-->
     <div th:replace="fragments/footer :: footer"></div>
     <script src="/js/dateUtils.js"></script>
-    <script src="/js/form/saleContractList.js"></script>
+    <script src="/js/form/invoice/list.js"></script>
 
 </div>
 </body>
