@@ -28,65 +28,63 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">卖方</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="seller" lay-verify="title" autocomplete="off" placeholder="境内发货人" th:value="${model}?${model.seller}:_"  class="layui-input">
+                    <input type="text" name="innerSender" lay-verify="title" autocomplete="off" placeholder="境内发货人" th:value="${model}?${model.innerSender}:_"  class="layui-input">
                 </div>
             </div>
-
-
 
             <div class="layui-form-item">
                 <label class="layui-form-label">出境关别</label>
                 <div class="layui-input-block">
-                    <input type="text" name="buyer" lay-verify="title" autocomplete="off" placeholder="境外收货人" th:value="${model}?${model.buyer}:_"  class="layui-input">
+                    <input type="text" name="outerReceiver" lay-verify="title" autocomplete="off" placeholder="境外收货人" th:value="${model}?${model.outerReceiver}:_"  class="layui-input">
                 </div>
             </div>
 
             <div class="layui-form-item">
                 <label class="layui-form-label">生产销售单位</label>
                 <div class="layui-input-block">
-                    <input type="text" name="buyer" lay-verify="title" autocomplete="off" placeholder="生产销售单位" th:value="${model}?${model.buyer}:_"  class="layui-input">
+                    <input type="text" name="producer" lay-verify="title" autocomplete="off" placeholder="生产销售单位" th:value="${model}?${model.producer}:_"  class="layui-input">
                 </div>
             </div>
 
             <div class="layui-form-item">
                 <label class="layui-form-label">合同协议号</label>
                 <div class="layui-input-block">
-                    <input type="text" name="buyer" lay-verify="title" autocomplete="off" placeholder="境外收货人" th:value="${model}?${model.buyer}:_"  class="layui-input">
+                    <input type="text" name="contractNo" lay-verify="title" autocomplete="off" placeholder="" th:value="${model}?${model.contractNo}:_"  class="layui-input">
                 </div>
             </div>
 
             <div class="layui-form-item">
                 <label class="layui-form-label">包装种类</label>
                 <div class="layui-input-block">
-                    <input type="text" name="buyer" lay-verify="title" autocomplete="off" placeholder="境外收货人" th:value="${model}?${model.buyer}:_"  class="layui-input">
+                    <input type="text" name="packingType" lay-verify="title" autocomplete="off" placeholder="" th:value="${model}?${model.packingType}:_"  class="layui-input">
                 </div>
             </div>
 
             <div class="layui-form-item">
                 <label class="layui-form-label">出口日期</label>
                 <div class="layui-input-block">
-                    <input type="text" name="buyer" lay-verify="title" autocomplete="off" placeholder="境外收货人" th:value="${model}?${model.buyer}:_"  class="layui-input">
+                    <input type="text" name="exportDate" id="exportDate" lay-verify="title" autocomplete="off" placeholder="" th:value="${model}?${model.exportDate}:_"  class="layui-input">
                 </div>
             </div>
 
             <div class="layui-form-item">
                 <label class="layui-form-label">申报日期</label>
                 <div class="layui-input-block">
-                    <input type="text" name="buyer" lay-verify="title" autocomplete="off" placeholder="境外收货人" th:value="${model}?${model.buyer}:_"  class="layui-input">
+                    <input type="text" name="declareDate" id="declareDate" lay-verify="title" autocomplete="off" placeholder="" th:value="${model}?${model.declareDate}:_"  class="layui-input">
                 </div>
             </div>
 
             <div class="layui-form-item">
                 <label class="layui-form-label">备案号</label>
                 <div class="layui-input-block">
-                    <input type="text" name="buyer" lay-verify="title" autocomplete="off" placeholder="境外收货人" th:value="${model}?${model.buyer}:_"  class="layui-input">
+                    <input type="text" name="fillingNo" lay-verify="title" autocomplete="off" placeholder="" th:value="${model}?${model.fillingNo}:_"  class="layui-input">
                 </div>
             </div>
 
             <div class="layui-form-item">
                 <label class="layui-form-label">境外收货人</label>
                 <div class="layui-input-block">
-                    <input type="text" name="buyer" lay-verify="title" autocomplete="off" placeholder="境外收货人" th:value="${model}?${model.buyer}:_"  class="layui-input">
+                    <input type="text" name="outerReceiver" lay-verify="title" autocomplete="off" placeholder="" th:value="${model}?${model.outerReceiver}:_"  class="layui-input">
                 </div>
             </div>
 
@@ -94,148 +92,148 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">运输方式</label>
                 <div class="layui-input-block">
-                    <input type="text" name="buyer" lay-verify="title" autocomplete="off" placeholder="境外收货人" th:value="${model}?${model.buyer}:_"  class="layui-input">
+                    <input type="text" name="transportType" lay-verify="title" autocomplete="off" placeholder="" th:value="${model}?${model.transportType}:_"  class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">运输工具名称及航次号</label>
                 <div class="layui-input-block">
-                    <input type="text" name="buyer" lay-verify="title" autocomplete="off" placeholder="境外收货人" th:value="${model}?${model.buyer}:_"  class="layui-input">
+                    <input type="text" name="transportToolsVoyageNo" lay-verify="title" autocomplete="off" placeholder="" th:value="${model}?${model.transportToolsVoyageNo}:_"  class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">提运单号</label>
                 <div class="layui-input-block">
-                    <input type="text" name="buyer" lay-verify="title" autocomplete="off" placeholder="境外收货人" th:value="${model}?${model.buyer}:_"  class="layui-input">
+                    <input type="text" name="billOfLandingNo" lay-verify="title" autocomplete="off" placeholder="" th:value="${model}?${model.billOfLandingNo}:_"  class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">生产销售单位</label>
                 <div class="layui-input-block">
-                    <input type="text" name="buyer" lay-verify="title" autocomplete="off" placeholder="境外收货人" th:value="${model}?${model.buyer}:_"  class="layui-input">
+                    <input type="text" name="producer" lay-verify="title" autocomplete="off" placeholder="" th:value="${model}?${model.producer}:_"  class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">监管方式</label>
                 <div class="layui-input-block">
-                    <input type="text" name="buyer" lay-verify="title" autocomplete="off" placeholder="境外收货人" th:value="${model}?${model.buyer}:_"  class="layui-input">
+                    <input type="text" name="monitorType" lay-verify="title" autocomplete="off" placeholder="" th:value="${model}?${model.monitorType}:_"  class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">征免性质</label>
                 <div class="layui-input-block">
-                    <input type="text" name="buyer" lay-verify="title" autocomplete="off" placeholder="境外收货人" th:value="${model}?${model.buyer}:_"  class="layui-input">
+                    <input type="text" name="exproprirationType" lay-verify="title" autocomplete="off" placeholder="" th:value="${model}?${model.exproprirationType}:_"  class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">许可证号</label>
                 <div class="layui-input-block">
-                    <input type="text" name="buyer" lay-verify="title" autocomplete="off" placeholder="境外收货人" th:value="${model}?${model.buyer}:_"  class="layui-input">
+                    <input type="text" name="licenceNo" lay-verify="title" autocomplete="off" placeholder="" th:value="${model}?${model.licenceNo}:_"  class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">合同协议号</label>
                 <div class="layui-input-block">
-                    <input type="text" name="buyer" lay-verify="title" autocomplete="off" placeholder="境外收货人" th:value="${model}?${model.buyer}:_"  class="layui-input">
+                    <input type="text" name="contractNo" lay-verify="title" autocomplete="off" placeholder="" th:value="${model}?${model.contractNo}:_"  class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">贸易国</label>
                 <div class="layui-input-block">
-                    <input type="text" name="buyer" lay-verify="title" autocomplete="off" placeholder="境外收货人" th:value="${model}?${model.buyer}:_"  class="layui-input">
+                    <input type="text" name="tradingCountryAddr" lay-verify="title" autocomplete="off" placeholder="" th:value="${model}?${model.tradingCountryAddr}:_"  class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">抵运国</label>
                 <div class="layui-input-block">
-                    <input type="text" name="buyer" lay-verify="title" autocomplete="off" placeholder="境外收货人" th:value="${model}?${model.buyer}:_"  class="layui-input">
+                    <input type="text" name="landingCountryAddr" lay-verify="title" autocomplete="off" placeholder="" th:value="${model}?${model.landingCountryAddr}:_"  class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">指运港</label>
                 <div class="layui-input-block">
-                    <input type="text" name="buyer" lay-verify="title" autocomplete="off" placeholder="境外收货人" th:value="${model}?${model.buyer}:_"  class="layui-input">
+                    <input type="text" name="pointingPort" lay-verify="title" autocomplete="off" placeholder="" th:value="${model}?${model.pointingPort}:_"  class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">离境口岸</label>
                 <div class="layui-input-block">
-                    <input type="text" name="buyer" lay-verify="title" autocomplete="off" placeholder="境外收货人" th:value="${model}?${model.buyer}:_"  class="layui-input">
+                    <input type="text" name="departurePort" lay-verify="title" autocomplete="off" placeholder="" th:value="${model}?${model.departurePort}:_"  class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">包装种类</label>
                 <div class="layui-input-block">
-                    <input type="text" name="buyer" lay-verify="title" autocomplete="off" placeholder="境外收货人" th:value="${model}?${model.buyer}:_"  class="layui-input">
+                    <input type="text" name="packingType" lay-verify="title" autocomplete="off" placeholder="" th:value="${model}?${model.packingType}:_"  class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">件数</label>
                 <div class="layui-input-block">
-                    <input type="text" name="buyer" lay-verify="title" autocomplete="off" placeholder="境外收货人" th:value="${model}?${model.buyer}:_"  class="layui-input">
+                    <input type="text" name="quantity" lay-verify="title" autocomplete="off" placeholder="" th:value="${model}?${model.quantity}:_"  class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">毛重</label>
                 <div class="layui-input-block">
-                    <input type="text" name="buyer" lay-verify="title" autocomplete="off" placeholder="境外收货人" th:value="${model}?${model.buyer}:_"  class="layui-input">
+                    <input type="text" name="grossWeight" lay-verify="title" autocomplete="off" placeholder="" th:value="${model}?${model.grossWeight}:_"  class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">净重</label>
                 <div class="layui-input-block">
-                    <input type="text" name="buyer" lay-verify="title" autocomplete="off" placeholder="境外收货人" th:value="${model}?${model.buyer}:_"  class="layui-input">
+                    <input type="text" name="netWeight" lay-verify="title" autocomplete="off" placeholder="" th:value="${model}?${model.netWeight}:_"  class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">成交方式</label>
                 <div class="layui-input-block">
-                    <input type="text" name="buyer" lay-verify="title" autocomplete="off" placeholder="境外收货人" th:value="${model}?${model.buyer}:_"  class="layui-input">
+                    <input type="text" name="dealType" lay-verify="title" autocomplete="off" placeholder="" th:value="${model}?${model.dealType}:_"  class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">运费</label>
                 <div class="layui-input-block">
-                    <input type="text" name="buyer" lay-verify="title" autocomplete="off" placeholder="境外收货人" th:value="${model}?${model.buyer}:_"  class="layui-input">
+                    <input type="text" name="transportCost" lay-verify="title" autocomplete="off" placeholder="" th:value="${model}?${model.transportCost}:_"  class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">保费</label>
                 <div class="layui-input-block">
-                    <input type="text" name="buyer" lay-verify="title" autocomplete="off" placeholder="境外收货人" th:value="${model}?${model.buyer}:_"  class="layui-input">
+                    <input type="text" name="insuranceCost" lay-verify="title" autocomplete="off" placeholder="" th:value="${model}?${model.insuranceCost}:_"  class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">杂费</label>
                 <div class="layui-input-block">
-                    <input type="text" name="buyer" lay-verify="title" autocomplete="off" placeholder="境外收货人" th:value="${model}?${model.buyer}:_"  class="layui-input">
+                    <input type="text" name="otherCost" lay-verify="title" autocomplete="off" placeholder="" th:value="${model}?${model.otherCost}:_"  class="layui-input">
                 </div>
             </div>
 
             <div class="layui-form-item">
                 <label class="layui-form-label">特殊关系确认</label>
                 <div class="layui-input-block">
-                    <input type="text" name="contractNo" lay-verify="title" th:value="${model}?${model.contractNo}:_" autocomplete="off" placeholder="请输入编号" class="layui-input">
+                    <input type="text" name="specialRelationConfirm" lay-verify="title" th:value="${model}?${model.specialRelationConfirm}:_" autocomplete="off" placeholder="" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">价格影响确认</label>
                 <div class="layui-input-block">
-                    <input type="text" name="signAddress" lay-verify="title" th:value="${model}?${model.signAddress}:_" autocomplete="off" placeholder="请输入地址" class="layui-input">
+                    <input type="text" name="priceEffectConfirm" lay-verify="title" th:value="${model}?${model.priceEffectConfirm}:_" autocomplete="off" placeholder="" class="layui-input">
                 </div>
             </div>
 
             <div class="layui-form-item">
                 <label class="layui-form-label">支付特许权使用费确认</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="signDate" id="signDate" lay-verify="title" th:value="${model}?${model.signDate}:_" autocomplete="off" placeholder="" class="layui-input">
+                    <input type="text" name="specialRelationConfirm" id="signDate" lay-verify="title" th:value="${model}?${model.specialRelationConfirm}:_" autocomplete="off" placeholder="" class="layui-input">
                 </div>
             </div>
 
             <div class="layui-form-item">
                 <label class="layui-form-label">自报自缴</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="deliveryDate" id="deliveryDate" lay-verify="title" th:value="${model}?${model.deliveryDate}:_" autocomplete="off" placeholder="" class="layui-input">
+                    <input type="text" name="selfReported" id="deliveryDate" lay-verify="title" th:value="${model}?${model.selfReported}:_" autocomplete="off" placeholder="" class="layui-input">
                 </div>
             </div>
 

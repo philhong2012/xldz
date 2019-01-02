@@ -134,6 +134,7 @@ function gen(type) {
                 window.location.href = '/packinglist/gen?sellingContractId='+checkStatus.data[0].id;
                 break;
             case 5: //报关单
+                window.location.href = '/customsclearance/gen?sellingContractId='+checkStatus.data[0].id;
                 break;
         }
 
