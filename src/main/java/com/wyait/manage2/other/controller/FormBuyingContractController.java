@@ -59,7 +59,7 @@ public class FormBuyingContractController {
      */
     @RequestMapping(value = "/gen", method = RequestMethod.GET)
     public ModelAndView gen(String sellingContractId) {
-        ModelAndView mv = new ModelAndView("form/buyingContract/create");
+        ModelAndView mv = new ModelAndView("form/buyingcontract/create");
         FormSellingContract formSellingContract = formSellingContractService.getById(sellingContractId);
         FormBuyingContract formBuyingContract  = new FormBuyingContract();
         if(formSellingContract != null) {
@@ -139,9 +139,10 @@ public class FormBuyingContractController {
      * 编辑采购合同
      * @return
      */
-    @RequestMapping(value = "/create", method = RequestMethod.GET)
-    public String create() {
-        return "form/buyingContract/create";
+    @RequestMapping(value = "/create")
+    public ModelAndView create() {
+        ModelAndView mv = new ModelAndView("form/buyingcontract/create");
+        return mv;
     }
 
 
@@ -151,7 +152,7 @@ public class FormBuyingContractController {
      */
     @RequestMapping(value = "/edit", method = RequestMethod.GET)
     public ModelAndView edit(String id) {
-        ModelAndView mv = new ModelAndView("form/buyingContract/create");
+        ModelAndView mv = new ModelAndView("form/buyingcontract/create");
         FormBuyingContract formBuyingContract = formBuyingContractService.getById(id);
         mv.addObject("model",formBuyingContract);
         return mv;
@@ -259,12 +260,12 @@ public class FormBuyingContractController {
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     @ResponseBody
     public String delete(String id) {
-        QueryWrapper<FormBuyingContract> formBuyingContractQueryWrapper = new QueryWrapper<>();
-        formBuyingContractQueryWrapper.eq("buying_contract_id",id);
+        QueryWrapper<BuyingContractDetail> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("buying_contract_id",id);
 
-        formBuyingContractService.remove(formBuyingContractQueryWrapper);
+        buyingContractDetailService.remove(queryWrapper);
 
-        buyingContractDetailService.removeById(id);
+        formBuyingContractService.removeById(id);
 
 
         return "ok";
