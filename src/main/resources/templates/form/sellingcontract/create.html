@@ -202,7 +202,7 @@
 
     <script type="text/javascript">
         $(function () {
-            $("body").delegate(".datagrid-cell-c1-quantity .textbox-text","change",function() {
+            $("body").delegate(".datagrid-cell-c1-quantity .textbox-text","keydown",function() {
                 //alert($(this).val());
                 var quantity = $(this).val();
                 quantity = quantity == '' ? 0: quantity;
@@ -243,7 +243,7 @@
             }
 
 
-            $("body").delegate(".datagrid-cell-c1-price .textbox-text","change",function() {
+            $("body").delegate(".datagrid-cell-c1-price .textbox-text","keydown",function() {
                 //alert($(this).val());
                 var price = $(this).val();
                 price = price == '' ? 0: price;

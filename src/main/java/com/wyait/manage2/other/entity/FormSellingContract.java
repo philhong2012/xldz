@@ -1,6 +1,7 @@
 package com.wyait.manage2.other.entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -152,10 +153,21 @@ public class FormSellingContract implements Serializable {
 
     private String updateUserName;
 
+    private String createUserName;
+
 
     private LocalDateTime updateTime;
 
     private String deptName;
+
+    private BigDecimal totalPrice;
+
+    private BigDecimal totalQuantity;
+
+    private String priceUnit;
+
+    private String quantityUnit;
+
 
 
 }

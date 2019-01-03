@@ -71,17 +71,51 @@ public class FormSellingContractController {
 
         User u = (User) SecurityUtils.getSubject().getPrincipal();
 
+        //计算总额
+        BigDecimal totalPrice = new BigDecimal(0);
+        BigDecimal totalQuantity = BigDecimal.ZERO;
+        String priceUnit = StringUtils.EMPTY;
+        String quantityUnit = StringUtils.EMPTY;
+        if (sellingContractVO.getDetails() != null) {
+            for (SellingContractDetail e : sellingContractVO.getDetails()) {
+                totalPrice = totalPrice.add(e.getTotalPrice() == null?
+                        BigDecimal.ZERO:e.getTotalPrice());
+
+                totalQuantity = totalQuantity.add(e.getQuantity() == null?
+                        BigDecimal.ZERO:e.getQuantity());
+
+                priceUnit = e.getPriceUnit();
+                quantityUnit = e.getGoodsUnit();
+
+            }
+        }
+
+        if(sellingContractVO.getDetails() != null && sellingContractVO.getDetails().size() > 0) {
+            for (SellingContractDetail detail : sellingContractVO.getDetails()) {
+                detail.setSellingContractId(sellingContractVO.getContract().getId());
+            }
+        }
 
         if(formSellingContract != null) {
 
             if(StringUtils.isNotEmpty(formSellingContract.getId())) {
                 formSellingContract.setUpdateUserId(u.getId().toString());
                 formSellingContract.setUpdateTime(LocalDateTime.now());
+                formSellingContract.setUpdateUserName(u.getUsername());
+                formSellingContract.setDeptId(u.getDeptId());
+                formSellingContract.setDeptName(u.getDeptName());
             } else {
                 formSellingContract.setCreateUserId(u.getId().toString());
                 formSellingContract.setCreateTime(LocalDateTime.now());
+                formSellingContract.setCreateUserName(u.getUsername());
             }
-            formSellingContractService.saveOrUpdate(sellingContractVO.getContract());
+
+            formSellingContract.setTotalPrice(totalPrice);
+            formSellingContract.setTotalQuantity(totalQuantity);
+            formSellingContract.setPriceUnit(priceUnit);
+            formSellingContract.setQuantityUnit(quantityUnit);
+
+            formSellingContractService.saveOrUpdate(formSellingContract);
         }
 
         if(sellingContractVO.getDetails() != null && sellingContractVO.getDetails().size() > 0) {
