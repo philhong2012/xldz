@@ -6,12 +6,15 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.wyait.common.utils.NumberUtils;
+import com.wyait.manage.entity.DataGridVO;
 import com.wyait.manage.entity.SaleContractDTO;
 import com.wyait.manage.entity.SearchEntityVO;
 import com.wyait.manage.entity.SellingContractVO;
 import com.wyait.manage.pojo.Role;
 import com.wyait.manage.pojo.User;
 import com.wyait.manage.utils.PageDataResult;
+import com.wyait.manage2.other.entity.BuyingContractDetail;
 import com.wyait.manage2.other.entity.FormSellingContract;
 import com.wyait.manage2.other.entity.PackingListDetail;
 import com.wyait.manage2.other.entity.SellingContractDetail;
@@ -26,11 +29,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * <p>
@@ -50,8 +52,9 @@ public class FormSellingContractController {
 
     Logger logger = LoggerFactory.getLogger(FormSellingContractController.class);
     @RequestMapping("/create")
-    public String toUserList() {
-        return "form/sellingcontract/create";
+    public ModelAndView create() {
+        ModelAndView mv = new ModelAndView("form/sellingcontract/create");
+        return mv;
     }
 
 
@@ -82,7 +85,7 @@ public class FormSellingContractController {
         }
 
         if(sellingContractVO.getDetails() != null && sellingContractVO.getDetails().size() > 0) {
-            for(SellingContractDetail detail : sellingContractVO.getDetails()) {
+            for (SellingContractDetail detail : sellingContractVO.getDetails()) {
                 detail.setSellingContractId(sellingContractVO.getContract().getId());
             }
             sellingContractDetailService.saveOrUpdateBatch(sellingContractVO.getDetails());
@@ -173,21 +176,44 @@ public class FormSellingContractController {
      */
     @RequestMapping(value = "/list2", method = RequestMethod.POST)
     @ResponseBody
-    public List<SellingContractDetail> list2(String id) {
+    public DataGridVO<SellingContractDetail> list2(String id) {
 
            QueryWrapper<SellingContractDetail> wrapper = new QueryWrapper<SellingContractDetail>();
            wrapper.eq("selling_contract_id",id);
            List<SellingContractDetail> sellingContractDetails = sellingContractDetailService.list(wrapper);
-            // 获取分页查询后的数据
-           // PageInfo<FormSellingContract> pageInfo = new PageInfo<>(formSellingContracts);
-            /*if(sellingContractDetails == null) {
-                sellingContractDetails = new ArrayList<>();
-                SellingContractDetail sellingContractDetail = new SellingContractDetail();
-                sellingContractDetails.add(sellingContractDetail);
-            }*/
 
 
-        return sellingContractDetails;
+
+        //计算总额
+
+        BigDecimal totalPrice = new BigDecimal(0);
+        if (sellingContractDetails != null) {
+            for (SellingContractDetail e : sellingContractDetails) {
+                totalPrice = totalPrice.add(e.getTotalPrice() == null?
+                        BigDecimal.ZERO:e.getTotalPrice());
+
+            }
+        }
+
+        DataGridVO<SellingContractDetail>  detailDataGridVO = new DataGridVO<>();
+        detailDataGridVO.setRows(sellingContractDetails);
+
+
+        List<Map<String,String>> footerSection = new ArrayList<>();
+
+        Map<String,String> footer1 = new HashMap<>();
+        footer1.put("price","");
+        footer1.put("totalPrice",totalPrice.toString());
+       /* Map<String,String> footer2 = new HashMap<>();
+        footer2.put("price","价税合计:人民币(大写)");
+        footer2.put("totalPrice",NumberUtils.digitUppercase(Double.parseDouble(totalPrice.toString()) ));*/
+
+        footerSection.add(footer1);
+        //footerSection.add(footer2);
+
+        detailDataGridVO.setFooter(footerSection);
+
+        return detailDataGridVO;
     }
 
 

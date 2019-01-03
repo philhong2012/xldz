@@ -163,7 +163,8 @@
                     url: '/sellingcontract/list2',
                     method: 'post',
                     onClickCell: onClickCell,
-                    onEndEdit: onEndEdit
+                    onEndEdit: onEndEdit,
+                    showFooter:true
                 ">
                         <thead>
                         <tr>
@@ -173,6 +174,7 @@
                            <th data-options="field:'quantity',width:100,editor:{type:'numberbox'}">数量</th>
                            <th data-options="field:'goodsUnit',width:100,editor:'textbox'">单位</th>
                            <th data-options="field:'price',width:100,editor:{type:'numberbox',options:{precision:2}}">价格</th>
+                           <th data-options="field:'priceUnit',width:100,editor:'textbox'">价格单位</th>
                            <th data-options="field:'totalPrice',width:100,editor:{type:'numberbox',options:{precision:2}}">总价</th>
                         </tr>
                         </thead>
@@ -206,9 +208,40 @@
                 quantity = quantity == '' ? 0: quantity;
                 var price = $(this).closest("tr.datagrid-row").find(".datagrid-cell-c1-price .textbox-text").val();
                 price = price == '' ? 0: price;
-                $(this).closest("tr.datagrid-row").find(".datagrid-cell-c1-totalPrice .textbox-text").val(price * quantity);
-                $(this).closest("tr.datagrid-row").find(".datagrid-cell-c1-totalPrice .textbox-value").val(price * quantity);
+                $(this).closest("tr.datagrid-row").find(".datagrid-cell-c1-totalPrice .textbox-text").val(toFixed(floatObj.multiply(price,quantity),2));
+                $(this).closest("tr.datagrid-row").find(".datagrid-cell-c1-totalPrice .textbox-value").val(toFixed(floatObj.multiply(price,quantity),2));
+                //当行金额汇总变化时时间处理
+                onSubTotalChanged();
             });
+
+            function onSubTotalChanged() {
+                var totalPrice = getTotalPrice();
+                $("div.datagrid-footer table.datagrid-ftable div.datagrid-cell-c1-totalPrice")
+                    .each(function (n,v) {
+                        if(n == 0) {
+                            $(this).html(totalPrice);
+                        } else if(n == 1) {
+                            $(this).html(digitUppercase(totalPrice));
+                        }
+                    });
+            }
+
+            function getTotalPrice() {
+                var total = 0;
+                $("div.datagrid-body div.datagrid-cell-c1-totalPrice").each(function (index,ele) {
+
+                    if($(this).hasClass("datagrid-editable")) {
+                        //total += parseFloat($(this).find(".textbox-value").val());
+                        total = floatObj.add(total,parseFloat($(this).find(".textbox-value").val()));
+                    } else {
+                        //total += parseFloat($(this).html());
+                        total = floatObj.add(total,parseFloat($(this).html()));
+                    }
+                });
+
+                return toFixed(total,2);
+            }
+
 
             $("body").delegate(".datagrid-cell-c1-price .textbox-text","change",function() {
                 //alert($(this).val());
@@ -216,12 +249,11 @@
                 price = price == '' ? 0: price;
                 var quantity = $(this).closest("tr.datagrid-row").find(".datagrid-cell-c1-quantity .textbox-text").val();
                 quantity = quantity == '' ? 0: quantity;
-                $(this).closest("tr.datagrid-row").find(".datagrid-cell-c1-totalPrice .textbox-text").val(price * quantity);
-                $(this).closest("tr.datagrid-row").find(".datagrid-cell-c1-totalPrice .textbox-value").val(price * quantity);
-            });
+                $(this).closest("tr.datagrid-row").find(".datagrid-cell-c1-totalPrice .textbox-text").val(toFixed(floatObj.multiply(price,quantity),2));
+                $(this).closest("tr.datagrid-row").find(".datagrid-cell-c1-totalPrice .textbox-value").val(toFixed(floatObj.multiply(price,quantity),2));
 
-            $("body").delegate(".datagrid-cell-c1-quantity .textbox-text","change",function() {
-                //alert($(this).val());
+                onSubTotalChanged();
+
             });
 
             $('#dg').datagrid('load', {
