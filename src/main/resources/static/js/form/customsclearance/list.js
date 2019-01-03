@@ -78,10 +78,10 @@ $(function() {
             ,laydate = layui.laydate;
         //日期
         laydate.render({
-            elem: '#startSignDate'
+            elem: '#startDeclareDate'
         });
         laydate.render({
-            elem: '#endSignDate'
+            elem: '#endDeclareDate'
         });
         //TODO 数据校验
         //监听搜索框
