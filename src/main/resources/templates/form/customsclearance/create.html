@@ -9,8 +9,13 @@
 '/jquery-easyui-1.6.11/jquery.min.js,'
 +'/jquery-easyui-1.6.11/jquery.easyui.min.js'
 )" th:with="title='报关单'">
+
 </head>
 
+<style>
+    /*#customsClearanceForm .layui-input-inline { width: 100px}*/
+    #customsClearanceForm table td {padding: 5px;}
+</style>
 
 
 <body class="layui-layout-body">
@@ -22,229 +27,253 @@
         <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
             <legend>采购合同</legend>
         </fieldset>
-        <form class="layui-form" id="buyingContractForm">
-            <input type="hidden" name="id" id="id" th:value="${model}?${model.id}:_" />
-            <input type="hidden" name="code" id="code" th:value="${model}?${model.sellingContractId}:_" />
+        <form class="layui-form" id="customsClearanceForm">
+            <input type="hidden" name="id" id="id" th:value="${model}?${model.id}:_"/>
+            <input type="hidden" name="code" id="code" th:value="${model}?${model.sellingContractId}:_"/>
             <div class="layui-form-item">
-                <label class="layui-form-label">卖方</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="innerSender" lay-verify="title" autocomplete="off" placeholder="境内发货人" th:value="${model}?${model.innerSender}:_"  class="layui-input">
-                </div>
+
+                <table>
+                    <tr>
+                        <td><label class="layui-form-label">卖方</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="innerSender" lay-verify="title" autocomplete="off" placeholder="境内发货人"
+                                       th:value="${model}?${model.innerSender}:_" class="layui-input">
+                            </div></td>
+                        <td><label class="layui-form-label">出境关别</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="outerReceiver" lay-verify="title" autocomplete="off" placeholder="境外收货人"
+                                       th:value="${model}?${model.outerReceiver}:_" class="layui-input">
+                            </div></td>
+                        <td><label class="layui-form-label">出口日期</label>
+                            <div class="layui-input-inline">
+                            <input type="text" name="exportDate" id="exportDate" lay-verify="title" autocomplete="off"
+                                   placeholder="" th:value="${model}?${model.exportDate}:_" class="layui-input">
+                        </div></td>
+
+                    </tr>
+                    <tr>
+
+                        <td><label class="layui-form-label">申报日期</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="declareDate" id="declareDate" lay-verify="title" autocomplete="off"
+                                       placeholder="" th:value="${model}?${model.declareDate}:_" class="layui-input">
+                            </div></td>
+                        <td><label class="layui-form-label">合同协议号</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="contractNo" lay-verify="title" autocomplete="off" placeholder=""
+                                       th:value="${model}?${model.contractNo}:_" class="layui-input">
+                            </div></td>
+                        <td></td>
+                    </tr>
+                </table>
             </div>
 
             <div class="layui-form-item">
-                <label class="layui-form-label">出境关别</label>
-                <div class="layui-input-block">
-                    <input type="text" name="outerReceiver" lay-verify="title" autocomplete="off" placeholder="境外收货人" th:value="${model}?${model.outerReceiver}:_"  class="layui-input">
-                </div>
+                <table>
+                    <tr>
+                        <td> <label class="layui-form-label">境外收货人</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="outerReceiver" lay-verify="title" autocomplete="off" placeholder=""
+                                       th:value="${model}?${model.outerReceiver}:_" class="layui-input">
+                            </div></td>
+                        <td><label class="layui-form-label">运输方式</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="transportType" lay-verify="title" autocomplete="off" placeholder=""
+                                       th:value="${model}?${model.transportType}:_" class="layui-input">
+                            </div></td>
+                        <td><label class="layui-form-label">运输工具名称及航次号</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="transportToolsVoyageNo" lay-verify="title" autocomplete="off"
+                                       placeholder="" th:value="${model}?${model.transportToolsVoyageNo}:_" class="layui-input">
+                            </div></td>
+
+                    </tr>
+                    <tr>
+                        <td> <label class="layui-form-label">提运单号</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="billOfLandingNo" lay-verify="title" autocomplete="off" placeholder=""
+                                   th:value="${model}?${model.billOfLandingNo}:_" class="layui-input">
+                        </div></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </table>
+
+
+
+
             </div>
 
             <div class="layui-form-item">
-                <label class="layui-form-label">生产销售单位</label>
-                <div class="layui-input-block">
-                    <input type="text" name="producer" lay-verify="title" autocomplete="off" placeholder="生产销售单位" th:value="${model}?${model.producer}:_"  class="layui-input">
-                </div>
-            </div>
+                <table>
+                    <tr>
+                        <td><label class="layui-form-label">生产销售单位</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="producer" lay-verify="title" autocomplete="off" placeholder="生产销售单位"
+                                       th:value="${model}?${model.producer}:_" class="layui-input">
+                            </div></td>
+                        <td><label class="layui-form-label">包装种类</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="packingType" lay-verify="title" autocomplete="off" placeholder=""
+                                       th:value="${model}?${model.packingType}:_" class="layui-input">
+                            </div></td>
+                        <td><label class="layui-form-label">监管方式</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="monitorType" lay-verify="title" autocomplete="off" placeholder=""
+                                       th:value="${model}?${model.monitorType}:_" class="layui-input">
+                            </div></td>
 
-            <div class="layui-form-item">
-                <label class="layui-form-label">合同协议号</label>
-                <div class="layui-input-block">
-                    <input type="text" name="contractNo" lay-verify="title" autocomplete="off" placeholder="" th:value="${model}?${model.contractNo}:_"  class="layui-input">
-                </div>
-            </div>
-
-            <div class="layui-form-item">
-                <label class="layui-form-label">包装种类</label>
-                <div class="layui-input-block">
-                    <input type="text" name="packingType" lay-verify="title" autocomplete="off" placeholder="" th:value="${model}?${model.packingType}:_"  class="layui-input">
-                </div>
-            </div>
-
-            <div class="layui-form-item">
-                <label class="layui-form-label">出口日期</label>
-                <div class="layui-input-block">
-                    <input type="text" name="exportDate" id="exportDate" lay-verify="title" autocomplete="off" placeholder="" th:value="${model}?${model.exportDate}:_"  class="layui-input">
-                </div>
-            </div>
-
-            <div class="layui-form-item">
-                <label class="layui-form-label">申报日期</label>
-                <div class="layui-input-block">
-                    <input type="text" name="declareDate" id="declareDate" lay-verify="title" autocomplete="off" placeholder="" th:value="${model}?${model.declareDate}:_"  class="layui-input">
-                </div>
-            </div>
-
-            <div class="layui-form-item">
-                <label class="layui-form-label">备案号</label>
-                <div class="layui-input-block">
-                    <input type="text" name="fillingNo" lay-verify="title" autocomplete="off" placeholder="" th:value="${model}?${model.fillingNo}:_"  class="layui-input">
-                </div>
-            </div>
-
-            <div class="layui-form-item">
-                <label class="layui-form-label">境外收货人</label>
-                <div class="layui-input-block">
-                    <input type="text" name="outerReceiver" lay-verify="title" autocomplete="off" placeholder="" th:value="${model}?${model.outerReceiver}:_"  class="layui-input">
-                </div>
+                    </tr>
+                    <tr>
+                        <td><label class="layui-form-label">征免性质</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="expropriationType" lay-verify="title" autocomplete="off" placeholder=""
+                                       th:value="${model}?${model.expropriationType}:_" class="layui-input">
+                            </div></td>
+                        <td><label class="layui-form-label">许可证号</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="licenceNo" lay-verify="title" autocomplete="off" placeholder=""
+                                       th:value="${model}?${model.licenceNo}:_" class="layui-input">
+                            </div></td>
+                        <td></td>
+                    </tr>
+                </table>
             </div>
 
 
             <div class="layui-form-item">
-                <label class="layui-form-label">运输方式</label>
-                <div class="layui-input-block">
-                    <input type="text" name="transportType" lay-verify="title" autocomplete="off" placeholder="" th:value="${model}?${model.transportType}:_"  class="layui-input">
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">运输工具名称及航次号</label>
-                <div class="layui-input-block">
-                    <input type="text" name="transportToolsVoyageNo" lay-verify="title" autocomplete="off" placeholder="" th:value="${model}?${model.transportToolsVoyageNo}:_"  class="layui-input">
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">提运单号</label>
-                <div class="layui-input-block">
-                    <input type="text" name="billOfLandingNo" lay-verify="title" autocomplete="off" placeholder="" th:value="${model}?${model.billOfLandingNo}:_"  class="layui-input">
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">生产销售单位</label>
-                <div class="layui-input-block">
-                    <input type="text" name="producer" lay-verify="title" autocomplete="off" placeholder="" th:value="${model}?${model.producer}:_"  class="layui-input">
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">监管方式</label>
-                <div class="layui-input-block">
-                    <input type="text" name="monitorType" lay-verify="title" autocomplete="off" placeholder="" th:value="${model}?${model.monitorType}:_"  class="layui-input">
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">征免性质</label>
-                <div class="layui-input-block">
-                    <input type="text" name="exproprirationType" lay-verify="title" autocomplete="off" placeholder="" th:value="${model}?${model.exproprirationType}:_"  class="layui-input">
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">许可证号</label>
-                <div class="layui-input-block">
-                    <input type="text" name="licenceNo" lay-verify="title" autocomplete="off" placeholder="" th:value="${model}?${model.licenceNo}:_"  class="layui-input">
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">合同协议号</label>
-                <div class="layui-input-block">
-                    <input type="text" name="contractNo" lay-verify="title" autocomplete="off" placeholder="" th:value="${model}?${model.contractNo}:_"  class="layui-input">
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">贸易国</label>
-                <div class="layui-input-block">
-                    <input type="text" name="tradingCountryAddr" lay-verify="title" autocomplete="off" placeholder="" th:value="${model}?${model.tradingCountryAddr}:_"  class="layui-input">
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">抵运国</label>
-                <div class="layui-input-block">
-                    <input type="text" name="landingCountryAddr" lay-verify="title" autocomplete="off" placeholder="" th:value="${model}?${model.landingCountryAddr}:_"  class="layui-input">
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">指运港</label>
-                <div class="layui-input-block">
-                    <input type="text" name="pointingPort" lay-verify="title" autocomplete="off" placeholder="" th:value="${model}?${model.pointingPort}:_"  class="layui-input">
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">离境口岸</label>
-                <div class="layui-input-block">
-                    <input type="text" name="departurePort" lay-verify="title" autocomplete="off" placeholder="" th:value="${model}?${model.departurePort}:_"  class="layui-input">
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">包装种类</label>
-                <div class="layui-input-block">
-                    <input type="text" name="packingType" lay-verify="title" autocomplete="off" placeholder="" th:value="${model}?${model.packingType}:_"  class="layui-input">
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">件数</label>
-                <div class="layui-input-block">
-                    <input type="text" name="quantity" lay-verify="title" autocomplete="off" placeholder="" th:value="${model}?${model.quantity}:_"  class="layui-input">
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">毛重</label>
-                <div class="layui-input-block">
-                    <input type="text" name="grossWeight" lay-verify="title" autocomplete="off" placeholder="" th:value="${model}?${model.grossWeight}:_"  class="layui-input">
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">净重</label>
-                <div class="layui-input-block">
-                    <input type="text" name="netWeight" lay-verify="title" autocomplete="off" placeholder="" th:value="${model}?${model.netWeight}:_"  class="layui-input">
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">成交方式</label>
-                <div class="layui-input-block">
-                    <input type="text" name="dealType" lay-verify="title" autocomplete="off" placeholder="" th:value="${model}?${model.dealType}:_"  class="layui-input">
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">运费</label>
-                <div class="layui-input-block">
-                    <input type="text" name="transportCost" lay-verify="title" autocomplete="off" placeholder="" th:value="${model}?${model.transportCost}:_"  class="layui-input">
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">保费</label>
-                <div class="layui-input-block">
-                    <input type="text" name="insuranceCost" lay-verify="title" autocomplete="off" placeholder="" th:value="${model}?${model.insuranceCost}:_"  class="layui-input">
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">杂费</label>
-                <div class="layui-input-block">
-                    <input type="text" name="otherCost" lay-verify="title" autocomplete="off" placeholder="" th:value="${model}?${model.otherCost}:_"  class="layui-input">
-                </div>
+                <table>
+                    <tr>
+                        <td><label class="layui-form-label">合同协议号</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="contractNo" lay-verify="title" autocomplete="off" placeholder=""
+                                       th:value="${model}?${model.contractNo}:_" class="layui-input">
+                            </div></td>
+                        <td>
+                            <label class="layui-form-label">贸易国</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="tradingCountryAddr" lay-verify="title" autocomplete="off" placeholder=""
+                                       th:value="${model}?${model.tradingCountryAddr}:_" class="layui-input">
+                            </div></td>
+                        <td><label class="layui-form-label">抵运国</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="landingCountryAddr" lay-verify="title" autocomplete="off" placeholder=""
+                                       th:value="${model}?${model.landingCountryAddr}:_" class="layui-input">
+                            </div></td>
+
+                    </tr>
+                    <tr>
+                        <td><label class="layui-form-label">指运港</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="pointingPort" lay-verify="title" autocomplete="off" placeholder=""
+                                       th:value="${model}?${model.pointingPort}:_" class="layui-input">
+                            </div></td>
+                        <td><label class="layui-form-label">离境口岸</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="departurePort" lay-verify="title" autocomplete="off" placeholder=""
+                                       th:value="${model}?${model.departurePort}:_" class="layui-input">
+                            </div></td>
+                    </tr>
+                </table>
+
             </div>
 
             <div class="layui-form-item">
-                <label class="layui-form-label">特殊关系确认</label>
-                <div class="layui-input-block">
-                    <input type="text" name="specialRelationConfirm" lay-verify="title" th:value="${model}?${model.specialRelationConfirm}:_" autocomplete="off" placeholder="" class="layui-input">
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">价格影响确认</label>
-                <div class="layui-input-block">
-                    <input type="text" name="priceEffectConfirm" lay-verify="title" th:value="${model}?${model.priceEffectConfirm}:_" autocomplete="off" placeholder="" class="layui-input">
-                </div>
+                <table>
+                    <tr>
+                        <td><label class="layui-form-label">包装种类</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="packingType" lay-verify="title" autocomplete="off" placeholder=""
+                                       th:value="${model}?${model.packingType}:_" class="layui-input">
+                            </div></td>
+                        <td><label class="layui-form-label">件数</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="quantity" lay-verify="title" autocomplete="off" placeholder=""
+                                       th:value="${model}?${model.quantity}:_" class="layui-input">
+                            </div></td>
+                        <td><label class="layui-form-label">毛重</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="grossWeight" lay-verify="title" autocomplete="off" placeholder=""
+                                       th:value="${model}?${model.grossWeight}:_" class="layui-input">
+                            </div></td>
+                    </tr>
+                    <tr>
+                        <td><label class="layui-form-label">净重</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="netWeight" lay-verify="title" autocomplete="off" placeholder=""
+                                       th:value="${model}?${model.netWeight}:_" class="layui-input">
+                            </div></td>
+                        <td><label class="layui-form-label">成交方式</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="dealType" lay-verify="title" autocomplete="off" placeholder=""
+                                       th:value="${model}?${model.dealType}:_" class="layui-input">
+                            </div></td>
+                        <td><label class="layui-form-label">运费</label>
+                            <div class="layui-input-inline">
+                            <input type="text" name="transportCost" lay-verify="title" autocomplete="off" placeholder=""
+                                   th:value="${model}?${model.transportCost}:_" class="layui-input"></div></td>
+                    </tr>
+                    <tr>
+                        <td><label class="layui-form-label">保费</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="insuranceCost" lay-verify="title" autocomplete="off" placeholder=""
+                                       th:value="${model}?${model.insuranceCost}:_" class="layui-input">
+                            </div></td>
+                        <td> <label class="layui-form-label">杂费</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="otherCost" lay-verify="title" autocomplete="off" placeholder=""
+                                       th:value="${model}?${model.otherCost}:_" class="layui-input">
+                            </div></td>
+                        <td></td>
+                    </tr>
+                </table>
             </div>
 
-            <div class="layui-form-item">
-                <label class="layui-form-label">支付特许权使用费确认</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="specialRelationConfirm" id="signDate" lay-verify="title" th:value="${model}?${model.specialRelationConfirm}:_" autocomplete="off" placeholder="" class="layui-input">
-                </div>
-            </div>
 
             <div class="layui-form-item">
-                <label class="layui-form-label">自报自缴</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="selfReported" id="deliveryDate" lay-verify="title" th:value="${model}?${model.selfReported}:_" autocomplete="off" placeholder="" class="layui-input">
-                </div>
+                <table>
+                    <tr>
+                        <td><label class="layui-form-label" >特殊关系确认</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="specialRelationConfirm" lay-verify="title"
+                                       th:value="${model}?${model.specialRelationConfirm}:_" autocomplete="off" placeholder=""
+                                       class="layui-input">
+                            </div></td>
+                        <td> <label class="layui-form-label" >价格影响确认</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="priceEffectConfirm" lay-verify="title"
+                                       th:value="${model}?${model.priceEffectConfirm}:_" autocomplete="off" placeholder=""
+                                       class="layui-input">
+                            </div></td>
+
+                    </tr>
+                    <tr>
+                        <td><label class="layui-form-label" >支付特许权使用费确认</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="specialRelationConfirm" id="signDate" lay-verify="title"
+                                       th:value="${model}?${model.specialRelationConfirm}:_" autocomplete="off" placeholder=""
+                                       class="layui-input">
+                            </div></td>
+                        <td><label class="layui-form-label">自报自缴</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="selfReported" id="deliveryDate" lay-verify="title"
+                                       th:value="${model}?${model.selfReported}:_" autocomplete="off" placeholder=""
+                                       class="layui-input">
+                            </div></td>
+                    </tr>
+                </table>
+
             </div>
 
+
             <div class="layui-form-item">
-                <div class="layui-input-block">
-                    <table id="dg" class="easyui-datagrid" title="货物明细" style="width:700px;height:auto"
+
+                    <table id="dg" class="easyui-datagrid" title="货物明细" style="height:auto"
                            data-options="
                     iconCls: 'icon-edit',
                     singleSelect: true,
                     toolbar: '#tb',
-                    url: '/buyingcontract/genlist',
+                    url: '/customsclearance/genlist',
                     method: 'post',
                     onClickCell: onClickCell,
                     onEndEdit: onEndEdit,
@@ -253,27 +282,37 @@
                         <thead>
                         <tr>
                             <th data-options="field:'id',width:80,editor:'textbox',hidden:true">id</th>
-                            <th data-options="field:'goodsName',width:100,editor:'textbox'">货品规格，名称</th>
+                            <th data-options="field:'id',width:100,editor:'textbox',hidden:true">商品编号</th>
+                            <th data-options="field:'goodsName',width:100,editor:'textbox'">商品名称及规格</th>
                             <th data-options="field:'quantity',width:50,editor:{type:'numberbox'}">数量</th>
                             <th data-options="field:'goodsUnit',width:50,editor:'textbox'">单位</th>
-                            <th data-options="field:'price',width:100,editor:{type:'numberbox',options:{precision:7}}">价格</th>
-                            <th data-options="field:'totalPrice',width:300,editor:{type:'numberbox',options:{precision:2}}">总价</th>
+                            <th data-options="field:'price',width:100,editor:{type:'numberbox',options:{precision:7}}">
+                                价格
+                            </th>
+                            <th data-options="field:'totalPrice',width:50,editor:{type:'numberbox',options:{precision:2}}">
+                                总价
+                            </th>
+                            <th data-options="field:'priceUnit',width:50,editor:'textbox'">币制</th>
+                            <th data-options="field:'fromCountry',width:100,editor:'textbox'">原厂国（地区）</th>
+                            <th data-options="field:'toCountry',width:100,editor:'textbox'">最终国（地区）</th>
+                            <th data-options="field:'innerFrom',width:100,editor:'textbox'">境内货源</th>
+                            <th data-options="field:'taxType',width:50,editor:'textbox'">征免</th>
                         </tr>
                         </thead>
                     </table>
 
-                    <div id="tb" style="height:auto">
-                        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="append()">增加</a>
-                        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="removeit()">删除</a>
-                        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" onclick="accept()">接受</a>
-                        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-undo',plain:true" onclick="reject()">拒绝</a>
-                        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="getChanges()">获取变更记录</a>
-                    </div>
-                </div>
+                    <!--  <div id="tb" style="height:auto">
+                          <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="append()">增加</a>
+                          <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="removeit()">删除</a>
+                          <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" onclick="accept()">接受</a>
+                          <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-undo',plain:true" onclick="reject()">拒绝</a>
+                          <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="getChanges()">获取变更记录</a>
+                      </div>-->
+
             </div>
             <div class="layui-form-item">
                 <div class="layui-input-block">
-                    <button class="layui-btn" lay-submit="" lay-filter="saveBuyingContract">立即提交</button>
+                    <button class="layui-btn" lay-submit="" lay-filter="saveCustomsClearance">立即提交</button>
                 </div>
             </div>
         </form>
@@ -281,14 +320,14 @@
 
     <script type="text/javascript">
         $(function () {
-            $("body").delegate(".datagrid-cell-c1-quantity .textbox-text","change",function() {
+            $("body").delegate(".datagrid-cell-c1-quantity .textbox-text", "change", function () {
                 //alert($(this).val());
                 var quantity = $(this).val();
-                quantity = quantity == '' ? 0: quantity;
+                quantity = quantity == '' ? 0 : quantity;
                 var price = $(this).closest("tr.datagrid-row").find(".datagrid-cell-c1-price .textbox-text").val();
-                price = price == '' ? 0: price;
-                $(this).closest("tr.datagrid-row").find(".datagrid-cell-c1-totalPrice .textbox-text").val(toFixed(floatObj.multiply(price,quantity),2));
-                $(this).closest("tr.datagrid-row").find(".datagrid-cell-c1-totalPrice .textbox-value").val(toFixed(floatObj.multiply(price,quantity),2));
+                price = price == '' ? 0 : price;
+                $(this).closest("tr.datagrid-row").find(".datagrid-cell-c1-totalPrice .textbox-text").val(toFixed(floatObj.multiply(price, quantity), 2));
+                $(this).closest("tr.datagrid-row").find(".datagrid-cell-c1-totalPrice .textbox-value").val(toFixed(floatObj.multiply(price, quantity), 2));
                 //当行金额汇总变化时时间处理
                 onSubTotalChanged();
             });
@@ -296,40 +335,40 @@
             function onSubTotalChanged() {
                 var totalPrice = getTotalPrice();
                 $("div.datagrid-footer table.datagrid-ftable div.datagrid-cell-c1-totalPrice")
-                    .each(function (n,v) {
-                        if(n == 0) {
+                    .each(function (n, v) {
+                        if (n == 0) {
                             $(this).html(totalPrice);
-                        } else if(n == 1) {
+                        } else if (n == 1) {
                             $(this).html(digitUppercase(totalPrice));
                         }
                     });
             }
 
-           function getTotalPrice() {
-               var total = 0;
-               $("div.datagrid-body div.datagrid-cell-c1-totalPrice").each(function (index,ele) {
+            function getTotalPrice() {
+                var total = 0;
+                $("div.datagrid-body div.datagrid-cell-c1-totalPrice").each(function (index, ele) {
 
-                   if($(this).hasClass("datagrid-editable")) {
-                      //total += parseFloat($(this).find(".textbox-value").val());
-                       total = floatObj.add(total,parseFloat($(this).find(".textbox-value").val()));
-                   } else {
-                       //total += parseFloat($(this).html());
-                       total = floatObj.add(total,parseFloat($(this).html()));
-                   }
-               });
+                    if ($(this).hasClass("datagrid-editable")) {
+                        //total += parseFloat($(this).find(".textbox-value").val());
+                        total = floatObj.add(total, parseFloat($(this).find(".textbox-value").val()));
+                    } else {
+                        //total += parseFloat($(this).html());
+                        total = floatObj.add(total, parseFloat($(this).html()));
+                    }
+                });
 
-               return toFixed(total,2);
-           }
+                return toFixed(total, 2);
+            }
 
 
-            $("body").delegate(".datagrid-cell-c1-price .textbox-text","change",function() {
+            $("body").delegate(".datagrid-cell-c1-price .textbox-text", "change", function () {
                 //alert($(this).val());
                 var price = $(this).val();
-                price = price == '' ? 0: price;
+                price = price == '' ? 0 : price;
                 var quantity = $(this).closest("tr.datagrid-row").find(".datagrid-cell-c1-quantity .textbox-text").val();
-                quantity = quantity == '' ? 0: quantity;
-                $(this).closest("tr.datagrid-row").find(".datagrid-cell-c1-totalPrice .textbox-text").val(toFixed(floatObj.multiply(price,quantity),2));
-                $(this).closest("tr.datagrid-row").find(".datagrid-cell-c1-totalPrice .textbox-value").val(toFixed(floatObj.multiply(price,quantity),2));
+                quantity = quantity == '' ? 0 : quantity;
+                $(this).closest("tr.datagrid-row").find(".datagrid-cell-c1-totalPrice .textbox-text").val(toFixed(floatObj.multiply(price, quantity), 2));
+                $(this).closest("tr.datagrid-row").find(".datagrid-cell-c1-totalPrice .textbox-value").val(toFixed(floatObj.multiply(price, quantity), 2));
 
                 onSubTotalChanged();
 
@@ -337,17 +376,19 @@
 
             $('#dg').datagrid('load', {
                 sellingContractId: '[[${param.sellingContractId}]]',
-                id:$('#id').val()
+                id: $('#id').val()
             });
 
         });
 
 
-
         var editIndex = undefined;
-        function endEditing(){
-            if (editIndex == undefined){return true}
-            if ($('#dg').datagrid('validateRow', editIndex)){
+
+        function endEditing() {
+            if (editIndex == undefined) {
+                return true
+            }
+            if ($('#dg').datagrid('validateRow', editIndex)) {
                 $('#dg').datagrid('endEdit', editIndex);
                 editIndex = undefined;
                 return true;
@@ -355,34 +396,45 @@
                 return false;
             }
         }
-        function onClickCell(index, field){
-            if (editIndex != index){
-                if (endEditing()){
+
+        function onClickCell(index, field) {
+            if (editIndex != index) {
+                if (endEditing()) {
                     $('#dg').datagrid('selectRow', index)
                         .datagrid('beginEdit', index);
-                    var ed = $('#dg').datagrid('getEditor', {index:index,field:field});
-                    if (ed){
+                    var ed = $('#dg').datagrid('getEditor', {index: index, field: field});
+                    if (ed) {
                         ($(ed.target).data('textbox') ? $(ed.target).textbox('textbox') : $(ed.target)).focus();
                     }
                     editIndex = index;
                 } else {
-                    setTimeout(function(){
+                    setTimeout(function () {
                         $('#dg').datagrid('selectRow', editIndex);
-                    },0);
+                    }, 0);
                 }
             }
         }
-        function onEndEdit(index, row){
+
+        function onEndEdit(index, row) {
             var ed = $(this).datagrid('getEditor', {
                 index: index,
                 field: 'userId'
             });
             //row.productname = $(ed.target).combobox('getText');
         }
-        function append(){
-            if (endEditing()){
-                $('#dg').datagrid('appendRow',{id:null,goodsName:null,goodsNameEn:null,price:null,goodsUnit:null,quantity:null,totalPrice:null});
-                editIndex = $('#dg').datagrid('getRows').length-1;
+
+        function append() {
+            if (endEditing()) {
+                $('#dg').datagrid('appendRow', {
+                    id: null,
+                    goodsName: null,
+                    goodsNameEn: null,
+                    price: null,
+                    goodsUnit: null,
+                    quantity: null,
+                    totalPrice: null
+                });
+                editIndex = $('#dg').datagrid('getRows').length - 1;
                 $('#dg').datagrid('selectRow', editIndex)
                     .datagrid('beginEdit', editIndex);
                 //setEditing(editIndex);
@@ -391,42 +443,48 @@
         }
 
         //计算报价小计
-        function setEditing(rowIndex){
+        function setEditing(rowIndex) {
             var editors = $('#dg').datagrid('getEditors', rowIndex);
             var priceEditor = editors[5];
             var amountEditor = editors[3];
             var costEditor = editors[6];
-            priceEditor.target.bind("change", function(){
+            priceEditor.target.bind("change", function () {
                 calculate();
             });
 
 
-            amountEditor.target.bind("change", function(){
+            amountEditor.target.bind("change", function () {
                 calculate();
             });
 
-            function calculate(){
-                var cost = (priceEditor.target.val())*(amountEditor.target.val());
+            function calculate() {
+                var cost = (priceEditor.target.val()) * (amountEditor.target.val());
                 console.log(cost);
-                costEditor.target.numberbox("setValue",cost);
+                costEditor.target.numberbox("setValue", cost);
             }
         }
-        function removeit(){
-            if (editIndex == undefined){return}
+
+        function removeit() {
+            if (editIndex == undefined) {
+                return
+            }
             $('#dg').datagrid('cancelEdit', editIndex)
                 .datagrid('deleteRow', editIndex);
             editIndex = undefined;
         }
-        function accept(){
-            if (endEditing()){
+
+        function accept() {
+            if (endEditing()) {
                 $('#dg').datagrid('acceptChanges');
             }
         }
-        function reject(){
+
+        function reject() {
             $('#dg').datagrid('rejectChanges');
             editIndex = undefined;
         }
-        function getChanges(){
+
+        function getChanges() {
             accept();
             var rows = $('#dg').datagrid('getRows');
             return rows;
@@ -434,12 +492,10 @@
     </script>
 
 
-
-
     <!--底部-->
     <div th:replace="fragments/footer :: footer"></div>
     <script src="../js/dateUtils.js"></script>
-    <script src="../js/form/buyingcontract/create.js"></script>
+    <script src="../js/form/customclearance/create.js"></script>
 
 </div>
 </body>
