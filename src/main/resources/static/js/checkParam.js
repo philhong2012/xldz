@@ -17,7 +17,14 @@ layui.use('form', function(){
        		       return '请输入正确格式！';
        		    }
    		    }
-   		  }
+   		  },
+   		  notRequiredNubmer:function (value,item) {
+    	    if(value != '') {
+                if (!value || isNaN(value)) {
+                    return "只能填写数字"
+                }
+            }
+          }
     });
 });
 

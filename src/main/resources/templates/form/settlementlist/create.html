@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro" xmlns="http://www.w3.org/1999/html">
+<head th:include="layout :: htmlhead_(
+'/jquery-easyui-1.6.11/themes/default/easyui.css,'
++'/jquery-easyui-1.6.11/themes/default/icon.css,'
++'/jquery-easyui-1.6.11/demo.css'
+,
+'/jquery-easyui-1.6.11/jquery.min.js,'
++'/jquery-easyui-1.6.11/jquery.easyui.min.js'
+)" th:with="title='结算卡'">
+</head>
+
+
+
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <!--头-->
+    <div th:replace="fragments/head :: header"></div>
+
+    <div class="layui-body" style="margin: 1%">
+        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+            <legend>采购合同</legend>
+        </fieldset>
+        <form class="layui-form" id="settlementListForm">
+            <input type="hidden" name="id" id="id" th:value="${model}?${model.id}:_" />
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">合同编号</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="code" lay-verify="required" autocomplete="off" placeholder="" th:value="${model}?${model.code}:_"  class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">销售收入</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="sellingIncome" lay-verify="notRequiredNubmer" autocomplete="off" placeholder="" th:value="${model}?${model.sellingIncome}:_"  class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">代购销售收入</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="dgdxIncome" lay-verify="notRequiredNubmer" autocomplete="off" placeholder="" th:value="${model}?${model.dgdxIncome}:_"  class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">退税收入</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="taxRefund" lay-verify="notRequiredNubmer" th:value="${model}?${model.taxRefund}:_" autocomplete="off" placeholder="" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">工厂退税</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="factoryRefund" lay-verify="notRequiredNubmer" th:value="${model}?${model.factoryRefund}:_" autocomplete="off" placeholder="" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">支出贷款</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="payBank" lay-verify="notRequiredNubmer" th:value="${model}?${model.payBank}:_" autocomplete="off" placeholder="" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">支出运杂费</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="payIntrest" lay-verify="notRequiredNubmer" th:value="${model}?${model.payIntrest}:_" autocomplete="off" placeholder="" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">支出保险费</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="payInsurance"  lay-verify="notRequiredNubmer" th:value="${model}?${model.payInsurance}:_" autocomplete="off" placeholder="" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">支出运杂费</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="payOtherRefund"  lay-verify="notRequiredNubmer" th:value="${model}?${model.payOtherRefund}:_" autocomplete="off" placeholder="" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">支出银行费</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="payBank"  lay-verify="notRequiredNubmer" th:value="${model}?${model.payBank}:_" autocomplete="off" placeholder="" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">利息支出</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="payIntrest"  lay-verify="notRequiredNubmer" th:value="${model}?${model.payIntrest}:_" autocomplete="off" placeholder="" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">缴纳税费</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="payTax"  lay-verify="notRequiredNubmer" th:value="${model}?${model.payTax}:_" autocomplete="off" placeholder="" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">其他支付</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="payOther"  lay-verify="notRequiredNubmer" th:value="${model}?${model.payOther}:_" autocomplete="off" placeholder="" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">毛利润</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="grossProfit"  lay-verify="notRequiredNubmer" th:value="${model}?${model.grossProfit}:_" autocomplete="off" placeholder="" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">间接减费用</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="payJjj"  lay-verify="notRequiredNubmer" th:value="${model}?${model.payJjj}:_" autocomplete="off" placeholder="" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">利润净额</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="netProfit"  lay-verify="notRequiredNubmer" th:value="${model}?${model.netProfit}:_" autocomplete="off" placeholder="" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-input-inline">
+                    <button class="layui-btn" lay-submit="" lay-filter="saveSettlementList">立即提交</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script type="text/javascript">
+
+
+    </script>
+
+
+
+
+    <!--底部-->
+    <div th:replace="fragments/footer :: footer"></div>
+    <script src="../js/dateUtils.js"></script>
+    <script src="../js/form/settlementlist/create.js"></script>
+
+</div>
+</body>
+</html>
