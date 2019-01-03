@@ -5,10 +5,10 @@ $(function () {
 
         //日期
         laydate.render({
-            elem: '#signDate'
+            elem: '#exportDate'
         });
         laydate.render({
-            elem: '#deliveryDate'
+            elem: '#declareDate'
         });
         laydate.render({
             elem: '#validityDate'

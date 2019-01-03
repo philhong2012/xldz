@@ -66,6 +66,11 @@ public class FormController {
     {
         return "form/packinglist/list";
     }
+    @RequestMapping("/customsClearanceList")
+    public String customsClearanceList()
+    {
+        return "form/customsclearance/list";
+    }
         /**
          * 分页查询用户列表
          * @return ok/fail

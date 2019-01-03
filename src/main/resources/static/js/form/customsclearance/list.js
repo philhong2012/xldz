@@ -25,11 +25,11 @@ $(function() {
             ,cols: [[
                 {type:'checkbox'}
                 ,{field:'id', title:'ID', width:80, unresize: true, sort: true}
-                ,{field:'code', title:'合同编号'}
+                ,{field:'contractNo', title:'合同编号'}
+                ,{field:'outerReceiver', title: '买方', }
+                ,{field:'innerSeller', title: '卖方',}
 
-                ,{field:'seller', title: '买方',}
-                ,{field:'buyer', title: '卖方', }
-                ,{field:'signDate', title: '签订日期',align:'center'}
+                ,{field:'declareDate', title: '申报日期',align:'center'}
                 /*,{field:'isJob', title:'是否在职',width:95,align:'center',templet:'#jobTpl'}*/
                 ,{fixed:'right', title:'操作', width:140,align:'center', toolbar:'#optBar'}
             ]]

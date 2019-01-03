@@ -27,6 +27,14 @@ public class SearchEntityVO {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate endSignDate;
 
+    @JsonFormat(pattern = JacksonConfig.DEFAULT_DATE_FORMAT)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate startDeclareDate;
+
+    @JsonFormat(pattern = JacksonConfig.DEFAULT_DATE_FORMAT)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate endDeclareDate;
+
     public String getCode() {
         return code;
     }
@@ -73,5 +81,21 @@ public class SearchEntityVO {
 
     public void setEndSignDate(LocalDate endSignDate) {
         this.endSignDate = endSignDate;
+    }
+
+    public LocalDate getEndDeclareDate() {
+        return endDeclareDate;
+    }
+
+    public void setEndDeclareDate(LocalDate endDeclareDate) {
+        this.endDeclareDate = endDeclareDate;
+    }
+
+    public LocalDate getStartDeclareDate() {
+        return startDeclareDate;
+    }
+
+    public void setStartDeclareDate(LocalDate startDeclareDate) {
+        this.startDeclareDate = startDeclareDate;
     }
 }

@@ -65,7 +65,18 @@ public class CustomsClearanceController {
     @RequestMapping("/gen")
     public ModelAndView gen(String sellingContractId) {
         ModelAndView mv = new ModelAndView("form/customsclearance/create");
-        mv.addObject("model",new CustomsClearance());
+        FormSellingContract formSellingContract = formSellingContractService.getById(sellingContractId);
+        CustomsClearance customsClearance = null;
+        if(formSellingContract != null) {
+            customsClearance = new CustomsClearance();
+            customsClearance.setInnerSender(formSellingContract.getSeller());
+            customsClearance.setOuterReceiver(formSellingContract.getBuyer());
+            customsClearance.setContractNo(formSellingContract.getContractNo());
+            customsClearance.setPackingType(formSellingContract.getPayingType());
+            //customsClearance.setQuantity(formSellingContract.)
+            //customsClearance.set
+        }
+        mv.addObject("model",customsClearance);
         return mv;
     }
 
@@ -85,6 +96,7 @@ public class CustomsClearanceController {
                     b.setGoodsUnit(e.getGoodsUnit());
                     b.setQuantity(e.getQuantity());
                     b.setPrice(e.getPrice());
+                    b.setTotalPrice(e.getTotalPrice());
                     b.setPriceUnit(e.getPriceUnit());
                     b.setGoodsUnit(e.getGoodsUnit());
                     customsClearanceDetails.add(b);
@@ -123,8 +135,8 @@ public class CustomsClearanceController {
     @RequestMapping(value = "/edit", method = RequestMethod.GET)
     public ModelAndView edit(String id) {
         ModelAndView mv = new ModelAndView("form/customsclearance/create");
-        FormBuyingContract formBuyingContract = formBuyingContractService.getById(id);
-        mv.addObject("model",formBuyingContract);
+        CustomsClearance customsClearance = customsClearanceService.getById(id);
+        mv.addObject("model",customsClearance);
         return mv;
     }
 
@@ -159,7 +171,7 @@ public class CustomsClearanceController {
             QueryWrapper<CustomsClearance> queryWrapper = new QueryWrapper<>();
             if(searchEntityVO != null) {
                 if(StringUtils.isNotEmpty(searchEntityVO.getCode())) {
-                    queryWrapper.like("code",searchEntityVO.getCode());
+                    queryWrapper.like("contract_no",searchEntityVO.getCode());
                 }
                 if(StringUtils.isNotEmpty(searchEntityVO.getName())) {
                     //queryWrapper.eq("cont")
@@ -178,6 +190,14 @@ public class CustomsClearanceController {
 
                 if(searchEntityVO.getEndSignDate() != null) {
                     queryWrapper.lt("sign_date",searchEntityVO.getEndSignDate());
+                }
+
+                if(searchEntityVO.getStartDeclareDate() != null) {
+                    queryWrapper.gt("declare_date",searchEntityVO.getStartDeclareDate());
+                }
+
+                if(searchEntityVO.getEndDeclareDate() != null) {
+                    queryWrapper.lt("declare_date",searchEntityVO.getEndDeclareDate());
                 }
             }
 

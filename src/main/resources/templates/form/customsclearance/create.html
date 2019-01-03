@@ -41,8 +41,8 @@
                             </div></td>
                         <td><label class="layui-form-label">出境关别</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="outerReceiver" lay-verify="title" autocomplete="off" placeholder="境外收货人"
-                                       th:value="${model}?${model.outerReceiver}:_" class="layui-input">
+                                <input type="text" name="departurePortType" lay-verify="title" autocomplete="off" placeholder="出境关别"
+                                       th:value="${model}?${model.departurePortType}:_" class="layui-input">
                             </div></td>
                         <td><label class="layui-form-label">出口日期</label>
                             <div class="layui-input-inline">
@@ -289,7 +289,7 @@
                             <th data-options="field:'price',width:100,editor:{type:'numberbox',options:{precision:7}}">
                                 价格
                             </th>
-                            <th data-options="field:'totalPrice',width:50,editor:{type:'numberbox',options:{precision:2}}">
+                            <th data-options="field:'totalPrice',width:100,editor:{type:'numberbox',options:{precision:2}}">
                                 总价
                             </th>
                             <th data-options="field:'priceUnit',width:50,editor:'textbox'">币制</th>
@@ -495,7 +495,7 @@
     <!--底部-->
     <div th:replace="fragments/footer :: footer"></div>
     <script src="../js/dateUtils.js"></script>
-    <script src="../js/form/customclearance/create.js"></script>
+    <script src="../js/form/customsclearance/create.js"></script>
 
 </div>
 </body>
