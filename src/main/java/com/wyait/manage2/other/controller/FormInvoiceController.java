@@ -225,9 +225,14 @@ public class FormInvoiceController {
         if(StringUtils.isNotEmpty(formInvoice.getId())) {
             formInvoice.setUpdateUserId(u.getId().toString());
             formInvoice.setUpdateTime(LocalDateTime.now());
+            formInvoice.setUpdateUserName(u.getUsername());
+
         } else {
             formInvoice.setCreateUserId(u.getId().toString());
             formInvoice.setCreateTime(LocalDateTime.now());
+            formInvoice.setCreateUserName(u.getUsername());
+            formInvoice.setDeptId(u.getDeptId());
+            formInvoice.setDeptName(u.getDeptName());
         }
 
         if(formInvoice != null) {

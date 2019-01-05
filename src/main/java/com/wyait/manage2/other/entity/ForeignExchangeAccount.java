@@ -12,62 +12,33 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 出口货物单
+ * 外汇台账
  * </p>
  *
  * @author hongxubing
- * @since 2018-12-26
+ * @since 2019-01-05
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class ExportGoodsList implements Serializable {
+public class ForeignExchangeAccount implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @TableId(type = IdType.ID_WORKER_STR)
     private String id;
-    private String buyer;
-    private String seller;
-    /**
-     * 收购合同id
-     */
-    private String buyingContractId;
 
     /**
-     * 售货合同id
+     * 外商汇款人
      */
-    private String sellingContractId;
+    private String remittance;
+
+    private String receiver;
 
     /**
-     * 收购合同编码
+     * 费用
      */
-    private String buyingContractNo;
-
-    /**
-     * 售货合同编码
-     */
-    private String sellingContractNo;
-
-    /**
-     * 装运口岸
-     */
-    private String packingKouAn;
-
-    /**
-     * 目的口岸
-     */
-    private String sendingKouAn;
-
-    /**
-     * 成交价格
-     */
-    private BigDecimal dealPrice;
-
-    /**
-     * 创建部门
-     */
-    private String deptName;
+    private BigDecimal amount;
 
     /**
      * 创建部门
@@ -88,11 +59,20 @@ public class ExportGoodsList implements Serializable {
 
     private String updateUserId;
 
+    /**
+     * 部门名称
+     */
+    private String deptName;
 
-    private String createUserName;
-
-
+    /**
+     * 更新人名称
+     */
     private String updateUserName;
+
+    /**
+     * 创建人名称
+     */
+    private String createUserName;
 
 
 }

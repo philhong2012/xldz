@@ -8,8 +8,8 @@ $(function() {
             ,form = layui.form;
 
         tableIns=table.render({
-            elem: '#buyingContractList'
-            ,url:'/buyingcontract/list'
+            elem: '#foreignExchangeAccountList'
+            ,url:'/foreignexchangeaccount/list'
             ,method: 'post' //默认：get请求
             ,cellMinWidth: 80
             ,page: true,
@@ -25,11 +25,12 @@ $(function() {
             ,cols: [[
                 {type:'checkbox'}
                 ,{field:'id', title:'ID', width:80, unresize: true, sort: true}
-                ,{field:'contractNo', title:'合同编号'}
+                ,{field:'remittance', title:'外商汇款人'}
 
-                ,{field:'seller', title: '买方',}
-                ,{field:'buyer', title: '卖方', }
-                ,{field:'signDate', title: '签订日期',align:'center'}
+                ,{field:'receiver', title:'外商收货人'}
+                ,{field:'createTime', title: '创建日期',align:'center'}
+                ,{field:'createUserName', title: '创建人',align:'center'}
+                ,{field:'updateUserName', title: '更新人',align:'center'}
                 /*,{field:'isJob', title:'是否在职',width:95,align:'center',templet:'#jobTpl'}*/
                 ,{fixed:'right', title:'操作', width:140,align:'center', toolbar:'#optBar'}
             ]]
@@ -46,7 +47,7 @@ $(function() {
         });
 
         //监听工具条
-        table.on('tool(buyingContractList)', function(obj){
+        table.on('tool(foreignExchangeAccountList)', function(obj){
             var data = obj.data;
             if(obj.event === 'del'){
                 deleteData(data,data.id);
@@ -66,7 +67,7 @@ $(function() {
         });
 
         //监听提交
-        form.on('submit(buyingContractSubmit)', function(data){
+        form.on('submit(foreignExchangeAccountSubmit)', function(data){
             // TODO 校验
             formSubmit(data);
             return false;
@@ -78,10 +79,10 @@ $(function() {
             ,laydate = layui.laydate;
         //日期
         laydate.render({
-            elem: '#startSignDate'
+            elem: '#startCreateTime'
         });
         laydate.render({
-            elem: '#endSignDate'
+            elem: '#endCreateTime'
         });
         //TODO 数据校验
         //监听搜索框
@@ -95,13 +96,13 @@ $(function() {
 
 
 function editSellingContract(obj,id) {
-    window.location.href = '/buyingcontract/edit?id='+id;
+    window.location.href = '/foreignexchangeaccount/edit?id='+id;
 }
 
 
 function deleteData(obj,id) {
     $.ajax({
-        "url": "/buyingcontract/delete?id="+id,
+        "url": "/foreignexchangeaccount/delete?id="+id,
         "type": "post",
         "data": null,
         "contentType": "application/json",

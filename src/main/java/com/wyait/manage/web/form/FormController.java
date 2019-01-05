@@ -80,6 +80,20 @@ public class FormController {
     }
 
 
+    @RequestMapping("/providerAccountList")
+    public String providerAccountList()
+    {
+        return "form/provideraccount/list";
+    }
+
+
+    @RequestMapping("/foreignExchangeAccountList")
+    public String foreignExchangeAccountList()
+    {
+        return "form/foreignexchangeaccount/list";
+    }
+
+
 
         /**
          * 分页查询用户列表

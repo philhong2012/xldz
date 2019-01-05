@@ -264,9 +264,13 @@ public class ExportGoodsListController {
         if(StringUtils.isNotEmpty(exportGoodsList.getId())) {
            exportGoodsList.setUpdateUserId(u.getId().toString());
            exportGoodsList.setUpdateTime(LocalDateTime.now());
+            exportGoodsList.setUpdateUserName(u.getUsername());
         } else {
             exportGoodsList.setCreateUserId(u.getId().toString());
             exportGoodsList.setCreateTime(LocalDateTime.now());
+            exportGoodsList.setCreateUserName(u.getUsername());
+            exportGoodsList.setDeptId(u.getDeptId());
+            exportGoodsList.setDeptName(u.getDeptName());
         }
         exportGoodsListService.saveOrUpdate(exportGoodsList);
 

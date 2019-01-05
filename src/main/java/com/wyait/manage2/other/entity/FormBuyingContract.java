@@ -122,5 +122,9 @@ public class FormBuyingContract implements Serializable {
 
     private String updateUserId;
 
+    private String createUserName;
 
+    private String updateUserName;
+
+    private String deptName;
 }

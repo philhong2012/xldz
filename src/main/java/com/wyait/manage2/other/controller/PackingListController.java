@@ -232,9 +232,11 @@ public class PackingListController {
         if(StringUtils.isNotEmpty(packingList.getId())) {
             packingList.setUpdateUserId(u.getId().toString());
             packingList.setUpdateTime(LocalDateTime.now());
+            packingList.setUpdateUserName(u.getUsername());
         } else {
             packingList.setCreateUserId(u.getId().toString());
             packingList.setCreateTime(LocalDateTime.now());
+            packingList.setCreateUserName(u.getUsername());
         }
 
         if(packingList != null) {

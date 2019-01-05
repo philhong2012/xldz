@@ -8,8 +8,8 @@ $(function() {
             ,form = layui.form;
 
         tableIns=table.render({
-            elem: '#buyingContractList'
-            ,url:'/buyingcontract/list'
+            elem: '#providerAccountList'
+            ,url:'/provideraccount/list'
             ,method: 'post' //默认：get请求
             ,cellMinWidth: 80
             ,page: true,
@@ -25,11 +25,13 @@ $(function() {
             ,cols: [[
                 {type:'checkbox'}
                 ,{field:'id', title:'ID', width:80, unresize: true, sort: true}
-                ,{field:'contractNo', title:'合同编号'}
+                ,{field:'code', title:'合同编号'}
+                ,{field:'amount', title:'金额'}
 
-                ,{field:'seller', title: '买方',}
-                ,{field:'buyer', title: '卖方', }
-                ,{field:'signDate', title: '签订日期',align:'center'}
+
+                ,{field:'createTime', title: '创建日期',align:'center'}
+                ,{field:'createUserName', title: '创建人',align:'center'}
+                ,{field:'updateUserName', title: '更新人',align:'center'}
                 /*,{field:'isJob', title:'是否在职',width:95,align:'center',templet:'#jobTpl'}*/
                 ,{fixed:'right', title:'操作', width:140,align:'center', toolbar:'#optBar'}
             ]]
@@ -46,7 +48,7 @@ $(function() {
         });
 
         //监听工具条
-        table.on('tool(buyingContractList)', function(obj){
+        table.on('tool(providerAccountList)', function(obj){
             var data = obj.data;
             if(obj.event === 'del'){
                 deleteData(data,data.id);
@@ -66,7 +68,7 @@ $(function() {
         });
 
         //监听提交
-        form.on('submit(buyingContractSubmit)', function(data){
+        form.on('submit(providerAccountSubmit)', function(data){
             // TODO 校验
             formSubmit(data);
             return false;
@@ -95,13 +97,13 @@ $(function() {
 
 
 function editSellingContract(obj,id) {
-    window.location.href = '/buyingcontract/edit?id='+id;
+    window.location.href = '/provideraccount/edit?id='+id;
 }
 
 
 function deleteData(obj,id) {
     $.ajax({
-        "url": "/buyingcontract/delete?id="+id,
+        "url": "/provideraccount/delete?id="+id,
         "type": "post",
         "data": null,
         "contentType": "application/json",

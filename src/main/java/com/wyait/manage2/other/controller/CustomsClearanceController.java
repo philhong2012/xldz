@@ -57,8 +57,10 @@ public class CustomsClearanceController {
     ICustomsClearanceService customsClearanceService;
 
     @RequestMapping("/create")
-    public String create() {
-        return "form/customsclearance/create";
+    public ModelAndView create() {
+
+        ModelAndView mv = new ModelAndView("form/customsclearance/create");
+        return mv;
     }
 
 
@@ -229,9 +231,13 @@ public class CustomsClearanceController {
         if(StringUtils.isNotEmpty(customsClearance.getId())) {
             customsClearance.setUpdateUserId(u.getId().toString());
             customsClearance.setUpdateTime(LocalDateTime.now());
+            customsClearance.setUpdateUserName(u.getUsername());
         } else {
             customsClearance.setCreateUserId(u.getId().toString());
             customsClearance.setCreateTime(LocalDateTime.now());
+            customsClearance.setCreateUserName(u.getUsername());
+            customsClearance.setDeptId(u.getDeptId());
+            customsClearance.setDeptName(u.getDeptName());
         }
 
         if(customsClearance != null) {

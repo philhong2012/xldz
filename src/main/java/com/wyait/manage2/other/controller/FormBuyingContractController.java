@@ -239,9 +239,13 @@ public class FormBuyingContractController {
         if(StringUtils.isNotEmpty(formBuyingContract.getId())) {
             formBuyingContract.setUpdateUserId(u.getId().toString());
             formBuyingContract.setUpdateTime(LocalDateTime.now());
+            formBuyingContract.setUpdateUserName(u.getUsername());
         } else {
             formBuyingContract.setCreateUserId(u.getId().toString());
             formBuyingContract.setCreateTime(LocalDateTime.now());
+            formBuyingContract.setCreateUserName(u.getUsername());
+            formBuyingContract.setDeptId(u.getDeptId());
+            formBuyingContract.setDeptName(u.getDeptName());
         }
 
         if(formBuyingContract != null) {

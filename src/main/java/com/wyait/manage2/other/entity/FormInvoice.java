@@ -71,5 +71,10 @@ public class FormInvoice implements Serializable {
      */
     private String deptName;
 
+    private String createUserName;
+
+
+    private String updateUserName;
+
 
 }
