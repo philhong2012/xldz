@@ -1,22 +1,19 @@
 package com.wyait.manage2.other.controller;
 
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import cn.afterturn.easypoi.entity.vo.TemplateWordConstants;
+import cn.afterturn.easypoi.excel.entity.TemplateExportParams;
+import cn.afterturn.easypoi.view.EasypoiTemplateWordView;
+import cn.afterturn.easypoi.word.entity.params.ExcelListEntity;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.wyait.common.utils.NumberUtils;
 import com.wyait.manage.entity.DataGridVO;
-import com.wyait.manage.entity.SaleContractDTO;
 import com.wyait.manage.entity.SearchEntityVO;
 import com.wyait.manage.entity.SellingContractVO;
-import com.wyait.manage.pojo.Role;
 import com.wyait.manage.pojo.User;
 import com.wyait.manage.utils.PageDataResult;
-import com.wyait.manage2.other.entity.BuyingContractDetail;
 import com.wyait.manage2.other.entity.FormSellingContract;
-import com.wyait.manage2.other.entity.PackingListDetail;
 import com.wyait.manage2.other.entity.SellingContractDetail;
 import com.wyait.manage2.other.service.IFormSellingContractService;
 import com.wyait.manage2.other.service.ISellingContractDetailService;
@@ -25,14 +22,21 @@ import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
-import java.sql.Timestamp;
+import java.text.Bidi;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -56,6 +60,55 @@ public class FormSellingContractController {
         ModelAndView mv = new ModelAndView("form/sellingcontract/create");
         return mv;
     }
+
+
+    @RequestMapping("/download")
+    public void download(String id,ModelMap modelMap,HttpServletRequest request, HttpServletResponse response) {
+        Map<String, Object> map = new HashMap<String, Object>();
+
+        FormSellingContract formSellingContract = formSellingContractService.getById(id);
+
+        QueryWrapper<SellingContractDetail> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("selling_contract_Id", id);
+        List<SellingContractDetail> sellingContractDetails = sellingContractDetailService.list(queryWrapper);
+        //map.put("items", new ExcelListEntity(sellingContractDetails, SellingContractDetail.class));
+        map.put("contractNo", formSellingContract.getContractNo());
+        map.put("signDate",formSellingContract.getSignDate().toString());
+        map.put("buyer",formSellingContract.getBuyer());
+        map.put("signAddress",formSellingContract.getSignAddress() == null ? "":formSellingContract.getSignAddress());
+        List<Map<String, Object>> mapList = new ArrayList<Map<String, Object>>();
+        BigDecimal totalPrice = BigDecimal.ZERO;
+        String priceUnit = StringUtils.EMPTY;
+        if(sellingContractDetails != null) {
+
+            for (SellingContractDetail e : sellingContractDetails) {
+                Map<String,Object> m = new HashMap<>();
+                m.put("goodsName",e.getGoodsName());
+                m.put("goodsUnit", e.getGoodsUnit());
+                m.put("quantity",(e.getQuantity() == null? BigDecimal.ZERO : e.getQuantity()).toString() + e.getGoodsUnit());
+                m.put("price", e.getPriceUnit() +(e.getPrice() == null? BigDecimal.ZERO : e.getPrice()).toString());
+                m.put("priceUnit",e.getPriceUnit());
+                if(StringUtils.isNotEmpty(e.getPriceUnit())) {
+                    priceUnit = e.getPriceUnit();
+                }
+                m.put("totalPrice",e.getTotalPrice());
+                mapList.add(m);
+
+                totalPrice = totalPrice.add(e.getTotalPrice());
+            }
+
+            map.put("totalPrice", priceUnit + totalPrice.toString());
+        }
+        map.put("items",mapList);
+
+        modelMap.put(TemplateWordConstants.FILE_NAME, formSellingContract.getContractNo());
+        modelMap.put(TemplateWordConstants.MAP_DATA, map);
+        modelMap.put(TemplateWordConstants.URL, "word/temp_购货合同.docx");
+        //EasypoiTemplateWordView
+        EasypoiTemplateWordView.render(modelMap, request, response,
+                TemplateWordConstants.EASYPOI_TEMPLATE_WORD_VIEW);
+    }
+
 
 
 
