@@ -1,6 +1,8 @@
 package com.wyait.manage2.other.controller;
 
 
+import cn.afterturn.easypoi.entity.vo.TemplateWordConstants;
+import cn.afterturn.easypoi.view.EasypoiTemplateWordView;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -20,10 +22,13 @@ import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -71,6 +76,58 @@ public class FormInvoiceController {
         mv.addObject("model",formInvoice);
         return mv;
     }
+
+    @RequestMapping("/download")
+    public void download(String id, ModelMap modelMap, HttpServletRequest request, HttpServletResponse response) {
+        Map<String, Object> map = new HashMap<String, Object>();
+
+        FormInvoice formInvoice = formInvoiceService.getById(id);
+        FormSellingContract formSellingContract = formSellingContractService.getById(formInvoice.getSellingContractId());
+        QueryWrapper<SellingContractDetail> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("selling_contract_Id", formSellingContract.getId());
+        List<SellingContractDetail> sellingContractDetails = sellingContractDetailService.list(queryWrapper);
+        //map.put("items", new ExcelListEntity(sellingContractDetails, SellingContractDetail.class));
+        map.put("code", formSellingContract.getContractNo());
+        map.put("invoiceDate",formInvoice.getInvoiceDate());
+        map.put("buyer",formSellingContract.getBuyer());
+        //map.put("signAddress",formSellingContract.getSignAddress() == null ? "":formSellingContract.getSignAddress());
+        List<Map<String, Object>> mapList = new ArrayList<Map<String, Object>>();
+        BigDecimal totalPrice = BigDecimal.ZERO;
+        String priceUnit = StringUtils.EMPTY;
+        if(sellingContractDetails != null) {
+
+            for (SellingContractDetail e : sellingContractDetails) {
+                Map<String,Object> m = new HashMap<>();
+                m.put("goodsName",e.getGoodsName() == null ? "":e.getGoodsName());
+                m.put("goodsUnit", e.getGoodsUnit() == null ? "":e.getGoodsUnit());
+                m.put("quantity",(e.getQuantity() == null? BigDecimal.ZERO : e.getQuantity()).toString() + e.getGoodsUnit());
+                m.put("price", e.getPriceUnit() +(e.getPrice() == null? BigDecimal.ZERO : e.getPrice()).toString());
+                m.put("priceUnit",e.getPriceUnit() == null ? "":e.getPriceUnit());
+                if(StringUtils.isNotEmpty(e.getPriceUnit())) {
+                    priceUnit = e.getPriceUnit();
+                }
+                m.put("totalPrice",e.getTotalPrice());
+                mapList.add(m);
+
+                totalPrice = totalPrice.add(e.getTotalPrice());
+            }
+
+            map.put("totalPrice", priceUnit + totalPrice.toString());
+        }
+        map.put("items",mapList);
+
+        modelMap.put("checked"," X ");
+        modelMap.put("unchecked","  ");
+
+        modelMap.put(TemplateWordConstants.FILE_NAME, formSellingContract.getContractNo());
+        modelMap.put(TemplateWordConstants.MAP_DATA, map);
+        modelMap.put(TemplateWordConstants.URL, "word/temp_发票.docx");
+        //EasypoiTemplateWordView
+        EasypoiTemplateWordView.render(modelMap, request, response,
+                TemplateWordConstants.EASYPOI_TEMPLATE_WORD_VIEW);
+    }
+
+
 
     /**
      * 生成发票及详情

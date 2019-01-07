@@ -1,6 +1,8 @@
 package com.wyait.manage2.other.controller;
 
 
+import cn.afterturn.easypoi.entity.vo.TemplateWordConstants;
+import cn.afterturn.easypoi.view.EasypoiTemplateWordView;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -18,10 +20,13 @@ import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -74,7 +79,69 @@ public class PackingListController {
         mv.addObject("model",packingList);
         return mv;
     }
+    @RequestMapping("/download")
+    public void download(String id, ModelMap modelMap, HttpServletRequest request, HttpServletResponse response) {
+        Map<String, Object> map = new HashMap<String, Object>();
 
+        PackingList packingList = packingListService.getById(id);
+
+        QueryWrapper<PackingListDetail> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("packing_list_id", id);
+        List<PackingListDetail> packingListDetails = packingListDetailService.list(queryWrapper);
+        //map.put("items", new ExcelListEntity(sellingContractDetails, BuyingContractDetail.class));
+        map.put("code", packingList.getCode());
+        //map.put("signDate",packingList.toString());
+        map.put("buyer",packingList.getBuyer() == null ? "":packingList.getBuyer());
+        map.put("seller",packingList.getSeller());
+        map.put("packingDate",packingList.getPackingDate() == null ? "":packingList.getPackingDate().toString());
+        List<Map<String, Object>> mapList = new ArrayList<Map<String, Object>>();
+        BigDecimal totalPrice = BigDecimal.ZERO;
+        BigDecimal totalGW = BigDecimal.ZERO;
+        BigDecimal totalNW = BigDecimal.ZERO;
+        BigDecimal totalQT = BigDecimal.ZERO;
+        BigDecimal totalPQ = BigDecimal.ZERO;
+        String priceUnit = StringUtils.EMPTY;
+        if(packingListDetails != null) {
+
+            for (PackingListDetail e : packingListDetails) {
+                Map<String,Object> m = new HashMap<>();
+                m.put("goodsName",e.getGoodsName());
+                m.put("goodsUnit", e.getGoodsUnit());
+                m.put("quantity",(e.getQuantity() == null? BigDecimal.ZERO : e.getQuantity()).toString() + e.getGoodsUnit());
+                m.put("packageQuantity",e.getPackageQuantity());
+                m.put("grossWeight",e.getGrossWeight());
+                m.put("netWeight",e.getNetWeight());
+                m.put("price", (StringUtils.isEmpty(e.getPriceUnit())?StringUtils.EMPTY: e.getPriceUnit())+(e.getPrice() == null? BigDecimal.ZERO : e.getPrice()).toString());
+                m.put("priceUnit",e.getPriceUnit());
+                if(StringUtils.isNotEmpty(e.getPriceUnit())) {
+                    priceUnit = e.getPriceUnit();
+                }
+                m.put("totalPrice",e.getTotalPrice());
+                mapList.add(m);
+
+                totalPrice = totalPrice.add(e.getTotalPrice()== null ? BigDecimal.ZERO:e.getTotalPrice());
+                totalGW = totalGW.add(e.getGrossWeight()== null ? BigDecimal.ZERO: e.getGrossWeight());
+                totalNW = totalNW.add(e.getNetWeight()== null ? BigDecimal.ZERO:e.getNetWeight());
+                totalPQ = totalPQ.add(e.getPackageQuantity()== null ? BigDecimal.ZERO:e.getPackageQuantity());
+                totalQT = totalQT.add(e.getQuantity()== null ? BigDecimal.ZERO:e.getQuantity());
+
+            }
+            map.put("totalGW",totalGW);
+            map.put("totalNW",totalNW);
+            map.put("totalPQ",totalPQ);
+            map.put("totalQT",totalQT);
+            map.put("capTotalPrice",NumberUtils.digitUppercase(totalPrice.doubleValue()));
+            map.put("totalPrice", priceUnit + totalPrice.toString());
+        }
+        map.put("items",mapList);
+
+        modelMap.put(TemplateWordConstants.FILE_NAME, packingList.getCode());
+        modelMap.put(TemplateWordConstants.MAP_DATA, map);
+        modelMap.put(TemplateWordConstants.URL, "word/temp_装箱单.docx");
+        //EasypoiTemplateWordView
+        EasypoiTemplateWordView.render(modelMap, request, response,
+                TemplateWordConstants.EASYPOI_TEMPLATE_WORD_VIEW);
+    }
     /**
      * 生成装箱单货物详情
      * @return
@@ -188,10 +255,10 @@ public class PackingListController {
                     //queryWrapper.eq("cont")
                 }
                 if(searchEntityVO.getStartCreateTime() != null) {
-                    queryWrapper.gt("create_time",searchEntityVO.getStartCreateTime());
+                    queryWrapper.gt("packing_date",searchEntityVO.getStartCreateTime());
                 }
                 if(searchEntityVO.getEndCreateTime() != null) {
-                    queryWrapper.lt("create_time",searchEntityVO.getEndCreateTime());
+                    queryWrapper.lt("packing_date",searchEntityVO.getEndCreateTime());
                 }
 
                 if(searchEntityVO.getStartSignDate() != null) {

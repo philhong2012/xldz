@@ -101,6 +101,9 @@ public class FormSellingContractController {
         }
         map.put("items",mapList);
 
+        modelMap.put("checked"," X ");
+        modelMap.put("unchecked","  ");
+
         modelMap.put(TemplateWordConstants.FILE_NAME, formSellingContract.getContractNo());
         modelMap.put(TemplateWordConstants.MAP_DATA, map);
         modelMap.put(TemplateWordConstants.URL, "word/temp_购货合同.docx");

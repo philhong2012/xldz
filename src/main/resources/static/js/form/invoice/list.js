@@ -24,6 +24,7 @@ $(function() {
                 ,dataName: 'list' //数据列表的字段名称，默认：data
             }
             ,cols: [[
+                {type:'checkbox'},
                 {field:'id', title:'ID', width:80, unresize: true, sort: true}
                 ,{field:'code', title:'合同编号'}
                 ,{field:'seller', title: '卖方',}
@@ -78,6 +79,17 @@ $(function() {
         });
     });
 });
+
+function exportFile() {
+    var table = layui.table;
+    var checkStatus = table.checkStatus('invoiceList');
+    if(checkStatus.data.length > 0) {
+        window.location.href = '/invoice/download?id='+checkStatus.data[0].id;
+    } else if(checkStatus.data.length == 0) {
+        layer.alert("请选择一条记录！");
+        //return false;
+    }
+}
 
 function edit(obj,id) {
     window.location.href = '/invoice/edit?id='+id;

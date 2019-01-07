@@ -24,6 +24,7 @@ $(function() {
                 ,dataName: 'list' //数据列表的字段名称，默认：data
             }
             ,cols: [[
+                {type:'checkbox'},
                 {field:'id', title:'ID', width:80, unresize: true, sort: true}
                 ,{field:'code', title:'合同编号'}
                 ,{field:'seller', title: '卖方',}
@@ -64,10 +65,10 @@ $(function() {
             ,laydate = layui.laydate;
         //日期
         laydate.render({
-            elem: '#startSignDate'
+            elem: '#startCreateTime'
         });
         laydate.render({
-            elem: '#endSignDate'
+            elem: '#endCreateTime'
         });
         //TODO 数据校验
         //监听搜索框
@@ -78,6 +79,17 @@ $(function() {
         });
     });
 });
+
+function exportFile() {
+    var table = layui.table;
+    var checkStatus = table.checkStatus('packinglist');
+    if(checkStatus.data.length > 0) {
+        window.location.href = '/packinglist/download?id='+checkStatus.data[0].id;
+    } else if(checkStatus.data.length == 0) {
+        layer.alert("请选择一条记录！");
+        //return false;
+    }
+}
 
 function edit(obj,id) {
     window.location.href = '/packinglist/edit?id='+id;

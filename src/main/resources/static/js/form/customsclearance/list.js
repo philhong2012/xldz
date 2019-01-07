@@ -93,6 +93,16 @@ $(function() {
     });
 });
 
+function exportFile() {
+    var table = layui.table;
+    var checkStatus = table.checkStatus('customsClearanceList');
+    if(checkStatus.data.length > 0) {
+        window.location.href = '/customsclearancelist/download?id='+checkStatus.data[0].id;
+    } else if(checkStatus.data.length == 0) {
+        layer.alert("请选择一条记录！");
+        //return false;
+    }
+}
 
 function editSellingContract(obj,id) {
     window.location.href = '/customsclearance/edit?id='+id;
