@@ -15,12 +15,14 @@
 		<result column="mcode" jdbcType="VARCHAR" property="mcode" />
 		<result column="send_time" jdbcType="TIMESTAMP" property="sendTime" />
 		<result column="version" jdbcType="INTEGER" property="version" />
+		<result column="dept_Id" jdbcType="VARCHAR" property="deptId" />
+		<result column="dept_name" jdbcType="VARCHAR" property="deptName" />
 	</resultMap>
 	<sql id="Base_Column_List">
 		id, username, mobile, email, password, insert_uid,
 		insert_time,
 		update_time, is_del,
-		is_job, mcode, send_time, version
+		is_job, mcode, send_time, version,dept_id,dept_name
 	</sql>
 	<select id="selectByPrimaryKey" parameterType="java.lang.Integer"
 		resultMap="BaseResultMap">
@@ -178,6 +180,12 @@
 			<if test="password != null and password !=''">
 				password = #{password,jdbcType=VARCHAR},
 			</if>
+			<if test="deptId != null and deptId !=''">
+				dept_id = #{deptId,jdbcType=VARCHAR},
+			</if>
+			<if test="deptName != null and deptName !=''">
+				dept_Name = #{deptName,jdbcType=VARCHAR},
+			</if>
 			<if test="insertUid != null">
 				insert_uid = #{insertUid,jdbcType=INTEGER},
 			</if>
@@ -268,6 +276,8 @@
 		<result column="is_del" jdbcType="BIT" property="isDel" />
 		<result column="is_job" jdbcType="BIT" property="isJob" />
 		<result column="version" jdbcType="INTEGER" property="version" />
+		<result column="dept_Id" jdbcType="VARCHAR" property="deptId" />
+		<result column="dept_Name" jdbcType="VARCHAR" property="deptName" />
 
 		<collection property="userRoles" ofType="com.wyait.manage.pojo.UserRoleKey">
 			<result column="user_id" property="userId" />
@@ -281,10 +291,11 @@
 		u.mobile, u.email, u.insert_uid insertUid,u.insert_time
 		insertTime,
 		u.update_time updateTime, u.is_del isDel,u.is_job isJob,u.version,
-		ur.user_id,ur.role_id
+		ur.user_id,ur.role_id,dept.id as dept_Id,dept.name as dept_Name
 		from user u
 		LEFT JOIN user_role ur ON
 		u.id=ur.user_id
+		left join department dept on u.dept_id = dept.id
 		WHERE u.id=#{id} AND u.is_del=0 and u.is_job=0
 	</select>
 	<!--=End getUserAndRoles 查询用户及他对应的角色ids -->
@@ -296,7 +307,7 @@
 		email, insert_uid insertUid, insert_time
 		insertTime, update_time
 		updateTime, is_del isDel,is_job
-		isJob,mcode,send_time sendTime,version
+		isJob,mcode,send_time sendTime,version,dept_id,dept_name
 		from user
 		WHERE username=#{username} AND password =#{password} and
 		is_del=0 and
@@ -309,7 +320,7 @@
 		id, username,
 		mobile,password, email, insert_uid insertUid, insert_time
 		insertTime,
-		update_time, is_del,is_job,mcode,send_time sendTime,version
+		update_time, is_del,is_job,mcode,send_time sendTime,version,dept_id,dept_name
 		from user
 		WHERE
 		mobile=#{mobile} and is_del=0
@@ -323,7 +334,7 @@
 		insertTime,
 		update_time updateTime, is_del isDel,is_job
 		isJob,mcode,send_time
-		sendTime,version
+		sendTime,version,dept_id,dept_name
 		from user
 		WHERE username=#{username} and is_del=0
 	</select>

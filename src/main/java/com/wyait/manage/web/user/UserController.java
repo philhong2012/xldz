@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import com.wyait.manage2.other.entity.Department;
+import com.wyait.manage2.other.service.IDepartmentService;
 import net.sf.oval.ConstraintViolation;
 import net.sf.oval.Validator;
 
@@ -66,6 +68,9 @@ public class UserController {
 	private AuthService authService;
 	@Autowired
 	private EhCacheManager ecm;
+
+	@Autowired
+	private IDepartmentService departmentService;
 
 	//private static final Pattern MOBILE_PATTERN = Pattern.compile("^1\\d{10}$");
 
@@ -270,6 +275,11 @@ public class UserController {
 			} else {
 				map.put("msg", "查询用户信息有误，请您稍后再试");
 			}
+
+			List<Department> departments = departmentService.list();
+
+			map.put("deptList",departments);
+
 			logger.debug("查询用户数据成功！map=" + map);
 			return map;
 		} catch (Exception e) {

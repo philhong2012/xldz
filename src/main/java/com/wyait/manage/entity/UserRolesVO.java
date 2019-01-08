@@ -25,6 +25,10 @@ public class UserRolesVO {
 
 	private boolean isJob;
 
+	private String deptId;
+
+	private String deptName;
+
 	private List<UserRoleKey> userRoles;
 
 	private Integer version;
@@ -135,4 +139,20 @@ public class UserRolesVO {
 				+ ", version=" + version + "]";
 	}
 
+
+	public String getDeptId() {
+		return deptId;
+	}
+
+	public void setDeptId(String deptId) {
+		this.deptId = deptId;
+	}
+
+	public String getDeptName() {
+		return deptName;
+	}
+
+	public void setDeptName(String deptName) {
+		this.deptName = deptName;
+	}
 }

@@ -2,11 +2,14 @@ package com.wyait.manage.web.user;
 
 import com.wyait.manage.entity.PermissionVO;
 import com.wyait.manage.entity.RoleVO;
+import com.wyait.manage.entity.SearchEntityVO;
 import com.wyait.manage.pojo.Permission;
 import com.wyait.manage.pojo.Role;
 import com.wyait.manage.pojo.RolePermissionKey;
 import com.wyait.manage.pojo.User;
 import com.wyait.manage.service.AuthService;
+import com.wyait.manage2.other.entity.Department;
+import com.wyait.manage2.other.service.IDepartmentService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
@@ -17,7 +20,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @项目名称：wyait-manage
@@ -33,6 +38,9 @@ public class AuthController {
 	private static final Logger logger = LoggerFactory
 			.getLogger(AuthController.class);
 	@Autowired private AuthService authService;
+
+	@Autowired
+	IDepartmentService departmentService;
 
 	/**
 	 * 添加权限【test】
@@ -313,6 +321,32 @@ public class AuthController {
 			logger.error("删除角色异常！", e);
 		}
 		return "删除角色出错，请您稍后再试";
+	}
+
+
+	/**
+	 * 查找所有角色
+	 * @return
+	 */
+	@RequestMapping(value = "/getRolesAndDetps", method = RequestMethod.GET)
+	@ResponseBody
+	public Map<String,Object> getRolesAndDetps() {
+		//logger.debug("查找所有角色!");
+		Map<String,Object> map =new HashMap<>();
+		List<Role> roles=null;
+		List<Department> departments = null;
+		try {
+			roles = this.authService.getRoles();
+			departments = departmentService.list();
+			map.put("roles",roles);
+			map.put("depts",departments);
+
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error("查找所有角色异常！", e);
+		}
+		return map;
 	}
 
 	/**
