@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro" xmlns="http://www.w3.org/1999/html">
+<head th:include="layout :: htmlhead_(
+'/jquery-easyui-1.6.11/themes/default/easyui.css,'
++'/jquery-easyui-1.6.11/themes/default/icon.css,'
++'/jquery-easyui-1.6.11/demo.css',''
+)" th:with="title='部门管理'">
+</head>
+
+
+
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <!--头-->
+    <div th:replace="fragments/head :: header"></div>
+
+    <div class="layui-body" style="margin: 1%">
+        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+            <legend>部门管理</legend>
+        </fieldset>
+        <form class="layui-form" id="departmentForm">
+            <input type="hidden" name="id" id="id" th:value="${model}?${model.id}:_" />
+            <div class="layui-form-item">
+                <label class="layui-form-label">名称</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="name" lay-verify="title" autocomplete="off" placeholder="名称" th:value="${model}?${model.name}:_"  class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">编号</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="code" lay-verify="title" autocomplete="off" placeholder="编号" th:value="${model}?${model.code}:_"  class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">描述</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="description" lay-verify="title" th:value="${model}?${model.description}:_" autocomplete="off" placeholder="请输入编号" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit="" lay-filter="saveDepartment">立即提交</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script type="text/javascript">
+
+    </script>
+
+
+    <!--底部-->
+    <div th:replace="fragments/footer :: footer"></div>
+    <script src="../js/dateUtils.js"></script>
+    <script src="../js/form/department/create.js"></script>
+
+</div>
+</body>
+</html>

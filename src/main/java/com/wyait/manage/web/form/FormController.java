@@ -94,8 +94,16 @@ public class FormController {
     }
 
 
+    @RequestMapping("/departmentList")
+    public String departmentList()
+    {
+        return "form/department/list";
+    }
 
-        /**
+
+
+
+    /**
          * 分页查询用户列表
          * @return ok/fail
          */
