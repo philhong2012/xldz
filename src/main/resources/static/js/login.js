@@ -143,7 +143,7 @@ function checkParams(){
     var password=$("#password").val();
     var mobile=$("#mobile").val();
     var code=$("#code").val();
-    if("ok"!=ValidateUtils.checkUserName(username) || "ok"!=ValidateUtils.checkSimplePassword(password)){
+    if("ok"!=ValidateUtils.checkUserName(username) /*|| "ok"!=ValidateUtils.checkSimplePassword(password)*/){
         layer.alert("请您输入正确的用户名和密码");
         return false;
     }

@@ -170,6 +170,11 @@ public class UserController {
 			// 设置用户[新增或更新]
 			logger.info("设置用户[新增或更新]成功！user=" + user + ",roleIds=" + roleIds
 					+ "，操作的用户ID=" + existUser.getId());
+			if(StringUtils.isNotEmpty(user.getDeptId())) {
+				Department department = departmentService.getById(user.getDeptId());
+				user.setDeptName(department.getName());
+			}
+
 			return userService.setUser(user, roleIds);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -695,14 +700,14 @@ public class UserController {
 		logger.debug("修改密码！pwd:" + pwd + ",isPwd=" + isPwd);
 		ResponseResult responseResult = new ResponseResult();
 		try {
-			if (!ValidateUtil.isSimplePassword(pwd)
+			/*if (!ValidateUtil.isSimplePassword(pwd)
 					|| !ValidateUtil.isSimplePassword(isPwd)) {
 				responseResult.setCode(IStatusMessage.SystemStatus.PARAM_ERROR
 						.getCode());
 				responseResult.setMessage("密码格式有误，请您重新填写");
 				logger.debug("修改密码，结果=responseResult:" + responseResult);
 				return responseResult;
-			}
+			}*/
 			if (!pwd.equals(isPwd)) {
 				responseResult.setCode(IStatusMessage.SystemStatus.PARAM_ERROR
 						.getCode());

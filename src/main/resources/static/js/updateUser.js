@@ -151,7 +151,7 @@ function setPwd(){
         });
         return false;
     }
-    if("ok"!=ValidateUtils.checkSimplePassword(pwd) || "ok"!=ValidateUtils.checkSimplePassword(isPwd)){
+    /*if("ok"!=ValidateUtils.checkSimplePassword(pwd) || "ok"!=ValidateUtils.checkSimplePassword(isPwd)){
         //tips层-右
         $("#pwd").val("");
         $("#pwd").val("");
@@ -159,7 +159,7 @@ function setPwd(){
         $("#isPwd").val("");
         layer.alert("密码格式有误，请您重新输入");
         return false;
-    }
+    }*/
     $.post("/user/setPwd",{"pwd":pwd,"isPwd":isPwd},function(data){
         console.log("data:"+data);
         if(data.code=="1000"){
