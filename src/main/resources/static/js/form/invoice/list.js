@@ -65,10 +65,10 @@ $(function() {
             ,laydate = layui.laydate;
         //日期
         laydate.render({
-            elem: '#startSignDate'
+            elem: '#startCreateTime'
         });
         laydate.render({
-            elem: '#endSignDate'
+            elem: '#endCreateTime'
         });
         //TODO 数据校验
         //监听搜索框

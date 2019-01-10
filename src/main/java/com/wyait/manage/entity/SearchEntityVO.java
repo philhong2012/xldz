@@ -16,9 +16,16 @@ import java.time.LocalDate;
 public class SearchEntityVO {
     private String code;
     private String name;
+
+    @JsonFormat(pattern = JacksonConfig.DEFAULT_DATE_FORMAT)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate startCreateTime;
 
+    @JsonFormat(pattern = JacksonConfig.DEFAULT_DATE_FORMAT)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate endCreateTime;
+
+
     @JsonFormat(pattern = JacksonConfig.DEFAULT_DATE_FORMAT)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate startSignDate;

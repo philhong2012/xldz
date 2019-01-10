@@ -240,10 +240,10 @@ public class FormInvoiceController {
                     //queryWrapper.eq("cont")
                 }
                 if(searchEntityVO.getStartCreateTime() != null) {
-                    queryWrapper.gt("create_time",searchEntityVO.getStartCreateTime());
+                    queryWrapper.gt("invoice_date",searchEntityVO.getStartCreateTime());
                 }
                 if(searchEntityVO.getEndCreateTime() != null) {
-                    queryWrapper.lt("create_time",searchEntityVO.getEndCreateTime());
+                    queryWrapper.lt("invoice_date",searchEntityVO.getEndCreateTime());
                 }
 
                 if(searchEntityVO.getStartSignDate() != null) {
