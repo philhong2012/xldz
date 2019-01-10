@@ -45,10 +45,16 @@
                     <input type="text" name="code" lay-verify="title" th:value="${model}?${model.code}:_" autocomplete="off" placeholder="请输入编号" class="layui-input">
                 </div>
             </div>
-
+            <div class="layui-form-item">
+                <label class="layui-form-label">装箱日期</label>
+                <div class="layui-input-block">
+                    <input type="text" name="packingDate" lay-verify="title" th:value="${model}?${model.packingDate}:_" autocomplete="off" placeholder="请输入编号" class="layui-input">
+                </div>
+            </div>
 
 
             <div class="layui-form-item">
+                <div class="layui-input-inline">
                 <table id="dg" class="easyui-datagrid" title="" style="width:700px;height:auto"
                        data-options="
                     iconCls: 'icon-edit',
@@ -78,6 +84,7 @@
                     <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" onclick="accept()">接受</a>
                     <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-undo',plain:true" onclick="reject()">拒绝</a>
                     <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="getChanges()">获取变更记录</a>
+                </div>
                 </div>
             </div>
             <div class="layui-form-item">

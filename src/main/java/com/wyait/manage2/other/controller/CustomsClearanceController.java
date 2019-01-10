@@ -1,31 +1,47 @@
 package com.wyait.manage2.other.controller;
 
 
+import cn.afterturn.easypoi.entity.vo.MapExcelConstants;
+import cn.afterturn.easypoi.entity.vo.TemplateExcelConstants;
+import cn.afterturn.easypoi.entity.vo.TemplateWordConstants;
+import cn.afterturn.easypoi.excel.entity.ExportParams;
+import cn.afterturn.easypoi.excel.entity.TemplateExportParams;
+import cn.afterturn.easypoi.excel.entity.enmus.ExcelType;
+import cn.afterturn.easypoi.view.EasypoiTemplateExcelView;
+import cn.afterturn.easypoi.view.EasypoiTemplateWordView;
+import cn.afterturn.easypoi.view.PoiBaseView;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.wyait.manage.entity.BuyingContractVO;
+import com.wyait.common.utils.BeanUtils;
 import com.wyait.manage.entity.CustomsClearanceVO;
 import com.wyait.manage.entity.DataGridVO;
 import com.wyait.manage.entity.SearchEntityVO;
 import com.wyait.manage.pojo.User;
 import com.wyait.manage.utils.PageDataResult;
-import com.wyait.manage2.other.entity.*;
+import com.wyait.manage2.other.entity.CustomsClearance;
+import com.wyait.manage2.other.entity.CustomsClearanceDetail;
+import com.wyait.manage2.other.entity.FormSellingContract;
+import com.wyait.manage2.other.entity.SellingContractDetail;
 import com.wyait.manage2.other.service.*;
-import io.swagger.models.HttpMethod;
+import org.apache.commons.beanutils.BeanMap;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -62,6 +78,55 @@ public class CustomsClearanceController {
         ModelAndView mv = new ModelAndView("form/customsclearance/create");
         return mv;
     }
+
+
+    @RequestMapping("/download")
+    public void download(String id, ModelMap modelMap, HttpServletRequest request, HttpServletResponse response) {
+        Map<String, Object> map = new HashMap<>();
+
+        CustomsClearance customsClearance = customsClearanceService.getById(id);
+
+        QueryWrapper<CustomsClearanceDetail> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("customs_clearance_id", id);
+        List<CustomsClearanceDetail> customsClearanceDetails = customsClearanceDetailService.list(queryWrapper);
+
+
+
+        map.putAll(BeanUtils.objectToMap(customsClearance));
+
+        List<Map<String, Object>> mapList = new ArrayList<>();
+        BigDecimal totalPrice = BigDecimal.ZERO;
+        String priceUnit = StringUtils.EMPTY;
+        if(customsClearanceDetails != null) {
+
+            for (CustomsClearanceDetail e : customsClearanceDetails) {
+                Map<String,Object> m = BeanUtils.objectToMap(e);
+                mapList.add(m);
+
+                totalPrice = totalPrice.add(e.getTotalPrice());
+            }
+            map.put("totalPrice", priceUnit + totalPrice.toString());
+        }
+        map.put("items",mapList);
+
+        /*modelMap.put(TemplateWordConstants.FILE_NAME, customsClearance.getContractNo());
+        modelMap.put(TemplateWordConstants.MAP_DATA, map);
+        modelMap.put(TemplateWordConstants.URL, "word/temp_新版出口货物报关单.xlsx");
+        //EasypoiTemplateWordView
+        EasypoiTemplateExcelView.render(modelMap, request, response,
+                TemplateExcelConstants.EASYPOI_TEMPLATE_EXCEL_VIEW);*/
+
+        TemplateExportParams params = new TemplateExportParams(
+                "word/temp_新版出口货物报关单.xlsx");
+
+        modelMap.put(TemplateExcelConstants.FILE_NAME, customsClearance.getContractNo());
+        modelMap.put(TemplateExcelConstants.PARAMS, params);
+        modelMap.put(TemplateExcelConstants.MAP_DATA, map);
+        PoiBaseView.render(modelMap, request, response,
+                TemplateExcelConstants.EASYPOI_TEMPLATE_EXCEL_VIEW);
+    }
+
+
 
 
     @RequestMapping("/gen")

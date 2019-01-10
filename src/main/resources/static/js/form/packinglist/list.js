@@ -29,7 +29,7 @@ $(function() {
                 ,{field:'code', title:'合同编号'}
                 ,{field:'seller', title: '卖方',}
                 ,{field:'buyer', title: '买方', }
-                ,{field:'signDate', title: '签订日期',align:'center'}
+                ,{field:'packingDate', title: '装箱日期',align:'center'}
                 ,{field:'createTime',title:'创建时间',align:'center'}
                 ,{fixed:'right', title:'操作', width:140,align:'center', toolbar:'#optBar'}
             ]]

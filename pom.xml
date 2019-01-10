@@ -90,7 +90,7 @@
         <dependency>
             <groupId>cn.afterturn</groupId>
             <artifactId>easypoi-spring-boot-starter</artifactId>
-            <version>4.0.0</version>
+            <version>3.3.0</version>
         </dependency>
 
      <!--   <dependency>
@@ -133,6 +133,8 @@
             <artifactId>shiro-spring</artifactId>
             <version>${shiro.version}</version>
         </dependency>
+
+
         <!--shiro依赖-->
         <dependency>
             <groupId>org.apache.shiro</groupId>
