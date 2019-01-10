@@ -103,6 +103,10 @@ public class ProviderAccountController {
                 if(searchEntityVO.getEndCreateTime() != null) {
                     queryWrapper.lt("create_time",searchEntityVO.getEndCreateTime());
                 }
+
+                if(searchEntityVO.getName() != null) {
+                    queryWrapper.like("name",searchEntityVO.getName());
+                }
             }
 
 

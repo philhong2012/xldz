@@ -41,7 +41,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">金额</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="amount" lay-verify="number" autocomplete="off" placeholder="" th:value="${model}?${model.amount}:_"  class="layui-input">
+                    <input type="text" name="amount" lay-verify="number"  autocomplete="off" placeholder="收入填正数，支出填负数" th:value="${model}?${model.amount}:_"  class="layui-input">
                 </div>
             </div>
 
@@ -49,7 +49,7 @@
 
             <div class="layui-form-item">
                 <div class="layui-input-inline">
-                    <button class="layui-btn" lay-submit="" placeholder="收入填正数，支出填负数" lay-filter="saveForeignExchangeAccount">立即提交</button>
+                    <button class="layui-btn" lay-submit="" lay-filter="saveForeignExchangeAccount">立即提交</button>
                 </div>
             </div>
         </form>

@@ -22,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.function.Function;
 
 /**
  * <p>
@@ -101,6 +102,11 @@ public class ForeignExchangeAccountController {
                 }
                 if(searchEntityVO.getEndCreateTime() != null) {
                     queryWrapper.lt("create_time",searchEntityVO.getEndCreateTime());
+                }
+
+                if(searchEntityVO.getName() != null) {
+                    queryWrapper.and(wrapper-> wrapper.like("remittance",searchEntityVO.getName()).or()
+                    .like("receiver",searchEntityVO.getName()));
                 }
             }
 
