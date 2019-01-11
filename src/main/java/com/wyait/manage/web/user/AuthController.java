@@ -77,7 +77,7 @@ public class AuthController {
 	@ResponseBody
 	public ModelAndView permList() {
 		logger.debug("权限列表！");
-		ModelAndView mav = new ModelAndView("/auth/permList");
+		ModelAndView mav = new ModelAndView("auth/permList");
 		try {
 			List<Permission> permList = authService.permList();
 			logger.debug("权限列表查询=permList:" + permList);
