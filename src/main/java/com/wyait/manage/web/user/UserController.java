@@ -173,6 +173,9 @@ public class UserController {
 			if(StringUtils.isNotEmpty(user.getDeptId())) {
 				Department department = departmentService.getById(user.getDeptId());
 				user.setDeptName(department.getName());
+			} else {
+				logger.debug("请选择部门");
+				return "请选择部门";
 			}
 
 			return userService.setUser(user, roleIds);

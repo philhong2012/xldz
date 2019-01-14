@@ -100,6 +100,13 @@ public class FormController {
         return "form/department/list";
     }
 
+    @RequestMapping("/formOutboundList")
+    public String formOutboundList()
+    {
+        return "form/formoutbound/list";
+    }
+
+
 
 
 

@@ -70,6 +70,7 @@ public class FormBuyingContractController {
         if(formSellingContract != null) {
             formBuyingContract.setBuyer(formSellingContract.getSeller());
             formBuyingContract.setContractNo(formSellingContract.getContractNo());
+            formBuyingContract.setSellingContractId(formSellingContract.getId());
             formBuyingContract.setCode(formSellingContract.getContractNo());
         }
 

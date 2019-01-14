@@ -42,6 +42,23 @@ public class SearchEntityVO {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate endDeclareDate;
 
+    @JsonFormat(pattern = JacksonConfig.DEFAULT_DATE_FORMAT)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate startOutboundDate;
+
+    @JsonFormat(pattern = JacksonConfig.DEFAULT_DATE_FORMAT)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate startInboundDate;
+
+    @JsonFormat(pattern = JacksonConfig.DEFAULT_DATE_FORMAT)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate endOutboundDate;
+
+    @JsonFormat(pattern = JacksonConfig.DEFAULT_DATE_FORMAT)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate endInboundDate;
+
+
     public String getCode() {
         return code;
     }
@@ -104,5 +121,39 @@ public class SearchEntityVO {
 
     public void setStartDeclareDate(LocalDate startDeclareDate) {
         this.startDeclareDate = startDeclareDate;
+    }
+
+
+
+    public LocalDate getStartOutboundDate() {
+        return startOutboundDate;
+    }
+
+    public void setStartOutboundDate(LocalDate startOutboundDate) {
+        this.startOutboundDate = startOutboundDate;
+    }
+
+    public LocalDate getStartInboundDate() {
+        return startInboundDate;
+    }
+
+    public void setStartInboundDate(LocalDate startInboundDate) {
+        this.startInboundDate = startInboundDate;
+    }
+
+    public LocalDate getEndOutboundDate() {
+        return endOutboundDate;
+    }
+
+    public void setEndOutboundDate(LocalDate endOutboundDate) {
+        this.endOutboundDate = endOutboundDate;
+    }
+
+    public LocalDate getEndInboundDate() {
+        return endInboundDate;
+    }
+
+    public void setEndInboundDate(LocalDate endInboundDate) {
+        this.endInboundDate = endInboundDate;
     }
 }

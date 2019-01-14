@@ -147,6 +147,9 @@ function gen(type) {
             case 5: //报关单
                 window.location.href = '/customsclearance/gen?sellingContractId='+checkStatus.data[0].id;
                 break;
+            case 6: //出入库单
+                window.location.href = '/formoutbound/gen?sellingContractId='+checkStatus.data[0].id;
+                break;
         }
 
     } else if(checkStatus.data.length == 0) {

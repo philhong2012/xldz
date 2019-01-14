@@ -215,7 +215,7 @@ function initDeptOptions(depts,selected,callBack) {
 
 
         $("#deptId").empty();
-        var deptOptions = "<option>请选择部门</option>";
+        var deptOptions = "<option value=''>请选择部门</option>";
         $.each(depts,function (index,item) {
             if(selected == item.id) {
                 deptOptions = deptOptions + "<option value='" + item.id + " selected '>" + item.name + "</option>";
@@ -327,7 +327,7 @@ function getUserAndRoles(obj,id) {
                         $("#roleDiv").append(roleInput).append(div);
                     });
                     $("#deptId").empty();
-                    var deptOptions = "<option>请选择部门</option>";
+                    var deptOptions = "<option value=''>请选择部门</option>";
                     $.each(data.deptList,function (index,item) {
                         if(data.user.deptId == item.id) {
                             deptOptions = deptOptions + "<option value='" + item.id + "' selected >" + item.name + "</option>";

@@ -25,6 +25,7 @@
         <form class="layui-form" id="buyingContractForm">
             <input type="hidden" name="id" id="id" th:value="${model}?${model.id}:_" />
             <input type="hidden" name="code" id="code" th:value="${model}?${model.code}:_" />
+            <input type="hidden" name="sellingContractId" id="sellingContractId" th:value="${model}?${model.sellingContractId}:_" />
             <div class="layui-form-item">
                 <label class="layui-form-label">卖方</label>
                 <div class="layui-input-block">
