@@ -83,7 +83,7 @@ $(function() {
 
 function exportFile() {
     var table = layui.table;
-    var checkStatus = table.checkStatus('formoutbound');
+    var checkStatus = table.checkStatus('formOutboundList');
     if(checkStatus.data.length > 0) {
         window.location.href = '/formoutbound/download?id='+checkStatus.data[0].id;
     } else if(checkStatus.data.length == 0) {

@@ -103,9 +103,9 @@ public class FormOutboundController {
 
         FormOutbound formOutbound = formOutboundService.getById(id);
 
-        QueryWrapper<PackingListDetail> queryWrapper = new QueryWrapper<>();
+        QueryWrapper<FormOutboundDetail> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("outbound_id", id);
-        List<PackingListDetail> packingListDetails = packingListDetailService.list(queryWrapper);
+        List<FormOutboundDetail> formOutboundDetails = formOutboundDetailService.list(queryWrapper);
         //map.put("items", new ExcelListEntity(sellingContractDetails, BuyingContractDetail.class));
         map.putAll(BeanUtils.objectToMap(formOutbound));
         List<Map<String, Object>> mapList = new ArrayList<Map<String, Object>>();
@@ -115,19 +115,20 @@ public class FormOutboundController {
         BigDecimal totalQT = BigDecimal.ZERO;
         BigDecimal totalPQ = BigDecimal.ZERO;
         String priceUnit = StringUtils.EMPTY;
-        if(packingListDetails != null) {
+        BigDecimal totalPackageQuantity = BigDecimal.ZERO;
+        if(formOutboundDetails != null) {
 
-            for (PackingListDetail e : packingListDetails) {
+            for (FormOutboundDetail e : formOutboundDetails) {
                 Map<String,Object> m = new HashMap<>();
 
-                m.putAll(BeanUtils.objectToMap(formOutbound));
+                m.putAll(BeanUtils.objectToMap(e));
                 mapList.add(m);
                 totalPrice = totalPrice.add(e.getTotalPrice()== null ? BigDecimal.ZERO:e.getTotalPrice());
                 totalGW = totalGW.add(e.getGrossWeight()== null ? BigDecimal.ZERO: e.getGrossWeight());
                 totalNW = totalNW.add(e.getNetWeight()== null ? BigDecimal.ZERO:e.getNetWeight());
                 totalPQ = totalPQ.add(e.getPackageQuantity()== null ? BigDecimal.ZERO:e.getPackageQuantity());
                 totalQT = totalQT.add(e.getQuantity()== null ? BigDecimal.ZERO:e.getQuantity());
-
+                totalPackageQuantity = totalPackageQuantity.add(e.getPackageQuantity()== null ? BigDecimal.ZERO:e.getPackageQuantity());
             }
             map.put("totalGW",totalGW);
             map.put("totalNW",totalNW);
@@ -135,11 +136,13 @@ public class FormOutboundController {
             map.put("totalQT",totalQT);
             map.put("capTotalPrice",NumberUtils.digitUppercase(totalPrice.doubleValue()));
             map.put("totalPrice", priceUnit + totalPrice.toString());
+            map.put("totalPackageQuantity",totalPackageQuantity);
+            map.put("totalQuantity",totalQT);
         }
         map.put("items",mapList);
 
         TemplateExportParams params = new TemplateExportParams(
-                "word/temp_出(入)库单.xlsx");
+                "word/temp_出入库明细表.xlsx");
 
         modelMap.put(TemplateExcelConstants.FILE_NAME, formOutbound.getCode());
         modelMap.put(TemplateExcelConstants.PARAMS, params);
