@@ -130,13 +130,16 @@ function exportFile() {
 function gen(type) {
     var table = layui.table;
     var checkStatus = table.checkStatus('saleContractList');
+    var url;
     if(checkStatus.data.length > 0) {
         switch (type) {
             case 1: // buying contract
                 window.location.href = '/buyingcontract/gen?sellingContractId='+checkStatus.data[0].id;
                 break;
             case 2: //export goods list
-                window.location.href = '/exportgoodslist/gen?sellingContractId='+checkStatus.data[0].id;
+               // window.location.href = '/exportgoodslist/gen?sellingContractId='+checkStatus.data[0].id;
+                url = '/exportgoodslist/gen?sellingContractId='+checkStatus.data[0].id;
+                ensureGenerateForms("2",checkStatus.data[0].id,url);
                 break;
             case 3: //invoice
                 window.location.href = '/invoice/gen?sellingContractId='+checkStatus.data[0].id;
@@ -148,7 +151,8 @@ function gen(type) {
                 window.location.href = '/customsclearance/gen?sellingContractId='+checkStatus.data[0].id;
                 break;
             case 6: //出入库单
-                window.location.href = '/formoutbound/gen?sellingContractId='+checkStatus.data[0].id;
+                url = '/formoutbound/gen?sellingContractId='+checkStatus.data[0].id;
+                ensureGenerateForms("6",checkStatus.data[0].id,url);
                 break;
         }
 
@@ -158,6 +162,22 @@ function gen(type) {
     }
 }
 
+
+function ensureGenerateForms(type,id,url) {
+    $.ajax({
+        "url": "/form/check?sellingContractId="+id+"&type="+type,
+        "type": "post",
+        "data": null,
+        "contentType": "application/json",
+        "success": function (data) {
+            if(data.code == "-1") {
+                layer.alert(data.message, {time: 1000 });
+            } else {
+                window.location.href = url;
+            }
+        }
+    });
+}
 
 
 
