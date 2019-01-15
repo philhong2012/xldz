@@ -1,11 +1,13 @@
 package com.wyait.manage2.other.controller;
 
 
+import cn.afterturn.easypoi.entity.vo.TemplateExcelConstants;
+import cn.afterturn.easypoi.excel.entity.TemplateExportParams;
+import cn.afterturn.easypoi.view.PoiBaseView;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.wyait.common.utils.NumberUtils;
-import com.wyait.manage.entity.BuyingContractVO;
+import com.wyait.common.utils.BeanUtils;
 import com.wyait.manage.entity.DataGridVO;
 import com.wyait.manage.entity.ExportGoodsListVO;
 import com.wyait.manage.entity.SearchEntityVO;
@@ -18,13 +20,14 @@ import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
-import java.text.Normalizer;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -83,6 +86,65 @@ public class ExportGoodsListController {
         mv.addObject("model",exportGoodsList);
         return mv;
     }
+
+
+    @RequestMapping("/download")
+    public void download(String id, ModelMap modelMap, HttpServletRequest request, HttpServletResponse response) {
+        Map<String, Object> map = new HashMap<String, Object>();
+
+        ExportGoodsList exportGoodsList = exportGoodsListService.getById(id);
+
+        QueryWrapper<ExportGoodsListDetail> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("export_goods_list_id", id);
+        List<ExportGoodsListDetail> exportGoodsListDetails = exportGoodsListDetailService.list(queryWrapper);
+        //map.put("items", new ExcelListEntity(sellingContractDetails, BuyingContractDetail.class));
+        map.putAll(BeanUtils.objectToMap(exportGoodsList));
+        List<Map<String, Object>> mapList = new ArrayList<>();
+        BigDecimal totalSubtotalBuyingPrice = BigDecimal.ZERO;
+        BigDecimal totalBuyingPrice = BigDecimal.ZERO;
+        BigDecimal totalSellingPrice = BigDecimal.ZERO;
+        BigDecimal totalQT = BigDecimal.ZERO;
+        BigDecimal totalPackageQuantity = BigDecimal.ZERO;
+        BigDecimal totalRefundTax = BigDecimal.ZERO;
+        BigDecimal totalExportCost = BigDecimal.ZERO;
+        BigDecimal totalTaxCost = BigDecimal.ZERO;
+        if(exportGoodsListDetails != null) {
+
+            for (ExportGoodsListDetail e : exportGoodsListDetails) {
+                Map<String,Object> m = new HashMap<>();
+                m.putAll(BeanUtils.objectToMap(e));
+                mapList.add(m);
+                totalSubtotalBuyingPrice = totalSubtotalBuyingPrice.add(e.getSubtotalBuyingPrice()== null ? BigDecimal.ZERO:e.getSubtotalBuyingPrice());
+                totalBuyingPrice = totalBuyingPrice.add(e.getBuyingPrice() == null ? BigDecimal.ZERO:e.getBuyingPrice());
+                totalSellingPrice = totalSellingPrice.add(e.getSubtotalSellingPrice()== null?BigDecimal.ZERO:e.getSubtotalSellingPrice());
+                totalRefundTax = totalRefundTax.add(e.getRefundTax() == null ? BigDecimal.ZERO:e.getRefundTax());
+                totalQT = totalQT.add(e.getQuantity()== null ? BigDecimal.ZERO:e.getQuantity());
+                totalPackageQuantity = totalPackageQuantity.add(e.getPackageQuantity()== null ? BigDecimal.ZERO:e.getPackageQuantity());
+                totalExportCost = totalExportCost.add(e.getExportCost()== null ? BigDecimal.ZERO:e.getExportCost());
+                totalTaxCost = totalTaxCost.add(e.getTaxCost() == null ? BigDecimal.ZERO:e.getTaxCost());
+            }
+            map.put("totalQT",totalQT);
+            map.put("totalPackageQuantity",totalPackageQuantity);
+            map.put("totalQuantity",totalQT);
+            map.put("totalSellingPrice",totalSellingPrice);
+            map.put("totalSubtotalBuyingPrice",totalSubtotalBuyingPrice);
+            map.put("totalBuyingPrice",totalBuyingPrice);
+            map.put("totalRefundTax",totalRefundTax);
+            map.put("totalExportCost",totalExportCost);
+            map.put("totalTaxCost",totalTaxCost);
+        }
+        map.put("items",mapList);
+
+        TemplateExportParams params = new TemplateExportParams(
+                "word/temp_进出口明细表.xlsx");
+
+        modelMap.put(TemplateExcelConstants.FILE_NAME, "进出口明细-"+exportGoodsList.getBuyingContractNo());
+        modelMap.put(TemplateExcelConstants.PARAMS, params);
+        modelMap.put(TemplateExcelConstants.MAP_DATA, map);
+        PoiBaseView.render(modelMap, request, response,
+                TemplateExcelConstants.EASYPOI_TEMPLATE_EXCEL_VIEW);
+    }
+
 
     /**
      * 生成采购合同货物详情

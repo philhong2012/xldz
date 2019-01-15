@@ -73,7 +73,7 @@ public class ExportGoodsListDetail implements Serializable {
     /**
      * 收购价格
      */
-    private String buyingPrice;
+    private BigDecimal buyingPrice;
 
     /**
      * 税费

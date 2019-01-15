@@ -93,6 +93,16 @@ $(function() {
     });
 });
 
+function exportFile() {
+    var table = layui.table;
+    var checkStatus = table.checkStatus('exportGoodsList');
+    if(checkStatus.data.length > 0) {
+        window.location.href = '/exportgoodslist/download?id='+checkStatus.data[0].id;
+    } else if(checkStatus.data.length == 0) {
+        layer.alert("请选择一条记录！");
+        //return false;
+    }
+}
 
 function edit(obj, id) {
     window.location.href = '/exportgoodslist/edit?id='+id;
