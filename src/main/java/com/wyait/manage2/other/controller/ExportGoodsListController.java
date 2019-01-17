@@ -172,7 +172,7 @@ public class ExportGoodsListController {
                 for (SellingContractDetail e : sellingContractDetails) {
                     ExportGoodsListDetail egDetail = new ExportGoodsListDetail();
                     egDetail.setGoodsName(e.getGoodsName());
-                    egDetail.setGoodsUnit(e.getGoodsName());
+                    egDetail.setGoodsUnit(e.getGoodsUnit());
                     egDetail.setQuantity(e.getQuantity());
                     egDetail.setSellingPrice(e.getPrice());
                     egDetail.setSubtotalSellingPrice(e.getTotalPrice());

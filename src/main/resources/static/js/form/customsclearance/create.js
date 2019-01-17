@@ -13,6 +13,9 @@ $(function () {
         laydate.render({
             elem: '#validityDate'
         });
+        laydate.render({
+            elem: '#exportDate'
+        })
     });
 
 

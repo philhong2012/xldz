@@ -101,6 +101,7 @@ public class PackingListController {
         BigDecimal totalNW = BigDecimal.ZERO;
         BigDecimal totalQT = BigDecimal.ZERO;
         BigDecimal totalPQ = BigDecimal.ZERO;
+        BigDecimal totalVe = BigDecimal.ZERO;
         String priceUnit = StringUtils.EMPTY;
         if(packingListDetails != null) {
 
@@ -114,6 +115,7 @@ public class PackingListController {
                 m.put("netWeight",e.getNetWeight());
                 m.put("price", (StringUtils.isEmpty(e.getPriceUnit())?StringUtils.EMPTY: e.getPriceUnit())+(e.getPrice() == null? BigDecimal.ZERO : e.getPrice()).toString());
                 m.put("priceUnit",e.getPriceUnit());
+                m.put("volume",e.getVolume());
                 if(StringUtils.isNotEmpty(e.getPriceUnit())) {
                     priceUnit = e.getPriceUnit();
                 }
@@ -125,6 +127,7 @@ public class PackingListController {
                 totalNW = totalNW.add(e.getNetWeight()== null ? BigDecimal.ZERO:e.getNetWeight());
                 totalPQ = totalPQ.add(e.getPackageQuantity()== null ? BigDecimal.ZERO:e.getPackageQuantity());
                 totalQT = totalQT.add(e.getQuantity()== null ? BigDecimal.ZERO:e.getQuantity());
+               // totalVe = totalVe.add(e.getVolume()== null ? BigDecimal.ZERO:e.getVolume());
 
             }
             map.put("totalGW",totalGW);
