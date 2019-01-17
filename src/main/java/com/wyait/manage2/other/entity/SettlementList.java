@@ -1,6 +1,7 @@
 package com.wyait.manage2.other.entity;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.io.Serializable;
 
@@ -40,6 +41,11 @@ public class SettlementList implements Serializable {
      * 销售收入
      */
     private BigDecimal sellingIncome;
+
+    /**
+     * 销售收入rmb
+     */
+    private BigDecimal sellingIncomeRmb;
 
     /**
      * 代购代销收入
@@ -162,6 +168,8 @@ public class SettlementList implements Serializable {
     private LocalDateTime updateTime;
 
     private String remark;
+
+    private LocalDate settleDate;
 
 
 }

@@ -1,9 +1,14 @@
 package com.wyait.manage2.other.controller;
 
 
+import cn.afterturn.easypoi.entity.vo.TemplateExcelConstants;
+import cn.afterturn.easypoi.excel.entity.TemplateExportParams;
+import cn.afterturn.easypoi.view.PoiBaseView;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.wyait.common.utils.BeanUtils;
+import com.wyait.common.utils.NumberUtils;
 import com.wyait.manage.entity.CustomsClearanceVO;
 import com.wyait.manage.entity.DataGridVO;
 import com.wyait.manage.entity.SearchEntityVO;
@@ -16,14 +21,19 @@ import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -47,9 +57,21 @@ public class SettlementListController {
         return mv;
 
     }
-    
 
 
+    @RequestMapping("/download")
+    public void download(String id, ModelMap modelMap, HttpServletRequest request, HttpServletResponse response) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        SettlementList settlementList = settlementListService.getById(id);
+        map.putAll(BeanUtils.objectToMap(settlementList));
+        TemplateExportParams params = new TemplateExportParams(
+                "word/temp_结算卡.xlsx");
+        modelMap.put(TemplateExcelConstants.FILE_NAME, "结算卡-"+settlementList.getCode());
+        modelMap.put(TemplateExcelConstants.PARAMS, params);
+        modelMap.put(TemplateExcelConstants.MAP_DATA, map);
+        PoiBaseView.render(modelMap, request, response,
+                TemplateExcelConstants.EASYPOI_TEMPLATE_EXCEL_VIEW);
+    }
 
     /**
      * 编辑采购合同

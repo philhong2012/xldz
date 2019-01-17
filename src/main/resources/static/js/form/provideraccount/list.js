@@ -24,11 +24,10 @@ $(function() {
             }
             ,cols: [[
                 {type:'checkbox'}
-                ,{field:'id', title:'ID', width:80, unresize: true, sort: true}
+              /*  ,{field:'id', title:'ID', width:80, unresize: true, sort: true}*/
                 ,{field:'code', title:'合同编号'}
                 ,{field:'amount', title:'金额'}
-
-
+                ,{field:'deptName', title:'部门'}
                 ,{field:'createTime', title: '创建日期',align:'center'}
                 ,{field:'createUserName', title: '创建人',align:'center'}
                 ,{field:'updateUserName', title: '更新人',align:'center'}
@@ -67,6 +66,15 @@ $(function() {
             return false;
         });
 
+
+        //监听搜索框
+        form.on('submit(exportFile)', function(data){
+            //重新加载table
+            //load(data);
+            exportFile(data);
+            return false;
+        });
+
         //监听提交
         form.on('submit(providerAccountSubmit)', function(data){
             // TODO 校验
@@ -92,12 +100,48 @@ $(function() {
             load(data);
             return false;
         });
+
+        $.get("/department/list2",function(data){
+            initDeptOptions(data,null);
+            form.render();
+        });
+
     });
 });
+
+//初始化部门下拉框
+function initDeptOptions(depts,selected,callBack) {
+
+    $("#deptId").empty();
+    var deptOptions = "<option value=''>请选择部门</option>";
+    $.each(depts,function (index,item) {
+        if(selected == item.id) {
+            deptOptions = deptOptions + "<option value='" + item.id + " selected '>" + item.name + "</option>";
+        } else {
+            deptOptions = deptOptions + "<option value='" + item.id + "'>" + item.name + "</option>";
+        }
+    });
+    $("#deptId").append(deptOptions);
+
+
+    if(callBack != null) {
+        callBack();
+    }
+    //layui.form.render('select');
+
+}
 
 
 function editSellingContract(obj,id) {
     window.location.href = '/provideraccount/edit?id='+id;
+}
+
+function exportFile(data) {
+    var field = data.field;
+    window.location.href = '/provideraccount/download?startDate='+field.startCreateTime
+    +"&endDate="+field.endCreateTime
+    +"&deptId="+field.deptId
+    +"&name="+field.name
 }
 
 

@@ -15,12 +15,15 @@
                 <div class="layui-input-inline">
                     <input id="name" name="name" autocomplete="off" class="layui-input" type="text"/>
                 </div>
-            </div>
-
-            <div class="layui-form-item">
-                <label class="layui-form-label">合同编号</label>
+                <!--<label class="layui-form-label">合同编号</label>
                 <div class="layui-input-inline">
                     <input id="code" name="code" autocomplete="off" class="layui-input" type="text"/>
+                </div>-->
+                <label class="layui-form-label">部门</label>
+                <div class="layui-input-inline">
+                    <select name="deptId" id="deptId">
+
+                    </select>
                 </div>
             </div>
 
@@ -34,7 +37,9 @@
                     <div class="layui-input-inline" style="width: 175px;">
                         <input name="endCreateTime" id="endCreateTime" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input" type="text"/>
                     </div>
+
                     <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                    <button class="layui-btn" lay-submit="" lay-filter="exportFile">导出</button>
                     <button class="layui-btn"  lay-submit="" lay-filter="searchSubmit">提交</button>
                 </div>
             </div>

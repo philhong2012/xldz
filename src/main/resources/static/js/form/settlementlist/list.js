@@ -24,7 +24,7 @@ $(function() {
             }
             ,cols: [[
                 {type:'checkbox'}
-                ,{field:'id', title:'ID', width:80, unresize: true, sort: true}
+              /*  ,{field:'id', title:'ID', width:80, unresize: true, sort: true}*/
                 ,{field:'code', title:'合同编号'}
 
 
@@ -99,6 +99,17 @@ function editSellingContract(obj,id) {
     window.location.href = '/settlementlist/edit?id='+id;
 }
 
+
+function exportFile() {
+    var table = layui.table;
+    var checkStatus = table.checkStatus('settlementList');
+    if (checkStatus.data.length > 0) {
+        window.location.href = '/settlementlist/download?id=' + checkStatus.data[0].id;
+    } else if (checkStatus.data.length == 0) {
+        layer.alert("请选择一条记录！");
+        //return false;
+    }
+}
 
 function deleteData(obj,id) {
     $.ajax({

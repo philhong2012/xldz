@@ -158,12 +158,13 @@ public class FormSellingContractController {
                 formSellingContract.setUpdateUserId(u.getId().toString());
                 formSellingContract.setUpdateTime(LocalDateTime.now());
                 formSellingContract.setUpdateUserName(u.getUsername());
-                formSellingContract.setDeptId(u.getDeptId());
-                formSellingContract.setDeptName(u.getDeptName());
+
             } else {
                 formSellingContract.setCreateUserId(u.getId().toString());
                 formSellingContract.setCreateTime(LocalDateTime.now());
                 formSellingContract.setCreateUserName(u.getUsername());
+                formSellingContract.setDeptId(u.getDeptId());
+                formSellingContract.setDeptName(u.getDeptName());
             }
 
             formSellingContract.setTotalPrice(totalPrice);

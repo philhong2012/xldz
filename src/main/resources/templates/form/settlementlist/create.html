@@ -33,9 +33,16 @@
             </div>
 
             <div class="layui-form-item">
-                <label class="layui-form-label">销售收入</label>
+                <label class="layui-form-label">销售收入($)</label>
                 <div class="layui-input-inline">
                     <input type="text" name="sellingIncome" lay-verify="notRequiredNubmer" autocomplete="off" placeholder="" th:value="${model}?${model.sellingIncome}:_"  class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">销售收入(RMB)</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="sellingIncomeRmb" lay-verify="notRequiredNubmer" autocomplete="off" placeholder="" th:value="${model}?${model.sellingIncomeRmb}:_"  class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
@@ -124,6 +131,13 @@
                 <label class="layui-form-label">利润净额</label>
                 <div class="layui-input-inline">
                     <input type="text" name="netProfit"  lay-verify="notRequiredNubmer" th:value="${model}?${model.netProfit}:_" autocomplete="off" placeholder="" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">结算日期</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="settleDate" id="settleDate"  th:value="${model}?${model.settleDate}:_" autocomplete="off" placeholder="" class="layui-input">
                 </div>
             </div>
 

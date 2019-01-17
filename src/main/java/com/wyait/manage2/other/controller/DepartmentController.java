@@ -129,6 +129,13 @@ public class DepartmentController {
         return pdr;
     }
 
+
+    @RequestMapping(value = "/list2")
+    @ResponseBody
+    public List<Department> list2() {
+       return departmentService.list();
+    }
+
     /**
      * 保存采购合同及详情
      * @return

@@ -24,7 +24,7 @@ $(function() {
             }
             ,cols: [[
                 {type:'checkbox'}
-                ,{field:'id', title:'ID', width:80, unresize: true, sort: true}
+            /*    ,{field:'id', title:'ID', width:80, unresize: true, sort: true}*/
                 ,{field:'contractNo', title:'合同编号'}
                 ,{field:'outerReceiver', title: '买方', }
                 ,{field:'innerSeller', title: '卖方',}

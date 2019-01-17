@@ -24,7 +24,7 @@ $(function() {
             }
             ,cols: [[
                 {type:'checkbox'}
-                ,{field:'id', title:'ID', width:80, unresize: true, sort: true}
+               /* ,{field:'id', title:'ID', width:80, unresize: true, sort: true}*/
                 ,{field:'name', title:'部门名称'}
                 ,{field:'code', title:'部门编号'}
                 ,{field:'createTime', title: '创建日期',align:'center'}
