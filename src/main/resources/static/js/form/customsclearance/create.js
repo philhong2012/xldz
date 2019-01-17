@@ -15,7 +15,13 @@ $(function () {
         });
         laydate.render({
             elem: '#exportDate'
+        });
+
+        laydate.render({
+            elem: '#declareDate'
         })
+
+
     });
 
 
