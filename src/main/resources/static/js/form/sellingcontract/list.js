@@ -8,7 +8,6 @@ $(function() {
             ,form = layui.form;
 
         tableIns=table.render({
-            toolbar:'#toolbarDemo',
             elem: '#saleContractList'
             ,url:'/sellingcontract/list'
             ,method: 'post' //默认：get请求

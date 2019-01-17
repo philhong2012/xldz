@@ -8,7 +8,6 @@ $(function() {
             ,form = layui.form;
 
         tableIns=table.render({
-            toolbar:'#toolbarDemo',
             elem: '#invoiceList'
             ,url:'/invoice/list'
             ,method: 'post' //默认：get请求
@@ -24,7 +23,7 @@ $(function() {
                 ,dataName: 'list' //数据列表的字段名称，默认：data
             }
             ,cols: [[
-                {type:'checkbox'},
+                {type:'checkbox'}
               /*  {field:'id', title:'ID', width:80, unresize: true, sort: true}*/
                 ,{field:'code', title:'合同编号'}
                 ,{field:'seller', title: '卖方',}
