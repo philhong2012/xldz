@@ -97,11 +97,29 @@ public class CustomsClearanceController {
         List<Map<String, Object>> mapList = new ArrayList<>();
         BigDecimal totalPrice = BigDecimal.ZERO;
         String priceUnit = StringUtils.EMPTY;
+        Integer NO = 0;
         if(customsClearanceDetails != null) {
 
             for (CustomsClearanceDetail e : customsClearanceDetails) {
+                NO++;
                 Map<String,Object> m = BeanUtils.objectToMap(e);
                 mapList.add(m);
+                //BigDecimal price = e.getPrice();
+
+                //String  = e.getPriceUnit();
+                m.put("priceAndUnit",
+                        (e.getPrice() == null ? "0": e.getPrice().toString())
+                + " "
+                + (e.getTotalPrice() == null ? "0": e.getTotalPrice().toString())
+                +" "
+                +e.getPriceUnit());
+
+                m.put("quantityAndUnit",
+                        (e.getQuantity() == null ? "0": e.getQuantity().toString())
+                + " "
+                + e.getGoodsUnit());
+
+                m.put("NO",NO);
 
                 totalPrice = totalPrice.add(e.getTotalPrice());
             }
