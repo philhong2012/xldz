@@ -175,6 +175,7 @@ public class ExportGoodsListController {
                     egDetail.setGoodsUnit(e.getGoodsUnit());
                     egDetail.setQuantity(e.getQuantity());
                     egDetail.setSellingPrice(e.getPrice());
+                    egDetail.setSellingPriceUnit(e.getPriceUnit());
                     egDetail.setSubtotalSellingPrice(e.getTotalPrice());
 
                     if(buyingContract != null) {

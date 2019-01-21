@@ -103,21 +103,28 @@ public class PackingListController {
         BigDecimal totalPQ = BigDecimal.ZERO;
         BigDecimal totalVe = BigDecimal.ZERO;
         String priceUnit = StringUtils.EMPTY;
+        String weightUnit = "KGS";
+        String packageUnit = "箱";
+        String volumeUnit = "CBM";
+        String goodsUnit = StringUtils.EMPTY;
         if(packingListDetails != null) {
 
             for (PackingListDetail e : packingListDetails) {
                 Map<String,Object> m = new HashMap<>();
                 m.put("goodsName",e.getGoodsName());
                 m.put("goodsUnit", e.getGoodsUnit());
-                m.put("quantity",(e.getQuantity() == null? BigDecimal.ZERO : e.getQuantity()).toString() + e.getGoodsUnit());
+                m.put("quantity", e.getQuantity());
                 m.put("packageQuantity",e.getPackageQuantity());
                 m.put("grossWeight",e.getGrossWeight());
                 m.put("netWeight",e.getNetWeight());
-                m.put("price", (StringUtils.isEmpty(e.getPriceUnit())?StringUtils.EMPTY: e.getPriceUnit())+(e.getPrice() == null? BigDecimal.ZERO : e.getPrice()).toString());
+                m.put("price", e.getPrice());
                 m.put("priceUnit",e.getPriceUnit());
                 m.put("volume",e.getVolume());
                 if(StringUtils.isNotEmpty(e.getPriceUnit())) {
                     priceUnit = e.getPriceUnit();
+                }
+                if(StringUtils.isNotEmpty(e.getGoodsUnit())){
+                    goodsUnit = e.getGoodsUnit();
                 }
                 m.put("totalPrice",e.getTotalPrice());
                 mapList.add(m);
@@ -127,15 +134,23 @@ public class PackingListController {
                 totalNW = totalNW.add(e.getNetWeight()== null ? BigDecimal.ZERO:e.getNetWeight());
                 totalPQ = totalPQ.add(e.getPackageQuantity()== null ? BigDecimal.ZERO:e.getPackageQuantity());
                 totalQT = totalQT.add(e.getQuantity()== null ? BigDecimal.ZERO:e.getQuantity());
-               // totalVe = totalVe.add(e.getVolume()== null ? BigDecimal.ZERO:e.getVolume());
+                totalVe = totalVe.add(e.getVolume()== null ? BigDecimal.ZERO:e.getVolume());
 
+
+                m.put("quantity",e.getQuantity() == null ? "0"+e.getGoodsUnit():e.getQuantity().toString()+e.getGoodsUnit());
+                m.put("grossWeight",e.getGrossWeight() == null? "0"+ weightUnit:e.getGrossWeight().toString()+weightUnit);
+                m.put("netWeight",e.getNetWeight() == null? "0"+ weightUnit:e.getNetWeight().toString()+weightUnit);
+                m.put("packageQuantity",e.getPackageQuantity() == null? "0"+ packageUnit:e.getPackageQuantity().toString()+packageUnit);
+                m.put("volume",e.getVolume() == null? "0"+ volumeUnit:e.getVolume().toString()+volumeUnit);
+                //m.put("price",e.getPrice()==null ? "0"+priceUnit:e.getPrice().toString() + priceUnit);
             }
-            map.put("totalGW",totalGW);
-            map.put("totalNW",totalNW);
-            map.put("totalPQ",totalPQ);
-            map.put("totalQT",totalQT);
-            map.put("capTotalPrice",NumberUtils.digitUppercase(totalPrice.doubleValue()));
-            map.put("totalPrice", priceUnit + totalPrice.toString());
+            map.put("totalGW",totalGW+weightUnit);
+            map.put("totalNW",totalNW+weightUnit);
+            map.put("totalPQ",totalPQ+packageUnit);
+            map.put("totalQT",totalQT+goodsUnit);
+            map.put("totalVE",totalVe+volumeUnit);
+           // map.put("capTotalPrice",NumberUtils.digitUppercase(totalPrice.doubleValue()));
+            //map.put("totalPrice", priceUnit + totalPrice.toString());
         }
         map.put("items",mapList);
 

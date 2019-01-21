@@ -116,7 +116,7 @@ public class PackingListDetail implements Serializable {
      */
     private String updateUserName;
 
-    private String volume;
+    private BigDecimal  volume;
 
 
 }
