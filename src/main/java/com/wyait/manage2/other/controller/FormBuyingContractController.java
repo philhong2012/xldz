@@ -6,6 +6,7 @@ import cn.afterturn.easypoi.view.EasypoiTemplateWordView;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.wyait.common.utils.BeanUtils;
 import com.wyait.common.utils.NumberUtils;
 import com.wyait.manage.entity.BuyingContractVO;
 import com.wyait.manage.entity.DataGridVO;
@@ -94,6 +95,7 @@ public class FormBuyingContractController {
         map.put("buyer",formBuyingContract.getBuyer());
         map.put("seller",formBuyingContract.getSeller());
         map.put("signAddress",formBuyingContract.getSignAddress() == null ? "":formBuyingContract.getSignAddress());
+        map.putAll(BeanUtils.objectToMap(formBuyingContract));
         List<Map<String, Object>> mapList = new ArrayList<Map<String, Object>>();
         BigDecimal totalPrice = BigDecimal.ZERO;
         String priceUnit = StringUtils.EMPTY;
