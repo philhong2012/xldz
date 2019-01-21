@@ -21,6 +21,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Controller;
@@ -76,6 +77,8 @@ public class FormSellingContractController {
         map.put("signDate",formSellingContract.getSignDate().toString());
         map.put("buyer",formSellingContract.getBuyer());
         map.put("signAddress",formSellingContract.getSignAddress() == null ? "":formSellingContract.getSignAddress());
+        map.putAll(com.wyait.common.utils.BeanUtils.objectToMap(formSellingContract));
+
         List<Map<String, Object>> mapList = new ArrayList<Map<String, Object>>();
         BigDecimal totalPrice = BigDecimal.ZERO;
         String priceUnit = StringUtils.EMPTY;
@@ -95,6 +98,8 @@ public class FormSellingContractController {
                 mapList.add(m);
 
                 totalPrice = totalPrice.add(e.getTotalPrice());
+
+                m.put("totalPrice",e.getPriceUnit() + (e.getTotalPrice() == null ? BigDecimal.ZERO : e.getTotalPrice().toString()));
             }
 
             map.put("totalPrice", priceUnit + totalPrice.toString());
@@ -103,6 +108,8 @@ public class FormSellingContractController {
 
         modelMap.put("checked"," X ");
         modelMap.put("unchecked","  ");
+
+
 
         modelMap.put(TemplateWordConstants.FILE_NAME, formSellingContract.getContractNo());
         modelMap.put(TemplateWordConstants.MAP_DATA, map);

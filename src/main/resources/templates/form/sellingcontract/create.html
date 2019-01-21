@@ -33,6 +33,13 @@
             </div>
 
             <div class="layui-form-item">
+                <label class="layui-form-label">签约地点</label>
+                <div class="layui-input-block">
+                    <input type="text" id="signAddress" name="signAddress" lay-verify="title" th:value="${model}?${model.signAddress}:_" autocomplete="off" placeholder="" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
                 <label class="layui-form-label">签订时间</label>
                 <div class="layui-input-block">
                     <input type="text" id="signDate" name="signDate" lay-verify="title" th:value="${model}?${model.signDate}:_" autocomplete="off" placeholder="" class="layui-input">
