@@ -110,6 +110,8 @@ public class FormInvoiceController {
                 mapList.add(m);
 
                 totalPrice = totalPrice.add(e.getTotalPrice());
+
+                m.put("totalPrice",priceUnit + (e.getTotalPrice() == null ? "0": e.getTotalPrice().toString()));
             }
 
             map.put("totalPrice", priceUnit + totalPrice.toString());
