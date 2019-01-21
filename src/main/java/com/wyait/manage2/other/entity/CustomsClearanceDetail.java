@@ -37,6 +37,8 @@ public class CustomsClearanceDetail implements Serializable {
      */
     private String goodsName;
 
+    private String goodsCode;
+
     /**
      * 货物英文名称
      */
