@@ -71,6 +71,9 @@ public class FormOutboundController {
 
     @Autowired
     IFormOutboundDetailService formOutboundDetailService;
+
+    @Autowired
+    IAttachmentService attachmentService;
     /**
      * 生成装箱单
      * @return
@@ -240,6 +243,10 @@ public class FormOutboundController {
     public ModelAndView edit(String id) {
         ModelAndView mv = new ModelAndView("form/formoutbound/create");
         FormOutbound formOutbound = formOutboundService.getById(id);
+        QueryWrapper<Attachment> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("bussiness_id",id);
+        List<Attachment> attachments = attachmentService.list(queryWrapper);
+        formOutbound.setAttachments(attachments);
         mv.addObject("model",formOutbound);
         return mv;
     }
@@ -303,6 +310,8 @@ public class FormOutboundController {
         //ModelAndView mv = new ModelAndView("form/buyingContract/save");
         FormOutbound formOutbound = formOutboundVO.getContract();
 
+
+
         User u = (User) SecurityUtils.getSubject().getPrincipal();
         if(StringUtils.isNotEmpty(formOutbound.getId())) {
             formOutbound.setUpdateUserId(u.getId().toString());
@@ -325,6 +334,29 @@ public class FormOutboundController {
                 e.setOutboundId(formOutbound.getId());
             }
             formOutboundDetailService.saveOrUpdateBatch(formOutboundVO.getDetails());
+        }
+
+        //保存图片
+        if(StringUtils.isNotEmpty(formOutbound.getFileName())) {
+            String[] fileNames = formOutbound.getFileName().split(",");
+            String[] filePaths = formOutbound.getFilePath().split(",");
+            List<Attachment> attachments = new ArrayList<>();
+            for(int i= 0; i<fileNames.length; i ++) {
+                Attachment a = new Attachment();
+                a.setFileName(fileNames[i]);
+                a.setFilePath(filePaths[i]);
+                a.setBussinessId(formOutbound.getId());
+                a.setBussinessType("1");//
+
+                a.setCreateUserId(u.getId().toString());
+                a.setCreateTime(LocalDateTime.now());
+                a.setCreateUserName(u.getUsername());
+
+                a.setDeptId(u.getDeptId());
+                a.setDeptName(u.getDeptName());
+                attachments.add(a);
+            }
+            attachmentService.saveBatch(attachments);
         }
         return "ok";
     }

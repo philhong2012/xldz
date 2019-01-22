@@ -53,6 +53,8 @@ $(function () {
                             //layer.closeAll();
                             //load();
                         });
+                        location.reload();
+                        //window.setTimeout(window.refresh(),1000);
                     }
                 }
             });

@@ -11,7 +11,20 @@
 )" th:with="title='出库单'">
 </head>
 
+<style>
+    .layui-upload-img {
+        width: 92px;
+        height: 92px;
+        margin: 0 10px 10px 0;
+    }
+    #fileList td {
+        border:1px solid #cccccc;
+        padding: 2px;
 
+    }
+    #fileList tr {
+    }
+</style>
 
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
@@ -20,7 +33,7 @@
 
     <div class="layui-body" style="margin: 1%">
         <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
-            <legend>装箱单</legend>
+            <legend>进出明细单</legend>
         </fieldset>
         <form class="layui-form" id="formOutboundForm">
             <input type="hidden" name="id" id="id" th:value="${model}?${model.id}:_" />
@@ -60,7 +73,43 @@
             </div>
 
 
+            <div class="layui-form-item" th:if="${model}">
+                <label class="layui-form-label">图片列表</label>
+                <div class="layui-input-block">
+                <table id="fileList">
+                    <tr>
+                        <td>文件名</td>
+                        <td>操作</td>
+                    </tr>
+                    <tr  th:each="file,stat : ${model.attachments}">
+                        <td th:text="${file.fileName}"></td>
+                        <td><a href="#" th:onclick="|delImg('${file.id}')|">删除</a> <a href="#" th:onclick="|showImg('${file.id}','${file.fileName}')|">查看</a></td>
+                    </tr>
+
+                </table>
+                </div>
+            </div>
+
+            <input type="hidden" value="" id="filePath" name="filePath" />
+            <input type="hidden" value="" id="fileName" name="fileName" />
+
             <div class="layui-form-item">
+                <label class="layui-form-label">上传图片</label>
+                <div class="layui-input-block">
+
+                    <div class="layui-upload">
+                        <button type="button" class="layui-btn" id="test2">多图片上传</button>
+                        <blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;">
+                            预览图：
+                            <div class="layui-upload-list" id="demo2"></div>
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">货物列表</label>
                 <div class="layui-input-inline">
                 <table id="dg" class="easyui-datagrid" title="" style="width:700px;height:auto"
                        data-options="
@@ -91,6 +140,10 @@
                     </div>
                 </div>
             </div>
+
+
+
+
             <div class="layui-form-item">
                 <div class="layui-input-block">
                     <button class="layui-btn" lay-submit="" lay-filter="saveFormOutbound">立即提交</button>
@@ -108,10 +161,84 @@
                 id:$('#id').val()
 
             });
+            layui.use('upload', function() {
+                var $ = layui.jquery
+                    , upload = layui.upload;
+                //多图片上传
+                upload.render({
+                    elem: '#test2'
+                    , url: '/file/upload/'
+                    , multiple: true
+                    , before: function (obj) {
+                        //预读本地文件示例，不支持ie8
+                        obj.preview(function (index, file, result) {
+                            $('#demo2').append('<img src="' + result + '" alt="' + file.name + '" class="layui-upload-img">');
+
+                        });
+                    }
+                    , done: function (res) {
+                        //上传完毕
+                        console.log(res);
+                        if(res.data != null && res.data.length > 0) {
+                            var path = res.data[0].filePath;
+                            var fileName = res.data[0].fileName;
+                            var oldPath = $('#filePath').val();
+                            var oldFileName = $('#fileName').val();
+
+                            if(oldPath == null || oldPath.length == 0) {
+                                $('#filePath').val(path);
+                            } else {
+                                $('#filePath').val(oldPath+","+path);
+                            }
+
+
+
+                            if(oldFileName == null || oldFileName.length == 0) {
+                                $('#fileName').val(fileName);
+                            } else {
+                                $('#fileName').val(oldFileName+","+fileName);
+                            }
+                        }
+                    }
+                });
+            });
+
 
         });
 
+        function showImg(fileId,fileName) {
+           // window.location.href = "/file/showImg?fileId="+fileId;
+            var imgUrl = '[[${#request.scheme}]]' + '://'
+                +'[[${#request.serverName}]]' + ":"
+                +'[[${#request.serverPort}]]' + '/'
+                + '[[${#request.contextPath}]]'
+                + "/file/showImg?fileId="+fileId;
+            layer.open({
+                title:fileName,
+                type: 2,
+                content: imgUrl,
+                area:['800px','600px']
 
+            });
+        }
+
+        function delImg(fileId) {
+            $.ajax({
+                "url": "/file/delImg?fileId="+fileId,
+                "type": "post",
+                "contentType": "application/json",
+
+                "success": function (data) {
+                    if(data == "ok") {
+                        layer.alert("操作成功",{time: 1000 }, function () {
+                            //layer.closeAll();
+                            //load();
+                        });
+                        location.reload();
+                    }
+                }
+            });
+        }
 
         var editIndex = undefined;
         function endEditing(){
