@@ -116,7 +116,7 @@ public class SettlementListController {
             QueryWrapper<SettlementList> queryWrapper = new QueryWrapper<>();
             if(searchEntityVO != null) {
                 if(StringUtils.isNotEmpty(searchEntityVO.getCode())) {
-                    queryWrapper.like("contract_no",searchEntityVO.getCode());
+                    queryWrapper.like("code",searchEntityVO.getCode());
                 }
                 if(StringUtils.isNotEmpty(searchEntityVO.getName())) {
                     //queryWrapper.eq("cont")
@@ -175,7 +175,9 @@ public class SettlementListController {
         } else {
             settlementList.setCreateUserId(u.getId().toString());
             settlementList.setCreateTime(LocalDateTime.now());
-            settlementList.setUpdateUserName(u.getUsername());
+            settlementList.setCreateUserName(u.getUsername());
+            settlementList.setDeptId(u.getDeptId());
+            settlementList.setDeptName(u.getDeptName());
         }
 
         if(settlementList != null) {

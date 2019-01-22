@@ -29,6 +29,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -92,14 +93,18 @@ public class ProviderAccountController {
         List<ProviderAccount> providerAccounts = providerAccountService.list(queryWrapper);
 
         List<Map<String,Object>> maplist = new ArrayList<>();
+        BigDecimal totalAmount = BigDecimal.ZERO;
         if(providerAccounts != null && providerAccounts.size() > 0) {
             for (ProviderAccount e : providerAccounts) {
                 Map m = BeanUtils.objectToMap(e);
                 //m.put("createTime",LocalDate);
                 maplist.add(m);
-
+                totalAmount = totalAmount.add(e.getAmount() == null ? BigDecimal.ZERO
+                : e.getAmount());
             }
         }
+
+
 
         Department department = departmentService.getById(deptId);
         String deptName="所有部门";
@@ -112,6 +117,8 @@ public class ProviderAccountController {
         map.put("deptName",deptName);
         map.put("startDate",startDate);
         map.put("endDate",endDate);
+
+        map.put("totalAmount",totalAmount);
 
         TemplateExportParams params = new TemplateExportParams(
                 "word/temp_供应商台账.xlsx");

@@ -29,6 +29,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -93,11 +94,13 @@ public class ForeignExchangeAccountController {
         }
 
         List<ForeignExchangeAccount> foreignExchangeAccounts = foreignExchangeAccountService.list(queryWrapper);
-
+        BigDecimal totalAmount = BigDecimal.ZERO;
         List<Map<String,Object>> maplist = new ArrayList<>();
         if(foreignExchangeAccounts != null && foreignExchangeAccounts.size() > 0) {
             for (ForeignExchangeAccount e : foreignExchangeAccounts) {
                 maplist.add(BeanUtils.objectToMap(e));
+                totalAmount = totalAmount.add(e.getAmount() == null ? BigDecimal.ZERO
+                        : e.getAmount());
             }
         }
 
@@ -112,6 +115,8 @@ public class ForeignExchangeAccountController {
         map.put("deptName",deptName);
         map.put("startDate",startDate);
         map.put("endDate",endDate);
+
+        map.put("totalAmount",totalAmount);
 
         TemplateExportParams params = new TemplateExportParams(
                 "word/temp_外商台账.xlsx");
