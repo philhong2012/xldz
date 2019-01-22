@@ -134,7 +134,10 @@ function gen(type) {
     if(checkStatus.data.length > 0) {
         switch (type) {
             case 1: // buying contract
-                window.location.href = '/buyingcontract/gen?sellingContractId='+checkStatus.data[0].id;
+
+                //window.location.href = '/buyingcontract/gen?sellingContractId='+checkStatus.data[0].id;
+                url = '/buyingcontract/gen?sellingContractId='+checkStatus.data[0].id;
+                ensureGenerateForms("1",checkStatus.data[0].id,url);
                 break;
             case 2: //export goods list
                // window.location.href = '/exportgoodslist/gen?sellingContractId='+checkStatus.data[0].id;
@@ -142,13 +145,19 @@ function gen(type) {
                 ensureGenerateForms("2",checkStatus.data[0].id,url);
                 break;
             case 3: //invoice
-                window.location.href = '/invoice/gen?sellingContractId='+checkStatus.data[0].id;
+                //window.location.href = '/invoice/gen?sellingContractId='+checkStatus.data[0].id;
+                url = '/invoice/gen?sellingContractId='+checkStatus.data[0].id;
+                ensureGenerateForms("3",checkStatus.data[0].id,url);
                 break;
             case 4:// packing list
-                window.location.href = '/packinglist/gen?sellingContractId='+checkStatus.data[0].id;
+                //window.location.href = '/packinglist/gen?sellingContractId='+checkStatus.data[0].id;
+                url = '/packinglist/gen?sellingContractId='+checkStatus.data[0].id;
+                ensureGenerateForms("4",checkStatus.data[0].id,url);
                 break;
             case 5: //报关单
-                window.location.href = '/customsclearance/gen?sellingContractId='+checkStatus.data[0].id;
+                //window.location.href = '/customsclearance/gen?sellingContractId='+checkStatus.data[0].id;
+                url = '/customsclearance/gen?sellingContractId='+checkStatus.data[0].id;
+                ensureGenerateForms("5",checkStatus.data[0].id,url);
                 break;
             case 6: //出入库单
                 url = '/formoutbound/gen?sellingContractId='+checkStatus.data[0].id;

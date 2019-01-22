@@ -9,10 +9,8 @@ import com.wyait.manage.entity.UserRoleDTO;
 import com.wyait.manage.entity.UserSearchDTO;
 import com.wyait.manage.utils.PageDataResult;
 import com.wyait.manage.web.user.UserController;
-import com.wyait.manage2.other.entity.FormBuyingContract;
-import com.wyait.manage2.other.entity.PackingList;
-import com.wyait.manage2.other.service.IFormBuyingContractService;
-import com.wyait.manage2.other.service.IPackingListService;
+import com.wyait.manage2.other.entity.*;
+import com.wyait.manage2.other.service.*;
 import net.sf.jsqlparser.expression.DateTimeLiteralExpression;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
@@ -46,6 +44,19 @@ public class FormController {
     @Autowired
     IPackingListService packingListService;
 
+    @Autowired
+    IExportGoodsListService exportGoodsListService;
+
+    @Autowired
+    IFormInvoiceService formInvoiceService;
+
+
+    @Autowired
+    IFormOutboundService formOutboundService;
+
+
+    @Autowired
+    ICustomsClearanceService customsClearanceService;
 
     @ResponseBody
     @RequestMapping("/check")
@@ -58,23 +69,91 @@ public class FormController {
         queryWrapper2.eq("selling_contract_id",sellingContractId);
         List<FormBuyingContract> contracts = buyingContractService.list(queryWrapper);
         List<PackingList> packingLists = packingListService.list(queryWrapper2);
+
+
+
+
+
+
+
+
+
+
+
         if("6".equals(type)) {
           //进出库明细，必须先生成"采购合同","装箱单";
             if(contracts == null || contracts.size() == 0) {
                 responseResult.setCode("-1");
                 responseResult.setMessage("请先生成采购合同");
-            }
+            }/* else if(contracts.size() == 1) {
+                responseResult.setCode("-1");
+                responseResult.setMessage("已生成采购合同，不能再生成！");
+            }*/
             if(packingLists == null || packingLists.size() == 0) {
                 responseResult.setCode("-1");
                 responseResult.setMessage("请先生成装箱单");
+            } /*else if(packingLists.size() == 1) {
+                responseResult.setCode("-1");
+                responseResult.setMessage("已生装箱单，不能再生成！");
+            }*/
+            QueryWrapper<FormOutbound> formOutboundQueryWrapper = new QueryWrapper<>();
+            formOutboundQueryWrapper.eq("selling_contract_id",sellingContractId);
+            List<FormOutbound> formOutbounds = formOutboundService.list(formOutboundQueryWrapper);
+            if(formOutbounds != null && formOutbounds.size() > 0) {
+                responseResult.setCode("-1");
+                responseResult.setMessage("已生出入库单，不能再生成！");
             }
-
         } else if("2".equals(type)) {
             //进出口明细，必须先生成"采购合同"；
             if(contracts == null || contracts.size() == 0) {
                 responseResult.setCode("-1");
                 responseResult.setMessage("请先生成采购合同");
             }
+            QueryWrapper<ExportGoodsList> exportGoodsListQueryWrapper = new QueryWrapper<>();
+            exportGoodsListQueryWrapper.eq("selling_contract_id",sellingContractId);
+            List<ExportGoodsList> exportGoodsLists = exportGoodsListService.list(exportGoodsListQueryWrapper);
+            if(exportGoodsLists != null && exportGoodsLists.size() > 0) {
+                responseResult.setCode("-1");
+                responseResult.setMessage("已生进出货物明细单，不能再生成！");
+            }
+
+        } else if("3".equals(type)) {
+            QueryWrapper<FormInvoice> formInvoiceQueryWrapper = new QueryWrapper<>();
+            formInvoiceQueryWrapper.eq("selling_contract_id",sellingContractId);
+            List<FormInvoice> formInvoices = formInvoiceService.list(formInvoiceQueryWrapper);
+            if(formInvoices != null && formInvoices.size() > 0) {
+                responseResult.setCode("-1");
+                responseResult.setMessage("已生发票单，不能再生成！");
+            }
+
+        }else if("4".equals(type)) {
+            QueryWrapper<PackingList> packingListQueryWrapper = new QueryWrapper<>();
+            packingListQueryWrapper.eq("selling_contract_id",sellingContractId);
+            List<PackingList> packingLists2 = packingListService.list(packingListQueryWrapper);
+            if(packingLists2 != null && packingLists2.size() > 0) {
+                responseResult.setCode("-1");
+                responseResult.setMessage("已生装箱单，不能再生成！");
+            }
+        } else if("5".equals(type)) {
+            if(contracts == null || contracts.size() == 0) {
+                responseResult.setCode("-1");
+                responseResult.setMessage("请先生成采购合同");
+            }
+            QueryWrapper<CustomsClearance> customsClearanceQueryWrapper  = new QueryWrapper<>();
+            customsClearanceQueryWrapper.eq("selling_contract_id",sellingContractId);
+            List<CustomsClearance> customsClearances = customsClearanceService.list(customsClearanceQueryWrapper);
+            if(customsClearances != null && customsClearances.size() > 0) {
+                responseResult.setCode("-1");
+                responseResult.setMessage("已生报关单，不能再生成！");
+            }
+        }
+
+        else if("1".equals(type)) {
+            if(contracts != null && contracts.size() >= 1) {
+                responseResult.setCode("-1");
+                responseResult.setMessage("已生成采购合同，不可再生成！");
+            }
+
         }
         return responseResult;
     }

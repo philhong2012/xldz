@@ -158,6 +158,7 @@ public class CustomsClearanceController {
             customsClearance.setOuterReceiver(formSellingContract.getBuyer());
             customsClearance.setContractNo(formSellingContract.getContractNo());
             customsClearance.setPackingType(formSellingContract.getPayingType());
+            customsClearance.setSellingContractId(sellingContractId);
             //customsClearance.setQuantity(formSellingContract.)
             //customsClearance.set
         }

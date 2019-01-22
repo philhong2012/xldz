@@ -95,6 +95,7 @@ public class FormOutboundController {
             formOutbound.setProvider(formBuyingContract.getSeller());
             formOutbound.setCustomer(formSellingContract.getBuyer());
             formOutbound.setCode(formSellingContract.getContractNo());
+            formOutbound.setSellingContractId(sellingContractId);
         }
 
         mv.addObject("model",formOutbound);
@@ -358,13 +359,13 @@ public class FormOutboundController {
             }
             attachmentService.saveBatch(attachments);
         }
-        return "ok";
+        return "ok:"+formOutbound.getId();
     }
 
 
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     @ResponseBody
-    public String save(String id) {
+    public String delete(String id) {
         //formInvoiceService.remove();
         QueryWrapper<FormOutboundDetail> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("outbound_id",id);

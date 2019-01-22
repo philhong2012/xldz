@@ -87,9 +87,10 @@ public class FormInvoiceController {
         queryWrapper.eq("selling_contract_Id", formSellingContract.getId());
         List<SellingContractDetail> sellingContractDetails = sellingContractDetailService.list(queryWrapper);
         //map.put("items", new ExcelListEntity(sellingContractDetails, SellingContractDetail.class));
-        map.put("code", formSellingContract.getContractNo());
+        map.put("sellingContractNo", formSellingContract.getContractNo());
         map.put("invoiceDate",formInvoice.getInvoiceDate());
         map.put("buyer",formSellingContract.getBuyer());
+        map.put("code",formInvoice.getCode());
         //map.put("signAddress",formSellingContract.getSignAddress() == null ? "":formSellingContract.getSignAddress());
         List<Map<String, Object>> mapList = new ArrayList<Map<String, Object>>();
         BigDecimal totalPrice = BigDecimal.ZERO;

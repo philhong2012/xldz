@@ -48,12 +48,13 @@ $(function () {
                 "contentType": "application/json",
 
                 "success": function (data) {
-                    if(data == "ok") {
+                    if(data.indexOf("ok") > -1) {
                         layer.alert("操作成功",{time: 1000 }, function () {
                             //layer.closeAll();
                             //load();
                         });
-                        location.reload();
+                        var id =data.split(":")[1];
+                        location.href = '/formoutbound/edit?id='+id;
                         //window.setTimeout(window.refresh(),1000);
                     }
                 }

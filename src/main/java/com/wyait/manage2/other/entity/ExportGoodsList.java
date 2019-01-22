@@ -94,5 +94,7 @@ public class ExportGoodsList implements Serializable {
 
     private String updateUserName;
 
+    private String dealPriceType;
+
 
 }
