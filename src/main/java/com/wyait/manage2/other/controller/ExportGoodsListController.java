@@ -132,9 +132,11 @@ public class ExportGoodsListController {
             map.put("totalRefundTax",totalRefundTax);
             map.put("totalExportCost",totalExportCost);
             map.put("totalTaxCost",totalTaxCost);
+
         }
         map.put("items",mapList);
-
+        map.put("sellingContractNo",exportGoodsList.getSellingContractNo());
+        map.put("buyingContractNo",exportGoodsList.getBuyingContractNo());
         TemplateExportParams params = new TemplateExportParams(
                 "word/temp_进出口明细表.xlsx");
 
