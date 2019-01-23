@@ -1,5 +1,6 @@
 package com.wyait.manage.config;
 
+import com.baomidou.mybatisplus.core.MybatisConfiguration;
 import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -55,6 +56,9 @@ public class DataSourceConfig {
 		//使用mybatisplus sqlsessionfacotory替换mybatis默认到工厂类
 		MybatisSqlSessionFactoryBean bean = new com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean();
 		bean.setDataSource(dataSource);
+		/*MybatisConfiguration mybatisConfiguration = new MybatisConfiguration();
+		mybatisConfiguration.setCallSettersOnNulls(true);
+		bean.setConfiguration(mybatisConfiguration);*/
 		//对应mybatis.type-aliases-package配置
 		bean.setTypeAliasesPackage("com.wyait.manage.pojo");
 		logger.info("####set type aliaes to: {}","com.wyait.manage.pojo");
@@ -62,6 +66,7 @@ public class DataSourceConfig {
 		bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:mapper/**/*.xml"));
 		//开启驼峰映射
 		bean.getObject().getConfiguration().setMapUnderscoreToCamelCase(true);
+		bean.getObject().getConfiguration().setCallSettersOnNulls(true);
 		return bean.getObject();
 	}
 

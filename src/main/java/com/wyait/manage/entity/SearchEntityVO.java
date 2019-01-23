@@ -16,6 +16,7 @@ import java.time.LocalDate;
 public class SearchEntityVO {
     private String code;
     private String name;
+    private String deptId;
 
     @JsonFormat(pattern = JacksonConfig.DEFAULT_DATE_FORMAT)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -155,5 +156,13 @@ public class SearchEntityVO {
 
     public void setEndInboundDate(LocalDate endInboundDate) {
         this.endInboundDate = endInboundDate;
+    }
+
+    public String getDeptId() {
+        return deptId;
+    }
+
+    public void setDeptId(String deptId) {
+        this.deptId = deptId;
     }
 }

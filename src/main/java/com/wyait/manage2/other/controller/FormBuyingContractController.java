@@ -307,7 +307,28 @@ public class FormBuyingContractController {
             formBuyingContract.setDeptName(u.getDeptName());
         }
 
+        BigDecimal totalPrice = BigDecimal.ZERO;
+        BigDecimal totalQuantity = BigDecimal.ZERO;
+        String priceUnit = StringUtils.EMPTY;
+        String quantityUnit = StringUtils.EMPTY;
+        if (buyingContractVO.getDetails() != null) {
+            for (BuyingContractDetail e : buyingContractVO.getDetails()) {
+                //if(!"3".equals(e.getModifyFlag())) {
+                totalPrice = totalPrice.add(e.getTotalPrice() == null ?
+                        BigDecimal.ZERO : e.getTotalPrice());
+
+                totalQuantity = totalQuantity.add(e.getQuantity() == null ?
+                        BigDecimal.ZERO : e.getQuantity());
+
+                priceUnit = e.getPriceUnit();
+                quantityUnit = e.getGoodsUnit();
+                //}
+
+            }
+        }
+
         if(formBuyingContract != null) {
+            formBuyingContract.setTotal(totalPrice);
            formBuyingContractService.saveOrUpdate(formBuyingContract);
         }
 
@@ -317,6 +338,10 @@ public class FormBuyingContractController {
             }
             buyingContractDetailService.saveOrUpdateBatch(buyingContractVO.getDetails());
         }
+
+
+
+
 
         if(buyingContractVO.getToDeletes() != null) {
             for(BuyingContractDetail e : buyingContractVO.getToDeletes()) {

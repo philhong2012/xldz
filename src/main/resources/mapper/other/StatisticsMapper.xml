@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wyait.manage2.other.mapper.StatisticsMapper">
+
+
+    <select id="getTurnoverExportCostProfit" resultType="java.util.Map" parameterType="java.util.Map">
+
+      select ifnull(a.turnOver,0) as turnOver ,ifnull(a.exportAmount,0) as exportAmount, ifnull(a.profit,0) as profit from (
+        select
+  (select sum(ifnull(total,0)) from form_buying_contract where 1= 1
+   <if test="deptId != null">
+      and dept_id = #{deptId}
+   </if>
+
+    <if test="startDate != null">
+       and unix_timestamp( sign_date )  <![CDATA[>=]]>  unix_timestamp(#{startDate})
+    </if>
+
+    <if test="endDate != null">
+      and  unix_timestamp( sign_date ) <![CDATA[<=]]> unix_timestamp(#{endDate})
+    </if>
+  ) as turnOver,
+  (select sum(ifnull(total_price,0)) from  form_selling_contract where 1=1
+        <if test="deptId != null">
+            and dept_id = #{deptId}
+        </if>
+
+        <if test="startDate != null">
+           and unix_timestamp( sign_date )  <![CDATA[>=]]>  unix_timestamp(#{startDate})
+        </if>
+
+        <if test="endDate != null">
+          and  unix_timestamp( sign_date ) <![CDATA[<=]]> unix_timestamp(#{endDate})
+        </if>
+
+        ) as exportAmount,
+   (select sum(ifnull(net_profit,0)) from settlement_list where 1=1
+
+        <if test="deptId != null">
+            and dept_id = #{deptId}
+        </if>
+
+        <if test="startDate != null">
+         and   unix_timestamp( settle_date )  <![CDATA[>=]]>  unix_timestamp(#{startDate})
+        </if>
+
+        <if test="endDate != null">
+          and  unix_timestamp( settle_date ) <![CDATA[<=]]> unix_timestamp(#{endDate})
+        </if>
+
+        ) as  profit
+from dual ) a
+    </select>
+
+
+
+</mapper>
