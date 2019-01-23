@@ -335,6 +335,13 @@ public class PackingListController {
             }
             packingListDetailService.saveOrUpdateBatch(packingListVO.getDetails());
         }
+
+
+        if(packingListVO.getToDeletes() != null) {
+            for(PackingListDetail e : packingListVO.getToDeletes()) {
+                packingListDetailService.removeById(e.getId());
+            }
+        }
         return "ok";
     }
 

@@ -384,6 +384,12 @@ public class FormOutboundController {
             formOutboundDetailService.saveOrUpdateBatch(formOutboundVO.getDetails());
         }
 
+        if(formOutboundVO.getToDeletes() != null) {
+            for(FormOutboundDetail e : formOutboundVO.getToDeletes()) {
+                formOutboundDetailService.removeById(e.getId());
+            }
+        }
+
         //保存图片
         if(StringUtils.isNotEmpty(formOutbound.getFileName())) {
             String[] fileNames = formOutbound.getFileName().split(",");

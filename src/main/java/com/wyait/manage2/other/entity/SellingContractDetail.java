@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.io.Serializable;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -86,5 +87,10 @@ public class SellingContractDetail implements Serializable {
 
     private String updateUserId;
 
+    /**
+     * 3:删除 2：修改 1：新增 ""：新增或修改
+     */
+    @TableField(exist = false)
+    private String modifyFlag;
 
 }

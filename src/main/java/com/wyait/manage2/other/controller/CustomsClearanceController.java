@@ -19,10 +19,7 @@ import com.wyait.manage.entity.DataGridVO;
 import com.wyait.manage.entity.SearchEntityVO;
 import com.wyait.manage.pojo.User;
 import com.wyait.manage.utils.PageDataResult;
-import com.wyait.manage2.other.entity.CustomsClearance;
-import com.wyait.manage2.other.entity.CustomsClearanceDetail;
-import com.wyait.manage2.other.entity.FormSellingContract;
-import com.wyait.manage2.other.entity.SellingContractDetail;
+import com.wyait.manage2.other.entity.*;
 import com.wyait.manage2.other.service.*;
 import org.apache.commons.beanutils.BeanMap;
 import org.apache.commons.lang3.StringUtils;
@@ -333,6 +330,12 @@ public class CustomsClearanceController {
                 e.setCustomsClearanceId(customsClearance.getId());
             }
             customsClearanceDetailService.saveOrUpdateBatch(customsClearanceVO.getDetails());
+        }
+
+        if(customsClearanceVO.getToDeletes() != null) {
+            for(CustomsClearanceDetail e : customsClearanceVO.getToDeletes()) {
+                customsClearanceDetailService.removeById(e.getId());
+            }
         }
         return "ok";
     }

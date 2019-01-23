@@ -50,7 +50,9 @@ $(function () {
                 }
             });
             //console.log(formData);
-            formData.details = getChanges();
+            var changes = getChanges();
+            formData.details = changes.insertOrUpdate;
+            formData.toDeletes = changes.deleted;
 
             $.ajax({
                 "url": "/sellingcontract/save",

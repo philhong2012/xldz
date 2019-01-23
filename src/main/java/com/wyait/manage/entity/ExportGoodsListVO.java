@@ -19,6 +19,8 @@ public class ExportGoodsListVO {
 
     private List<ExportGoodsListDetail> details;
 
+    private List<ExportGoodsListDetail> toDeletes;
+
     public ExportGoodsList getContract() {
         return contract;
     }
@@ -33,5 +35,13 @@ public class ExportGoodsListVO {
 
     public void setDetails(List<ExportGoodsListDetail> details) {
         this.details = details;
+    }
+
+    public List<ExportGoodsListDetail> getToDeletes() {
+        return toDeletes;
+    }
+
+    public void setToDeletes(List<ExportGoodsListDetail> toDeletes) {
+        this.toDeletes = toDeletes;
     }
 }

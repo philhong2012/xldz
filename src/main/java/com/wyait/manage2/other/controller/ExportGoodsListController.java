@@ -345,6 +345,12 @@ public class ExportGoodsListController {
 
         exportGoodsListDetailService.saveOrUpdateBatch(exportGoodsListVO.getDetails());
 
+        if(exportGoodsListVO.getToDeletes() != null) {
+            for(ExportGoodsListDetail e : exportGoodsListVO.getToDeletes()) {
+                exportGoodsListDetailService.removeById(e.getId());
+            }
+        }
+
         return "ok";
     }
 

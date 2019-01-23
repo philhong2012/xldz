@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.wyait.manage.config.JacksonConfig;
@@ -167,6 +168,7 @@ public class FormSellingContract implements Serializable {
     private String priceUnit;
 
     private String quantityUnit;
+
 
 
 

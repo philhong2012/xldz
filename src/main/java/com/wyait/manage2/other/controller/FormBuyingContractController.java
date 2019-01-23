@@ -317,6 +317,13 @@ public class FormBuyingContractController {
             }
             buyingContractDetailService.saveOrUpdateBatch(buyingContractVO.getDetails());
         }
+
+        if(buyingContractVO.getToDeletes() != null) {
+            for(BuyingContractDetail e : buyingContractVO.getToDeletes()) {
+                buyingContractDetailService.removeById(e.getId());
+            }
+        }
+
         return "ok";
     }
 

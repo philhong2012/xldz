@@ -19,6 +19,8 @@ public class FormOutboundVO {
 
     private List<FormOutboundDetail> details;
 
+    private List<FormOutboundDetail> toDeletes;
+
     public FormOutbound getContract() {
         return contract;
     }
@@ -33,5 +35,13 @@ public class FormOutboundVO {
 
     public void setDetails(List<FormOutboundDetail> details) {
         this.details = details;
+    }
+
+    public List<FormOutboundDetail> getToDeletes() {
+        return toDeletes;
+    }
+
+    public void setToDeletes(List<FormOutboundDetail> toDeletes) {
+        this.toDeletes = toDeletes;
     }
 }

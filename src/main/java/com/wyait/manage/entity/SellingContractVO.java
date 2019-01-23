@@ -16,6 +16,8 @@ public class SellingContractVO {
     private FormSellingContract contract;
     private List<SellingContractDetail> details;
 
+    private List<SellingContractDetail> toDeletes;
+
     public FormSellingContract getContract() {
         return contract;
     }
@@ -30,5 +32,13 @@ public class SellingContractVO {
 
     public void setDetails(List<SellingContractDetail> details) {
         this.details = details;
+    }
+
+    public List<SellingContractDetail> getToDeletes() {
+        return toDeletes;
+    }
+
+    public void setToDeletes(List<SellingContractDetail> toDeletes) {
+        this.toDeletes = toDeletes;
     }
 }

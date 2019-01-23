@@ -323,9 +323,11 @@
             editIndex = undefined;
         }
         function getChanges(){
+            var deleted = $('#dg').datagrid('getChanges','deleted');
             accept();
             var rows = $('#dg').datagrid('getRows');
-            return rows;
+
+            return {"deleted":deleted,"insertOrUpdate":rows};
         }
     </script>
 

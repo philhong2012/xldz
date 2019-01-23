@@ -19,6 +19,8 @@ public class PackingListVO {
 
     private List<PackingListDetail> details;
 
+    private List<PackingListDetail> toDeletes;
+
     public PackingList getContract() {
         return contract;
     }
@@ -33,5 +35,13 @@ public class PackingListVO {
 
     public void setDetails(List<PackingListDetail> details) {
         this.details = details;
+    }
+
+    public List<PackingListDetail> getToDeletes() {
+        return toDeletes;
+    }
+
+    public void setToDeletes(List<PackingListDetail> toDeletes) {
+        this.toDeletes = toDeletes;
     }
 }

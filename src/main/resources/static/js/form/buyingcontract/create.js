@@ -39,7 +39,9 @@ $(function () {
                     formData.contract[ele.name] = $(ele).val();
                 }
             });
-            formData.details = getChanges();
+            var changes = getChanges();
+            formData.details = changes.insertOrUpdate;
+            formData.toDeletes = changes.deleted;
             $.ajax({
                 "url": "/buyingcontract/save",
                 "type": "post",

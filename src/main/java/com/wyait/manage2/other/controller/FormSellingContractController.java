@@ -141,14 +141,16 @@ public class FormSellingContractController {
         String quantityUnit = StringUtils.EMPTY;
         if (sellingContractVO.getDetails() != null) {
             for (SellingContractDetail e : sellingContractVO.getDetails()) {
-                totalPrice = totalPrice.add(e.getTotalPrice() == null?
-                        BigDecimal.ZERO:e.getTotalPrice());
+                //if(!"3".equals(e.getModifyFlag())) {
+                    totalPrice = totalPrice.add(e.getTotalPrice() == null ?
+                            BigDecimal.ZERO : e.getTotalPrice());
 
-                totalQuantity = totalQuantity.add(e.getQuantity() == null?
-                        BigDecimal.ZERO:e.getQuantity());
+                    totalQuantity = totalQuantity.add(e.getQuantity() == null ?
+                            BigDecimal.ZERO : e.getQuantity());
 
-                priceUnit = e.getPriceUnit();
-                quantityUnit = e.getGoodsUnit();
+                    priceUnit = e.getPriceUnit();
+                    quantityUnit = e.getGoodsUnit();
+                //}
 
             }
         }
@@ -187,6 +189,12 @@ public class FormSellingContractController {
                 detail.setSellingContractId(sellingContractVO.getContract().getId());
             }
             sellingContractDetailService.saveOrUpdateBatch(sellingContractVO.getDetails());
+        }
+
+        if(sellingContractVO.getToDeletes() != null && sellingContractVO.getToDeletes().size() >0) {
+           for(SellingContractDetail e : sellingContractVO.getToDeletes()) {
+               sellingContractDetailService.removeById(e.getId());
+           }
         }
 
         //formSellingContractService.update()

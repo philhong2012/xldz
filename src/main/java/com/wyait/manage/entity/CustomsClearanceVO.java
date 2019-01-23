@@ -19,6 +19,8 @@ public class CustomsClearanceVO {
 
     private List<CustomsClearanceDetail> details;
 
+    private List<CustomsClearanceDetail>  toDeletes;
+
     public CustomsClearance getContract() {
         return contract;
     }
@@ -33,5 +35,13 @@ public class CustomsClearanceVO {
 
     public void setDetails(List<CustomsClearanceDetail> details) {
         this.details = details;
+    }
+
+    public List<CustomsClearanceDetail> getToDeletes() {
+        return toDeletes;
+    }
+
+    public void setToDeletes(List<CustomsClearanceDetail> toDeletes) {
+        this.toDeletes = toDeletes;
     }
 }
