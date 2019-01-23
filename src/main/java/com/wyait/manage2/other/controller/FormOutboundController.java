@@ -1,6 +1,7 @@
 package com.wyait.manage2.other.controller;
 
 
+import cn.afterturn.easypoi.entity.ImageEntity;
 import cn.afterturn.easypoi.entity.vo.TemplateExcelConstants;
 import cn.afterturn.easypoi.entity.vo.TemplateWordConstants;
 import cn.afterturn.easypoi.excel.entity.TemplateExportParams;
@@ -11,10 +12,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.wyait.common.utils.BeanUtils;
 import com.wyait.common.utils.NumberUtils;
-import com.wyait.manage.entity.DataGridVO;
-import com.wyait.manage.entity.FormOutboundVO;
-import com.wyait.manage.entity.PackingListVO;
-import com.wyait.manage.entity.SearchEntityVO;
+import com.wyait.manage.entity.*;
 import com.wyait.manage.pojo.User;
 import com.wyait.manage.utils.PageDataResult;
 import com.wyait.manage2.other.entity.*;
@@ -24,14 +22,21 @@ import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -74,10 +79,16 @@ public class FormOutboundController {
 
     @Autowired
     IAttachmentService attachmentService;
+
+
+    @Value("${upload.url}")
+    private String basePath;
+
     /**
      * 生成装箱单
      * @return
      */
+
     @RequestMapping(value = "/gen", method = RequestMethod.GET)
     public ModelAndView gen(String sellingContractId) {
         ModelAndView mv = new ModelAndView("form/formoutbound/create");
@@ -145,6 +156,24 @@ public class FormOutboundController {
         }
         map.put("items",mapList);
 
+        QueryWrapper<Attachment> attachmentQueryWrapper = new QueryWrapper<>();
+        attachmentQueryWrapper.eq("bussiness_id",formOutbound.getId());
+        List<Attachment> attachments = attachmentService.list(attachmentQueryWrapper);
+
+        List<ImageEntityVO> imgs = new ArrayList<>();
+        //Map<String,Object>
+        if(attachments != null && attachments.size() >0) {
+            for (Attachment a : attachments) {
+                byte[] img = getImageBinary(Paths.get( basePath , a.getFilePath()).toString());
+                ImageEntity imageEntity = new ImageEntity(img,400,300);
+                ImageEntityVO imageEntityVO = new ImageEntityVO();
+                imageEntityVO.setImage(imageEntity);
+                imgs.add(imageEntityVO);
+            }
+        }
+
+        map.put("imgs",imgs);
+
         TemplateExportParams params = new TemplateExportParams(
                 "word/temp_出入库明细表.xlsx");
 
@@ -169,7 +198,7 @@ public class FormOutboundController {
         List<PackingListDetail> packingListDetails = null;
         if(packingList != null) {
             QueryWrapper<PackingListDetail> wrapper2 = new QueryWrapper<>();
-            wrapper.eq("packing_list_Id", packingList.getId());
+            wrapper2.eq("packing_list_Id", packingList.getId());
             packingListDetails = packingListDetailService.list(wrapper2);
         }
 
@@ -250,6 +279,24 @@ public class FormOutboundController {
         formOutbound.setAttachments(attachments);
         mv.addObject("model",formOutbound);
         return mv;
+    }
+
+    public static byte[] getImageBinary(String fileName) {
+        fileName = fileName.replace("\\","/");
+        File f = new File(fileName);
+        BufferedImage bi;
+        try {
+            bi = ImageIO.read(f);
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ImageIO.write(bi, "jpg", baos);
+            byte[] bytes = baos.toByteArray();
+            return bytes;
+            //return Base64.encodeBase64String(bytes);
+            //return encoder.encodeBuffer(bytes).trim();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     /**
