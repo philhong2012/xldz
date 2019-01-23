@@ -25,7 +25,7 @@
 
     <div class="layui-body" style="margin: 1%">
         <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
-            <legend>采购合同</legend>
+            <legend>报关单</legend>
         </fieldset>
         <form class="layui-form" id="customsClearanceForm">
             <input type="hidden" name="id" id="id" th:value="${model}?${model.id}:_"/>
@@ -39,12 +39,12 @@
                                 <input type="text" name="innerSender" lay-verify="title" autocomplete="off" placeholder="境内发货人"
                                        th:value="${model}?${model.innerSender}:_" class="layui-input">
                             </div></td>
-                        <td><label class="layui-form-label">出境关别</label>
+                        <!--<td><label class="layui-form-label">出境关别</label>
                             <div class="layui-input-inline">
                                 <input type="text" name="departurePortType" lay-verify="title" autocomplete="off" placeholder="出境关别"
                                        th:value="${model}?${model.departurePortType}:_" class="layui-input">
-                            </div></td>
-                        <td><label class="layui-form-label">出口日期</label>
+                            </div></td>-->
+                        <td colspan="2"><label class="layui-form-label">出口日期</label>
                             <div class="layui-input-inline">
                             <input type="text" name="exportDate" id="exportDate" lay-verify="title" autocomplete="off"
                                    placeholder="" th:value="${model}?${model.exportDate}:_" class="layui-input">

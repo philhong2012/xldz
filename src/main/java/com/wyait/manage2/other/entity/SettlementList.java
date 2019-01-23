@@ -171,5 +171,7 @@ public class SettlementList implements Serializable {
 
     private LocalDate settleDate;
 
+    private BigDecimal payGoodsCost;
+
 
 }
