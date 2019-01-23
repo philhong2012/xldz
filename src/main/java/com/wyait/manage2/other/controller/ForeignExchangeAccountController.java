@@ -90,7 +90,7 @@ public class ForeignExchangeAccountController {
         }
 
         if(StringUtils.isNotEmpty(name)) {
-            queryWrapper.like("name",name);
+            queryWrapper.like("remittance",name);
         }
 
         List<ForeignExchangeAccount> foreignExchangeAccounts = foreignExchangeAccountService.list(queryWrapper);
