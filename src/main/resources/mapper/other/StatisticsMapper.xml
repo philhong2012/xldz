@@ -53,23 +53,23 @@ from dual ) a
     </select>
 
     <select id="getTurnOverExportAmountProfit" parameterType="java.util.Map" resultType="java.util.Map">
-        select * from (
-        select t.deptId,t.deptName,
-        sum(ifnull(t.turnOver,0)) as turnOver,
-        sum(ifnull(t.exportAmount,0)) as exportAmount,
-        sum(ifnull(t.profit,0)) as profit
 
-        from (
-
-  select d.id as deptId,d.name as deptName,
-  b.total as turnOver,
-  s.total_price as exportAmount,
-  st.net_profit as profit
-from department d left join
-
-  (
-  select * from
-  form_buying_contract where 1 = 1
+        SELECT
+        a.deptId, a.deptName, a.turnOver, b.exportAmount, c.profit
+        FROM
+        (SELECT
+        deptId, deptName, SUM(IFNULL(turnOver, 0)) AS turnOver
+        FROM
+        (SELECT
+        d.id AS deptId, d.name AS deptName, b.total AS turnOver
+        FROM
+        department d
+        LEFT JOIN (SELECT
+        *
+        FROM
+        form_buying_contract
+        WHERE
+        1 = 1
         <if test="startDate != null">
             and unix_timestamp( sign_date )  <![CDATA[>=]]>  unix_timestamp(#{startDate})
         </if>
@@ -78,12 +78,26 @@ from department d left join
             and  unix_timestamp( sign_date ) <![CDATA[<=]]> unix_timestamp(#{endDate})
         </if>
 
-  ) b on b.dept_id = d.id
-
-left join
-  (select * from
-  form_selling_contract where 1=1
-
+        ) b ON b.dept_id = d.id) a
+        GROUP BY deptId) a
+        INNER JOIN
+        (SELECT
+        deptId,
+        deptName,
+        SUM(IFNULL(exportAmount, 0)) AS exportAmount
+        FROM
+        (SELECT
+        d.id AS deptId,
+        d.name AS deptName,
+        b.total_price AS exportAmount
+        FROM
+        department d
+        LEFT JOIN (SELECT
+        *
+        FROM
+        form_selling_contract
+        WHERE
+        1 = 1
         <if test="startDate != null">
             and unix_timestamp( sign_date )  <![CDATA[>=]]>  unix_timestamp(#{startDate})
         </if>
@@ -91,25 +105,34 @@ left join
         <if test="endDate != null">
             and  unix_timestamp( sign_date ) <![CDATA[<=]]> unix_timestamp(#{endDate})
         </if>
-  ) s on s.dept_id = d.id
 
-left join
-  (
-  select * from settlement_list where 1=1
+        ) b ON b.dept_id = d.id) a
+        GROUP BY deptId) b ON a.deptId = b.deptId
+        INNER JOIN
+        (SELECT
+        deptId, deptName, SUM(IFNULL(profit, 0)) AS profit
+        FROM
+        (SELECT
+        d.id AS deptId, d.name AS deptName, b.net_profit AS profit
+        FROM
+        department d
+        LEFT JOIN (SELECT
+        *
+        FROM
+        settlement_list
+        WHERE
+        1 = 1
+
         <if test="startDate != null">
-            and   unix_timestamp( settle_date )  <![CDATA[>=]]>  unix_timestamp(#{startDate})
+            and unix_timestamp( settle_date )  <![CDATA[>=]]>  unix_timestamp(#{startDate})
         </if>
 
         <if test="endDate != null">
             and  unix_timestamp( settle_date ) <![CDATA[<=]]> unix_timestamp(#{endDate})
         </if>
 
-  ) st on st.dept_id = d.id ) t group by deptId ) t1 where 1 = 1
-
-        <if test="deptId != null and deptId!=''">
-            and deptId = #{deptId}
-        </if>
-
+        ) b ON b.dept_id = d.id) a
+        GROUP BY deptId) c ON c.deptId = b.deptId
 
 
     </select>
