@@ -50,7 +50,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/customsclearance")
-public class CustomsClearanceController {
+public class CustomsClearanceController extends BaseController{
 
     Logger logger = LoggerFactory.getLogger(CustomsClearanceController.class);
     @Autowired
@@ -284,6 +284,9 @@ public class CustomsClearanceController {
                 }
             }
 
+            if(!isCompanyRole()) {
+                queryWrapper.lt("dept_id",getCurrentUser().getDeptId());
+            }
 
             List<CustomsClearance> customsClearances = customsClearanceService.list(queryWrapper);
             // 获取分页查询后的数据

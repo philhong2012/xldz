@@ -49,7 +49,7 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping("/sellingcontract")
-public class FormSellingContractController {
+public class FormSellingContractController extends BaseController {
     @Autowired
     IFormSellingContractService formSellingContractService;
     @Autowired
@@ -259,6 +259,12 @@ public class FormSellingContractController {
                     queryWrapper.lt("sign_date",searchEntityVO.getEndSignDate());
                 }
             }
+
+            if(!isCompanyRole()) {
+                queryWrapper.lt("dept_id",getCurrentUser().getDeptId());
+            }
+
+
 
             List<FormSellingContract> formSellingContracts = formSellingContractService.list(queryWrapper);
             // 获取分页查询后的数据

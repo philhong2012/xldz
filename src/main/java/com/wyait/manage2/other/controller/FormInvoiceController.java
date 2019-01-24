@@ -46,7 +46,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/invoice")
-public class FormInvoiceController {
+public class FormInvoiceController extends BaseController{
     Logger logger = LoggerFactory.getLogger(FormInvoiceController.class);
 
     @Autowired

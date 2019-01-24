@@ -48,7 +48,7 @@ import java.util.function.Function;
  */
 @RestController
 @RequestMapping("/foreignexchangeaccount")
-public class ForeignExchangeAccountController {
+public class ForeignExchangeAccountController extends BaseController{
 
     Logger logger = LoggerFactory.getLogger(ForeignExchangeAccountController.class);
 
@@ -191,6 +191,9 @@ public class ForeignExchangeAccountController {
             }
 
 
+            if(!isCompanyRole()) {
+                queryWrapper.lt("dept_id",getCurrentUser().getDeptId());
+            }
             List<ForeignExchangeAccount> foreignExchangeAccounts = foreignExchangeAccountService.list(queryWrapper);
             // 获取分页查询后的数据
             PageInfo<ForeignExchangeAccount> pageInfo = new PageInfo<>(foreignExchangeAccounts);

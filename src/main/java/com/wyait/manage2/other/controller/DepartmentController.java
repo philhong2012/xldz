@@ -43,7 +43,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/department")
-public class DepartmentController {
+public class DepartmentController extends BaseController{
     Logger logger = LoggerFactory.getLogger(DepartmentController.class);
 
     @Autowired

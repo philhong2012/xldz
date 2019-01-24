@@ -15,6 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/other/form-outbound-detail")
-public class FormOutboundDetailController {
+public class FormOutboundDetailController extends BaseController{
 
 }

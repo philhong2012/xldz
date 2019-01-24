@@ -15,6 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/other/packing-list-detail")
-public class PackingListDetailController {
+public class PackingListDetailController extends BaseController{
 
 }

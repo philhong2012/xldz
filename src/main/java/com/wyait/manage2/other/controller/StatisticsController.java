@@ -45,7 +45,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/statistics")
-public class StatisticsController {
+public class StatisticsController extends BaseController{
 
     Logger logger = LoggerFactory.getLogger(StatisticsController.class);
 
@@ -125,6 +125,10 @@ public class StatisticsController {
             }
 
             PageHelper.startPage(page, limit);
+
+            if(!isCompanyRole()) {
+                searchEntityVO.setDeptId(getCurrentUser().getDeptId());
+            }
 
            stats = statisticsService.getTurnOverExportAmountProfit(
                    searchEntityVO.getStartCreateTime(),

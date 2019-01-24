@@ -47,7 +47,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/provideraccount")
-public class ProviderAccountController {
+public class ProviderAccountController extends BaseController{
     Logger logger = LoggerFactory.getLogger(ProviderAccountController.class);
     
     @Autowired
@@ -190,6 +190,9 @@ public class ProviderAccountController {
                 }
             }
 
+            if(!isCompanyRole()) {
+                queryWrapper.lt("dept_id",getCurrentUser().getDeptId());
+            }
 
             List<ProviderAccount> providerAccounts = providerAccountService.list(queryWrapper);
             // 获取分页查询后的数据

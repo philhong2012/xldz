@@ -15,6 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/other/selling-contract-detail")
-public class SellingContractDetailController {
+public class SellingContractDetailController extends BaseController{
 
 }

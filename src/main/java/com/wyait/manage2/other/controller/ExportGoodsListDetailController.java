@@ -15,6 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/other/export-goods-list-detail")
-public class ExportGoodsListDetailController {
+public class ExportGoodsListDetailController extends BaseController{
 
 }

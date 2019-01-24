@@ -41,7 +41,7 @@ import java.util.*;
  */
 @RestController
 @RequestMapping("/exportgoodslist")
-public class ExportGoodsListController {
+public class ExportGoodsListController extends BaseController{
 
     Logger logger = LoggerFactory.getLogger(ExportGoodsListController.class);
 
@@ -302,6 +302,9 @@ public class ExportGoodsListController {
                 }
             }
 
+            if(!isCompanyRole()) {
+                queryWrapper.lt("dept_id",getCurrentUser().getDeptId());
+            }
 
             List<ExportGoodsList> exportGoodsLists = exportGoodsListService.list(queryWrapper);
             // 获取分页查询后的数据

@@ -15,6 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/other/customs-clearance-detail")
-public class CustomsClearanceDetailController {
+public class CustomsClearanceDetailController extends BaseController{
 
 }

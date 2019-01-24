@@ -48,7 +48,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/buyingcontract")
-public class FormBuyingContractController {
+public class FormBuyingContractController extends BaseController{
     Logger logger = LoggerFactory.getLogger(FormBuyingContractController.class);
     @Autowired
     IFormSellingContractService formSellingContractService;
@@ -270,6 +270,9 @@ public class FormBuyingContractController {
                 }
             }
 
+            if(!isCompanyRole()) {
+                queryWrapper.lt("dept_id",getCurrentUser().getDeptId());
+            }
 
             List<FormBuyingContract> formBuyingContracts = formBuyingContractService.list(queryWrapper);
             // 获取分页查询后的数据

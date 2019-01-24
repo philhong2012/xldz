@@ -53,7 +53,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/formoutbound")
-public class FormOutboundController {
+public class FormOutboundController extends BaseController{
     Logger logger = LoggerFactory.getLogger(FormOutboundController.class);
     @Autowired
     IFormSellingContractService formSellingContractService;

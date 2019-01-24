@@ -15,6 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/other/attachment")
-public class AttachmentController {
+public class AttachmentController extends BaseController{
 
 }
