@@ -13,9 +13,12 @@ import java.util.Map;
  * @since 2019-01-05
  */
 public interface IStatisticsService {
-
+    @Deprecated
     List<Map<String,Object>> getTurnoverExportCostProfit(LocalDate start,
                                                          LocalDate end,
                                                          String deptId);
+
+
+    List<Map<String,Object>>  getTurnOverExportAmountProfit(LocalDate start, LocalDate end, String deptId);
 
 }

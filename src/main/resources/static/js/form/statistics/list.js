@@ -25,6 +25,7 @@ $(function() {
             ,cols: [[
                 {type:'checkbox'}
               /*  ,{field:'id', title:'ID', width:80, unresize: true, sort: true}*/
+                ,{field:'deptName', title: '部门',align:'center'}
                 ,{field:'turnOver', title: '营业额',align:'center'}
                 ,{field:'exportAmount', title: '出口额',align:'center'}
                 ,{field:'profit', title: '利润',align:'center'}
@@ -42,6 +43,13 @@ $(function() {
             }
         });
 
+        //监听搜索框
+        form.on('submit(exportFile)', function(data){
+            //重新加载table
+            //load(data);
+            exportFile(data);
+            return false;
+        });
 
         //监听搜索框
         form.on('submit(searchSubmit)', function(data){
@@ -99,19 +107,13 @@ function initDeptOptions(depts,selected,callBack) {
 
 }
 
-
-
-function exportFile() {
-    var table = layui.table;
-    var checkStatus = table.checkStatus('statisticsList');
-    if (checkStatus.data.length > 0) {
-        window.location.href = '/statistics/download?id=' + checkStatus.data[0].id;
-    } else if (checkStatus.data.length == 0) {
-        layer.alert("请选择一条记录！");
-        //return false;
-    }
+function exportFile(data) {
+    var field = data.field;
+    window.location.href = '/statistics/download?startDate='+field.startCreateTime
+        +"&endDate="+field.endCreateTime
+        +"&deptId="+field.deptId
+        +"&name="+field.name
 }
-
 
 
 function load(obj){

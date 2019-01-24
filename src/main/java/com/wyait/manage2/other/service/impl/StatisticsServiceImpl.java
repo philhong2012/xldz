@@ -32,4 +32,14 @@ public class StatisticsServiceImpl implements IStatisticsService {
 
         return mapper.getTurnoverExportCostProfit(map);
     }
+
+    @Override
+    public List<Map<String, Object>> getTurnOverExportAmountProfit(LocalDate start, LocalDate end, String deptId) {
+        Map<String,Object> map = new HashMap<>();
+        map.put("startDate",start);
+        map.put("endDate",end);
+        map.put("deptId",deptId);
+
+        return mapper.getTurnOverExportAmountProfit(map);
+    }
 }

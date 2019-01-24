@@ -66,55 +66,26 @@ public class StatisticsController {
                          String endDate,
                          String name,
                          ModelMap modelMap, HttpServletRequest request, HttpServletResponse response) {
-
-        QueryWrapper<ForeignExchangeAccount> queryWrapper = new QueryWrapper<>();
-        if(StringUtils.isNotEmpty(deptId)) {
-            if(!"all".equals(deptId)) {
-                queryWrapper.eq("dept_id",deptId);
-            }
-        }
-
+        LocalDate sd =null,ed=null;
         if(StringUtils.isNotEmpty(startDate)) {
-
-            queryWrapper.gt("create_time",LocalDate.parse(startDate));
+            sd = LocalDate.parse(startDate);
         }
 
-        if(StringUtils.isNotEmpty(endDate)) {
-            queryWrapper.lt("create_time",LocalDate.parse(endDate));
+        if(StringUtils.isNotEmpty(endDate))  {
+            ed = LocalDate.parse(endDate);
         }
 
-        if(StringUtils.isNotEmpty(name)) {
-            queryWrapper.like("remittance",name);
-        }
-
-        List<ForeignExchangeAccount> foreignExchangeAccounts = foreignExchangeAccountService.list(queryWrapper);
-        BigDecimal totalAmount = BigDecimal.ZERO;
-        List<Map<String,Object>> maplist = new ArrayList<>();
-        if(foreignExchangeAccounts != null && foreignExchangeAccounts.size() > 0) {
-            for (ForeignExchangeAccount e : foreignExchangeAccounts) {
-                maplist.add(BeanUtils.objectToMap(e));
-                totalAmount = totalAmount.add(e.getAmount() == null ? BigDecimal.ZERO
-                        : e.getAmount());
-            }
-        }
-
-        Department department = departmentService.getById(deptId);
-        String deptName="所有部门";
-        if(department != null) {
-            deptName =  department.getName();
-        }
         Map<String,Object> map = new HashMap<>();
-        map.put("items",maplist);
-        map.put("name",name);
-        map.put("deptName",deptName);
-        map.put("startDate",startDate);
-        map.put("endDate",endDate);
+        List<Map<String,Object>> stats = statisticsService.getTurnOverExportAmountProfit(
+               sd,ed,deptId
+        );
 
-        map.put("totalAmount",totalAmount);
-
+        map.put("items",stats);
+        map.put("startDate",sd == null ? "":sd.toString());
+        map.put("endDate",ed== null ? "" : ed.toString());
         TemplateExportParams params = new TemplateExportParams(
-                "word/temp_外商台账.xlsx");
-        modelMap.put(TemplateExcelConstants.FILE_NAME, "外商台账报表");
+                "word/temp_营业额出口额利润.xlsx");
+        modelMap.put(TemplateExcelConstants.FILE_NAME, "营业额出口额利润");
         modelMap.put(TemplateExcelConstants.PARAMS, params);
         modelMap.put(TemplateExcelConstants.MAP_DATA, map);
         PoiBaseView.render(modelMap, request, response,
@@ -155,7 +126,7 @@ public class StatisticsController {
 
             PageHelper.startPage(page, limit);
 
-           stats = statisticsService.getTurnoverExportCostProfit(
+           stats = statisticsService.getTurnOverExportAmountProfit(
                    searchEntityVO.getStartCreateTime(),
                    searchEntityVO.getEndCreateTime(),
                    searchEntityVO.getDeptId()

@@ -16,7 +16,9 @@ import java.util.Map;
  * @since 2019-01-05
  */
 public interface StatisticsMapper  {
-
+    @Deprecated
     List<Map<String,Object>> getTurnoverExportCostProfit(Map<String,Object> map);
+
+    List<Map<String,Object>>  getTurnOverExportAmountProfit(Map<String,Object> map);
 
 }
