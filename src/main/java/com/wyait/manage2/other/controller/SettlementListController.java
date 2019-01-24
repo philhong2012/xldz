@@ -148,7 +148,7 @@ public class SettlementListController extends BaseController{
 
 
             if(!isCompanyRole()) {
-                queryWrapper.lt("dept_id",getCurrentUser().getDeptId());
+                queryWrapper.eq("dept_id",getCurrentUser().getDeptId());
             }
             List<SettlementList> settlementLists = settlementListService.list(queryWrapper);
             // 获取分页查询后的数据

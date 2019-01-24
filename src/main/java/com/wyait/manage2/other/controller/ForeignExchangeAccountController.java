@@ -192,7 +192,7 @@ public class ForeignExchangeAccountController extends BaseController{
 
 
             if(!isCompanyRole()) {
-                queryWrapper.lt("dept_id",getCurrentUser().getDeptId());
+                queryWrapper.eq("dept_id",getCurrentUser().getDeptId());
             }
             List<ForeignExchangeAccount> foreignExchangeAccounts = foreignExchangeAccountService.list(queryWrapper);
             // 获取分页查询后的数据

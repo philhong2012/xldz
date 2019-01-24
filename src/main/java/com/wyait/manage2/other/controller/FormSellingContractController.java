@@ -261,7 +261,7 @@ public class FormSellingContractController extends BaseController {
             }
 
             if(!isCompanyRole()) {
-                queryWrapper.lt("dept_id",getCurrentUser().getDeptId());
+                queryWrapper.eq("dept_id",getCurrentUser().getDeptId());
             }
 
 

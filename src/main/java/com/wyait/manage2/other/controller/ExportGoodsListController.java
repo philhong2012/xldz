@@ -303,7 +303,7 @@ public class ExportGoodsListController extends BaseController{
             }
 
             if(!isCompanyRole()) {
-                queryWrapper.lt("dept_id",getCurrentUser().getDeptId());
+                queryWrapper.eq("dept_id",getCurrentUser().getDeptId());
             }
 
             List<ExportGoodsList> exportGoodsLists = exportGoodsListService.list(queryWrapper);

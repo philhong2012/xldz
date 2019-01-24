@@ -191,7 +191,7 @@ public class ProviderAccountController extends BaseController{
             }
 
             if(!isCompanyRole()) {
-                queryWrapper.lt("dept_id",getCurrentUser().getDeptId());
+                queryWrapper.eq("dept_id",getCurrentUser().getDeptId());
             }
 
             List<ProviderAccount> providerAccounts = providerAccountService.list(queryWrapper);
