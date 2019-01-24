@@ -27,8 +27,8 @@ $(function() {
              /*   ,{field:'id', title:'ID', width:80, unresize: true, sort: true}*/
                 ,{field:'contractNo', title:'合同编号'}
 
-                ,{field:'seller', title: '买方',}
-                ,{field:'buyer', title: '卖方', }
+                ,{field:'seller', title: '卖方',}
+                ,{field:'buyer', title: '买方', }
                 ,{field:'deptName', title:'部门'}
                 ,{field:'signDate', title: '签订日期',align:'center'}
                 /*,{field:'isJob', title:'是否在职',width:95,align:'center',templet:'#jobTpl'}*/
