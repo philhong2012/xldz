@@ -54,6 +54,7 @@ from dual ) a
 
     <select id="getTurnOverExportAmountProfit" parameterType="java.util.Map" resultType="java.util.Map">
 
+select * from (
         SELECT
         a.deptId, a.deptName, a.turnOver, b.exportAmount, c.profit
         FROM
@@ -75,7 +76,7 @@ from dual ) a
         </if>
 
         <if test="endDate != null">
-            and  unix_timestamp( sign_date ) <![CDATA[<=]]> unix_timestamp(#{endDate})
+            and unix_timestamp( sign_date ) <![CDATA[<=]]> unix_timestamp(#{endDate})
         </if>
 
         ) b ON b.dept_id = d.id) a
@@ -103,7 +104,7 @@ from dual ) a
         </if>
 
         <if test="endDate != null">
-            and  unix_timestamp( sign_date ) <![CDATA[<=]]> unix_timestamp(#{endDate})
+            and unix_timestamp( sign_date ) <![CDATA[<=]]> unix_timestamp(#{endDate})
         </if>
 
         ) b ON b.dept_id = d.id) a
@@ -113,7 +114,7 @@ from dual ) a
         deptId, deptName, SUM(IFNULL(profit, 0)) AS profit
         FROM
         (SELECT
-        d.id AS deptId, d.name AS deptName, b.net_profit AS profit
+        d.id AS deptId, d.name AS deptName, b.gross_profit AS profit
         FROM
         department d
         LEFT JOIN (SELECT
@@ -128,11 +129,19 @@ from dual ) a
         </if>
 
         <if test="endDate != null">
-            and  unix_timestamp( settle_date ) <![CDATA[<=]]> unix_timestamp(#{endDate})
+            and unix_timestamp( settle_date ) <![CDATA[<=]]> unix_timestamp(#{endDate})
         </if>
 
         ) b ON b.dept_id = d.id) a
         GROUP BY deptId) c ON c.deptId = b.deptId
+        ) t
+        where 1= 1
+
+        <if test="deptId != null and deptId!=''">
+            and t.deptId = #{deptId}
+        </if>
+
+
 
 
     </select>

@@ -19,7 +19,7 @@ public class BaseController {
 
     protected boolean isCompanyRole() {
         //User user = (User)SecurityUtils.getSubject().getPrincipal();
-        return SecurityUtils.getSubject().hasRole("companyRole");
+        return SecurityUtils.getSubject().hasRole("highmanage");
     }
 
 }

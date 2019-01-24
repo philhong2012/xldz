@@ -173,5 +173,10 @@ public class SettlementList implements Serializable {
 
     private BigDecimal payGoodsCost;
 
+    private BigDecimal sellingIncome2;
+    private BigDecimal sellingIncome3;
+    private BigDecimal sellingIncome4;
+    private BigDecimal sellingIncome5;
+
 
 }
