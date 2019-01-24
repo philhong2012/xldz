@@ -115,7 +115,9 @@ public class FormInvoiceController {
                 m.put("totalPrice",priceUnit + (e.getTotalPrice() == null ? "0": e.getTotalPrice().toString()));
             }
 
+            map.put("totalPriceCap",NumberUtils.digitUppercase(totalPrice.doubleValue()));
             map.put("totalPrice", priceUnit + totalPrice.toString());
+
         }
         map.put("items",mapList);
 
