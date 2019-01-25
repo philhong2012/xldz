@@ -177,6 +177,7 @@ public class SettlementList implements Serializable {
     private BigDecimal sellingIncome3;
     private BigDecimal sellingIncome4;
     private BigDecimal sellingIncome5;
+    private BigDecimal totalSellingIncome;
 
 
 }

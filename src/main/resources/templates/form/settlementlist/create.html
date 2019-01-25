@@ -35,26 +35,30 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">销售收入1($)</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="sellingIncome" lay-verify="notRequiredNubmer" autocomplete="off" placeholder="" th:value="${model}?${model.sellingIncome}:_"  class="layui-input">
+                    <input type="text" name="sellingIncome" onkeyup="sellingIncomeChange()" lay-verify="notRequiredNubmer" autocomplete="off" placeholder="" th:value="${model}?${model.sellingIncome}:_"  class="layui-input will-calculate">
                 </div>
                 <label class="layui-form-label">销售收入2($)</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="sellingIncome2" lay-verify="notRequiredNubmer" autocomplete="off" placeholder="" th:value="${model}?${model.sellingIncome2}:_"  class="layui-input">
+                    <input type="text" name="sellingIncome2" onkeyup="sellingIncomeChange()" lay-verify="notRequiredNubmer" autocomplete="off" placeholder="" th:value="${model}?${model.sellingIncome2}:_"  class="layui-input will-calculate">
                 </div>
                 <label class="layui-form-label">销售收入3($)</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="sellingIncome3" lay-verify="notRequiredNubmer" autocomplete="off" placeholder="" th:value="${model}?${model.sellingIncome3}:_"  class="layui-input">
+                    <input type="text" name="sellingIncome3" onkeyup="sellingIncomeChange()" lay-verify="notRequiredNubmer" autocomplete="off" placeholder="" th:value="${model}?${model.sellingIncome3}:_"  class="layui-input will-calculate">
                 </div>
 
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">销售收入4($)</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="sellingIncome4" lay-verify="notRequiredNubmer" autocomplete="off" placeholder="" th:value="${model}?${model.sellingIncome4}:_"  class="layui-input">
+                    <input type="text" name="sellingIncome4" onkeyup="sellingIncomeChange()" lay-verify="notRequiredNubmer" autocomplete="off" placeholder="" th:value="${model}?${model.sellingIncome4}:_"  class="layui-input will-calculate">
                 </div>
                 <label class="layui-form-label">销售收入5($)</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="sellingIncome5" lay-verify="notRequiredNubmer" autocomplete="off" placeholder="" th:value="${model}?${model.sellingIncome5}:_"  class="layui-input">
+                    <input type="text" name="sellingIncome5" onkeyup="sellingIncomeChange()" lay-verify="notRequiredNubmer" autocomplete="off" placeholder="" th:value="${model}?${model.sellingIncome5}:_"  class="layui-input will-calculate">
+                </div>
+                <label class="layui-form-label">销售收入总计($)</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="totalSellingIncome" id="totalSellingIncome" lay-verify="notRequiredNubmer" autocomplete="off" placeholder="" th:value="${model}?${model.totalSellingIncome}:_"  class="layui-input">
                 </div>
             </div>
 
@@ -170,7 +174,18 @@
 
     <script type="text/javascript">
 
+        function sellingIncomeChange() {
+            var total = 0;
+            $('.will-calculate').each(function (i,v) {
+                var v = $(this).val();
+                if(v != '') {
+                    total = floatObj.add(total, parseFloat(v));
+                }
 
+            });
+
+            $('#totalSellingIncome').val(total);
+        }
     </script>
 
 

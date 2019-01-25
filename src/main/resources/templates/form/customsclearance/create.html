@@ -112,29 +112,26 @@
                                 <input type="text" name="producer" lay-verify="title" autocomplete="off" placeholder="生产销售单位"
                                        th:value="${model}?${model.producer}:_" class="layui-input">
                             </div></td>
-                        <td><label class="layui-form-label">包装种类</label>
-                            <div class="layui-input-inline">
-                                <input type="text" name="packingType" lay-verify="title" autocomplete="off" placeholder=""
-                                       th:value="${model}?${model.packingType}:_" class="layui-input">
-                            </div></td>
+
                         <td><label class="layui-form-label">监管方式</label>
                             <div class="layui-input-inline">
                                 <input type="text" name="monitorType" lay-verify="title" autocomplete="off" placeholder=""
                                        th:value="${model}?${model.monitorType}:_" class="layui-input">
                             </div></td>
-
-                    </tr>
-                    <tr>
                         <td><label class="layui-form-label">征免性质</label>
                             <div class="layui-input-inline">
                                 <input type="text" name="expropriationType" lay-verify="title" autocomplete="off" placeholder=""
                                        th:value="${model}?${model.expropriationType}:_" class="layui-input">
                             </div></td>
+                    </tr>
+                    <tr>
+
                         <td><label class="layui-form-label">许可证号</label>
                             <div class="layui-input-inline">
                                 <input type="text" name="licenceNo" lay-verify="title" autocomplete="off" placeholder=""
                                        th:value="${model}?${model.licenceNo}:_" class="layui-input">
                             </div></td>
+                        <td></td>
                         <td></td>
                     </tr>
                 </table>
