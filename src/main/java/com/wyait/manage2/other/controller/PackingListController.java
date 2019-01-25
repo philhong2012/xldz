@@ -326,6 +326,8 @@ public class PackingListController extends BaseController{
             packingList.setCreateUserId(u.getId().toString());
             packingList.setCreateTime(LocalDateTime.now());
             packingList.setCreateUserName(u.getUsername());
+            packingList.setDeptId(u.getDeptId());
+            packingList.setDeptName(u.getDeptName());
         }
 
         if(packingList != null) {
