@@ -2,9 +2,7 @@ package com.wyait.manage2.other.controller;
 
 
 import cn.afterturn.easypoi.entity.vo.TemplateWordConstants;
-import cn.afterturn.easypoi.excel.entity.TemplateExportParams;
 import cn.afterturn.easypoi.view.EasypoiTemplateWordView;
-import cn.afterturn.easypoi.word.entity.params.ExcelListEntity;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -21,7 +19,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Controller;
@@ -32,8 +29,10 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
-import java.text.Bidi;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -78,7 +77,12 @@ public class FormSellingContractController extends BaseController {
         map.put("buyer",formSellingContract.getBuyer());
         map.put("signAddress",formSellingContract.getSignAddress() == null ? "":formSellingContract.getSignAddress());
         map.putAll(com.wyait.common.utils.BeanUtils.objectToMap(formSellingContract));
-
+        //SimpleDateFormat df=new SimpleDateFormat("yyyy年MM月dd日");
+        if(formSellingContract.getPackingExpiredDate() != null) {
+            map.put("packingExpiredDate", formSellingContract.getPackingExpiredDate().format(DateTimeFormatter.ofPattern("yyyy年MM月dd日")));
+        } else {
+            map.put("packingExpiredDate", LocalDate.now().getYear() + "年 月 日");
+        }
         List<Map<String, Object>> mapList = new ArrayList<Map<String, Object>>();
         BigDecimal totalPrice = BigDecimal.ZERO;
         String priceUnit = StringUtils.EMPTY;
@@ -113,7 +117,7 @@ public class FormSellingContractController extends BaseController {
 
         modelMap.put(TemplateWordConstants.FILE_NAME, formSellingContract.getContractNo());
         modelMap.put(TemplateWordConstants.MAP_DATA, map);
-        modelMap.put(TemplateWordConstants.URL, "word/temp_购货合同.docx");
+        modelMap.put(TemplateWordConstants.URL, "word/temp_售货合同.docx");
         //EasypoiTemplateWordView
         EasypoiTemplateWordView.render(modelMap, request, response,
                 TemplateWordConstants.EASYPOI_TEMPLATE_WORD_VIEW);
