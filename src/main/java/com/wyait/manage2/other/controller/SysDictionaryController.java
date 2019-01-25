@@ -77,16 +77,16 @@ public class SysDictionaryController extends BaseController {
     }
 
     @RequestMapping(value={"/save"},method = RequestMethod.POST)
-    public String save(SysDictionary sysDictionary) {
+    public SysDictionary save(SysDictionary sysDictionary) {
         sysDictionaryService.saveOrUpdate(sysDictionary);
-        return "ok";
+        return sysDictionary;
     }
 
 
     @RequestMapping(value={"/delete"},method = RequestMethod.POST)
     public String delete(SysDictionary sysDictionary) {
         sysDictionaryService.removeById(sysDictionary.getId());
-        return "ok";
+        return "{\"success\":true}";
     }
 
 

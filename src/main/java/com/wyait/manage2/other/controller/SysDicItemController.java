@@ -14,11 +14,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 import com.wyait.manage2.other.controller.BaseController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -88,18 +85,29 @@ public class SysDicItemController extends BaseController {
         return pdr;
     }
 
+    /**
+     * easyUI edatagrid要求保存返回实体
+     * @param sysDictionary
+     * @return
+     */
     @RequestMapping(value={"/save"},method = RequestMethod.POST)
-    public String save(SysDicItem sysDictionary){
+    @ResponseBody
+    public SysDicItem save(SysDicItem sysDictionary){
         String dicId = request.getParameter("dicId");
         sysDicItemService.saveOrUpdate(sysDictionary);
-        return "ok";
+        return sysDictionary;
     }
 
-
+    /**
+     * easy UI edatagrid要求删除返回 json {"success":true}
+     * @param sysDictionary
+     * @return
+     */
     @RequestMapping(value={"/delete"},method = RequestMethod.POST)
+    @ResponseBody
     public String delete(SysDicItem sysDictionary) {
         sysDicItemService.removeById(sysDictionary.getId());
-        return "{success:true}";
+        return "{\"success\":true}";
     }
 
 }
