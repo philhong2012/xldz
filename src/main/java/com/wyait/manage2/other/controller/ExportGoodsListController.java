@@ -76,7 +76,7 @@ public class ExportGoodsListController extends BaseController{
         if(formSellingContract != null) {
             exportGoodsList.setSellingContractId(formSellingContract.getId());
             exportGoodsList.setSellingContractNo(formSellingContract.getContractNo());
-            exportGoodsList.setPackingKouAn(formSellingContract.getPackingMaiTou());
+            exportGoodsList.setPackingKouAn(formSellingContract.getPackingKouAn());
             exportGoodsList.setSendingKouAn(formSellingContract.getSendingKouAn());
             exportGoodsList.setBuyer(formSellingContract.getBuyer());
             exportGoodsList.setSeller(formSellingContract.getSeller());
