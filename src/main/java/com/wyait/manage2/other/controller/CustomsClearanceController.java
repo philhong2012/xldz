@@ -133,7 +133,7 @@ public class CustomsClearanceController extends BaseController{
 
         TemplateExportParams params = new TemplateExportParams(
                 "word/temp_新版出口货物报关单.xlsx");
-
+        params.setSheetNum(new Integer[] {0,1,2});
         modelMap.put(TemplateExcelConstants.FILE_NAME, customsClearance.getContractNo());
         modelMap.put(TemplateExcelConstants.PARAMS, params);
         modelMap.put(TemplateExcelConstants.MAP_DATA, map);
