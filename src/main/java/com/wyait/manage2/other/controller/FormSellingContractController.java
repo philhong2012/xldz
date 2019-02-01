@@ -73,7 +73,7 @@ public class FormSellingContractController extends BaseController {
         List<SellingContractDetail> sellingContractDetails = sellingContractDetailService.list(queryWrapper);
         //map.put("items", new ExcelListEntity(sellingContractDetails, SellingContractDetail.class));
         map.put("contractNo", formSellingContract.getContractNo());
-        map.put("signDate",formSellingContract.getSignDate().toString());
+        map.put("signDate",formSellingContract.getSignDate()== null ? "":formSellingContract.getSignDate().toString());
         map.put("buyer",formSellingContract.getBuyer());
         map.put("signAddress",formSellingContract.getSignAddress() == null ? "":formSellingContract.getSignAddress());
         map.putAll(com.wyait.common.utils.BeanUtils.objectToMap(formSellingContract));
