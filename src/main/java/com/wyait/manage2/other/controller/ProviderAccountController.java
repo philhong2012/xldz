@@ -75,6 +75,11 @@ public class ProviderAccountController extends BaseController{
             if(!"all".equals(deptId)) {
                 queryWrapper.eq("dept_id",deptId);
             }
+        } else {
+            //如果没有选择部门，不是公司管理者，用登录人部门身份过滤数据
+            if(!isCompanyRole()) {
+                queryWrapper.eq("dept_id",getCurrentUser().getDeptId());
+            }
         }
 
         if(StringUtils.isNotEmpty(startDate)) {
