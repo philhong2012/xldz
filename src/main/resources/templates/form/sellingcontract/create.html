@@ -49,13 +49,13 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">卖方</label>
                 <div class="layui-input-block">
-                    <input type="text" name="seller" lay-verify="title" autocomplete="off" placeholder="请输入卖方" th:value="${model}?${model.seller}:_"  class="layui-input">
+                    <textarea type="text" name="seller" lay-verify="title" autocomplete="off" placeholder="请输入卖方" th:text="${model}?${model.seller}:_"  class="layui-textarea"> </textarea>
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">买方</label>
                 <div class="layui-input-block">
-                    <input type="text" name="buyer" lay-verify="title" autocomplete="off" placeholder="请输入买方" th:value="${model}?${model.buyer}:_"  class="layui-input">
+                    <textarea type="text" name="buyer" lay-verify="title" autocomplete="off" placeholder="请输入买方" th:text="${model}?${model.buyer}:_"  class="layui-textarea"> </textarea>
                 </div>
             </div>
             <div class="layui-form-item">

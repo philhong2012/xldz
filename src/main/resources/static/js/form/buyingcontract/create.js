@@ -22,7 +22,7 @@ $(function () {
 
         //监听提交
         form.on('submit(saveBuyingContract)', function(data){
-            var formElements = $('#buyingContractForm input:not(".textbox-text,.textbox-value")');
+            var formElements = $('#buyingContractForm input:not(".textbox-text,.textbox-value"),#buyingContractForm textarea');
             var formData = {contract:{},details:[]};
             formElements.each(function (i,ele) {
                 if(ele.type === 'text') {

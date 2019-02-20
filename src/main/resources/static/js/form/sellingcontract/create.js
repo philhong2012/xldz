@@ -32,7 +32,7 @@ $(function () {
         //监听提交
         form.on('submit(saveSellingContract)', function(data){
 
-            var formElements = $('#sellingContractForm input:not(".textbox-text,.textbox-value")');
+            var formElements = $('#sellingContractForm input:not(".textbox-text,.textbox-value"),#sellingContractForm textarea');
             var formData = {contract:{},details:[]};
             formElements.each(function (i,ele) {
                 if(ele.type === 'text') {
