@@ -11,7 +11,13 @@
 )" th:with="title='结算卡'">
 </head>
 
+<style>
+    #sellingIncomeList td {
+        border:1px solid #cccccc;
+        padding: 2px;
 
+    }
+</style>
 
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
@@ -31,35 +37,93 @@
                     <input type="text" name="code" lay-verify="required" autocomplete="off" placeholder="" th:value="${model}?${model.code}:_"  class="layui-input">
                 </div>
             </div>
-
             <div class="layui-form-item">
-                <label class="layui-form-label">销售收入1($)</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="sellingIncome" onkeyup="sellingIncomeChange()" lay-verify="notRequiredNubmer" autocomplete="off" placeholder="" th:value="${model}?${model.sellingIncome}:_"  class="layui-input will-calculate">
-                </div>
-                <label class="layui-form-label">销售收入2($)</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="sellingIncome2" onkeyup="sellingIncomeChange()" lay-verify="notRequiredNubmer" autocomplete="off" placeholder="" th:value="${model}?${model.sellingIncome2}:_"  class="layui-input will-calculate">
-                </div>
-                <label class="layui-form-label">销售收入3($)</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="sellingIncome3" onkeyup="sellingIncomeChange()" lay-verify="notRequiredNubmer" autocomplete="off" placeholder="" th:value="${model}?${model.sellingIncome3}:_"  class="layui-input will-calculate">
-                </div>
+                <table id="sellingIncomeList">
+                    <tr>
+                        <td>
+                            <label class="layui-form-label">销售收入1($)</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="sellingIncome" onkeyup="sellingIncomeChange()" lay-verify="notRequiredNubmer" autocomplete="off" placeholder="" th:value="${model}?${model.sellingIncome}:_"  class="layui-input will-calculate">
+                            </div>
+                        </td>
+                        <td>
+                            <label class="layui-form-label">收汇日期1</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="sellingIncomeDate" id="sellingIncomeDate"  th:value="${model}?${model.sellingIncomeDate}:_" autocomplete="off" placeholder="" class="layui-input">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="layui-form-label">销售收入2($)</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="sellingIncome2" onkeyup="sellingIncomeChange()" lay-verify="notRequiredNubmer" autocomplete="off" placeholder="" th:value="${model}?${model.sellingIncome2}:_"  class="layui-input will-calculate">
+                            </div>
+                        </td>
+                        <td>
+                            <label class="layui-form-label">收汇日期2</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="sellingIncomeDate2" id="sellingIncomeDate2"  th:value="${model}?${model.sellingIncomeDate2}:_" autocomplete="off" placeholder="" class="layui-input">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="layui-form-label">销售收入3($)</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="sellingIncome3" onkeyup="sellingIncomeChange()" lay-verify="notRequiredNubmer" autocomplete="off" placeholder="" th:value="${model}?${model.sellingIncome3}:_"  class="layui-input will-calculate">
+                            </div>
+                        </td>
+                        <td>
+                            <label class="layui-form-label">收汇日期3</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="sellingIncomeDate3" id="sellingIncomeDate3"  th:value="${model}?${model.sellingIncomeDate3}:_" autocomplete="off" placeholder="" class="layui-input">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="layui-form-label">销售收入4($)</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="sellingIncome4" onkeyup="sellingIncomeChange()" lay-verify="notRequiredNubmer" autocomplete="off" placeholder="" th:value="${model}?${model.sellingIncome4}:_"  class="layui-input will-calculate">
+                            </div>
+                        </td>
+                        <td>
+                            <label class="layui-form-label">收汇日期4</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="sellingIncomeDate4" id="sellingIncomeDate4"  th:value="${model}?${model.sellingIncomeDate4}:_" autocomplete="off" placeholder="" class="layui-input">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="layui-form-label">销售收入5($)</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="sellingIncome5" onkeyup="sellingIncomeChange()" lay-verify="notRequiredNubmer" autocomplete="off" placeholder="" th:value="${model}?${model.sellingIncome5}:_"  class="layui-input will-calculate">
+                            </div>
+                        </td>
+                        <td>
+                            <label class="layui-form-label">收汇日期5</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="sellingIncomeDate5" id="sellingIncomeDate5"  th:value="${model}?${model.sellingIncomeDate5}:_" autocomplete="off" placeholder="" class="layui-input">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                       <td colspan="2">
+                           <label class="layui-form-label">销售收入总计($)</label>
+                           <div class="layui-input-inline">
+                               <input type="text" name="totalSellingIncome" id="totalSellingIncome" lay-verify="notRequiredNubmer" autocomplete="off" placeholder="" th:value="${model}?${model.totalSellingIncome}:_"  class="layui-input">
+                           </div>
+                       </td>
+                    </tr>
+                </table>
 
-            </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">销售收入4($)</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="sellingIncome4" onkeyup="sellingIncomeChange()" lay-verify="notRequiredNubmer" autocomplete="off" placeholder="" th:value="${model}?${model.sellingIncome4}:_"  class="layui-input will-calculate">
-                </div>
-                <label class="layui-form-label">销售收入5($)</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="sellingIncome5" onkeyup="sellingIncomeChange()" lay-verify="notRequiredNubmer" autocomplete="off" placeholder="" th:value="${model}?${model.sellingIncome5}:_"  class="layui-input will-calculate">
-                </div>
-                <label class="layui-form-label">销售收入总计($)</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="totalSellingIncome" id="totalSellingIncome" lay-verify="notRequiredNubmer" autocomplete="off" placeholder="" th:value="${model}?${model.totalSellingIncome}:_"  class="layui-input">
-                </div>
+
+
+
+
+
             </div>
 
             <div class="layui-form-item">

@@ -180,4 +180,12 @@ public class SettlementList implements Serializable {
     private BigDecimal totalSellingIncome;
 
 
+    private LocalDate sellingIncomeDate;
+    private LocalDate sellingIncomeDate2;
+    private LocalDate sellingIncomeDate3;
+    private LocalDate sellingIncomeDate4;
+    private LocalDate sellingIncomeDate5;
+
+
+
 }

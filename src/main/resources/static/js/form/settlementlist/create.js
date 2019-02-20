@@ -16,7 +16,22 @@ $(function () {
 
         laydate.render({
             elem: '#settleDate'
-        })
+        });
+        laydate.render({
+            elem: '#sellingIncomeDate'
+        });
+        laydate.render({
+            elem: '#sellingIncomeDate2'
+        });
+        laydate.render({
+            elem: '#sellingIncomeDate3'
+        });
+        laydate.render({
+            elem: '#sellingIncomeDate4'
+        });
+        laydate.render({
+            elem: '#sellingIncomeDate5'
+        });
     });
 
 
