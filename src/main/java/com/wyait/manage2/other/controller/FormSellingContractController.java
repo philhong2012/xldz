@@ -6,6 +6,7 @@ import cn.afterturn.easypoi.view.EasypoiTemplateWordView;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.wyait.common.utils.NumberUtils;
 import com.wyait.manage.entity.DataGridVO;
 import com.wyait.manage.entity.SearchEntityVO;
 import com.wyait.manage.entity.SellingContractVO;
@@ -105,7 +106,7 @@ public class FormSellingContractController extends BaseController {
 
                 m.put("totalPrice",e.getPriceUnit() + (e.getTotalPrice() == null ? BigDecimal.ZERO : e.getTotalPrice().toString()));
             }
-
+            map.put("capTotalPrice",priceUnit + NumberUtils.digitUppercase(totalPrice.doubleValue()));
             map.put("totalPrice", priceUnit + totalPrice.toString());
         }
         map.put("items",mapList);
