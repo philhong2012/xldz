@@ -16,10 +16,12 @@ import com.wyait.manage2.other.entity.FormSellingContract;
 import com.wyait.manage2.other.entity.SellingContractDetail;
 import com.wyait.manage2.other.service.IFormSellingContractService;
 import com.wyait.manage2.other.service.ISellingContractDetailService;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Controller;
@@ -29,15 +31,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * <p>
@@ -125,7 +125,47 @@ public class FormSellingContractController extends BaseController {
     }
 
 
+    @RequestMapping(value = "/copy", method = RequestMethod.POST)
+    @ResponseBody
+    public String copy(String sellingContractId) {
+        FormSellingContract formSellingContract = formSellingContractService.getById(sellingContractId);
 
+        QueryWrapper<SellingContractDetail> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("selling_contract_Id", sellingContractId);
+        List<SellingContractDetail> details = sellingContractDetailService.list(queryWrapper);
+        List<SellingContractDetail> copyDetails = new ArrayList<>();
+        if(formSellingContract != null) {
+            FormSellingContract copy = new FormSellingContract();
+            Random random = new Random();
+            int ends = random.nextInt(99);
+
+
+
+                copy.setCreateTime(LocalDateTime.now());
+                BeanUtils.copyProperties(formSellingContract,copy);
+                copy.setId(null);
+                copy.setContractNo(formSellingContract.getContractNo()+"_副本_"+String.valueOf(ends));
+                formSellingContractService.save(copy);
+                if(details != null && details.size() > 0) {
+                    for(SellingContractDetail e : details) {
+
+                        SellingContractDetail detail = new SellingContractDetail();
+                        BeanUtils.copyProperties(e,detail);
+                        e.setId(null);
+                        e.setSellingContractId(copy.getId());
+                        e.setCreateTime(LocalDateTime.now());
+                        copyDetails.add(e);
+                    }
+
+                    sellingContractDetailService.saveBatch(copyDetails);
+                }
+
+
+
+
+        }
+        return "ok";
+    }
 
     /**
      * 保存售货合同

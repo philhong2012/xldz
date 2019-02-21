@@ -127,6 +127,34 @@ function exportFile() {
     }
 }
 
+
+function copy() {
+    var table = layui.table;
+    var checkStatus = table.checkStatus('saleContractList');
+    if(checkStatus.data.length > 0) {
+        $.ajax({
+            "url": "/sellingcontract/copy?sellingContractId="+checkStatus.data[0].id,
+            "type": "post",
+            "data":null,
+            "contentType": "application/json",
+            "success": function (data) {
+                if(data == "ok") {
+                    //layer.alert("", {time: 1000 });
+                    layer.alert("复制成功",{time:1000});
+                    window.location.reload(true);
+                } else {
+                    window.location.href = url;
+                    layer.alert("复制失败",{time:1000});
+                }
+            }
+        });
+    } else if(checkStatus.data.length == 0) {
+        layer.alert("请选择一条记录！");
+        //return false;
+    }
+}
+
+
 function gen(type) {
     var table = layui.table;
     var checkStatus = table.checkStatus('saleContractList');
