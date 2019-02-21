@@ -28,6 +28,7 @@ $(function() {
                 ,{field:'remittance', title:'外商汇款人'}
                 ,{field:'receiver', title:'外商收货人'}
                 ,{field:'deptName', title:'部门'}
+                ,{field:'actualDate', title:'收/支日期'}
                 ,{field:'createTime', title: '创建日期',align:'center'}
                 ,{field:'createUserName', title: '创建人',align:'center'}
                 ,{field:'updateUserName', title: '更新人',align:'center'}
