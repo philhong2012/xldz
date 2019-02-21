@@ -74,6 +74,7 @@ public class PackingListController extends BaseController{
             packingList.setBuyer(formSellingContract.getBuyer());
             packingList.setSeller(formSellingContract.getSeller());
             packingList.setCode(formSellingContract.getContractNo());
+            packingList.setPackingMaiTou(formSellingContract.getPackingMaiTou());
             packingList.setSellingContractId(formSellingContract.getId());
         }
 
@@ -120,6 +121,7 @@ public class PackingListController extends BaseController{
                 m.put("price", e.getPrice());
                 m.put("priceUnit",e.getPriceUnit());
                 m.put("volume",e.getVolume());
+                m.put("packingMaiTou",packingList.getPackingMaiTou());
                 if(StringUtils.isNotEmpty(e.getPriceUnit())) {
                     priceUnit = e.getPriceUnit();
                 }

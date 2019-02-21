@@ -67,6 +67,7 @@ public class FormInvoiceController extends BaseController{
         if(formSellingContract != null) {
             formInvoice.setCode(formSellingContract.getContractNo());
             formInvoice.setBuyer(formSellingContract.getBuyer());
+            formInvoice.setPackingMaiTou(formSellingContract.getPackingMaiTou());
             formInvoice.setSellingContractId(formSellingContract.getId());
             formInvoice.setSeller("GUANGDONG NEW ELECTRONICS INFORMATION IMPORT & EXPORT LTD\n" +
                     "172 HAOXIAN ROAD, GUANGZHOU, CHINA");
@@ -107,6 +108,7 @@ public class FormInvoiceController extends BaseController{
                 if(StringUtils.isNotEmpty(e.getPriceUnit())) {
                     priceUnit = e.getPriceUnit();
                 }
+                m.put("packingMaiTou",formInvoice.getPackingMaiTou());
                 m.put("totalPrice",e.getTotalPrice());
                 mapList.add(m);
 
