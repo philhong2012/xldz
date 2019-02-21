@@ -28,6 +28,7 @@ $(function() {
                 ,{field:'code', title:'合同编号'}
                 ,{field:'provider', title: '供应商',}
                 ,{field:'customer', title: '客户', }
+                ,{field:'deptName', title:'部门'}
                 ,{field:'outboundDate', title: '出库日期',align:'center'}
                 ,{field:'inboundDate', title: '入库日期',align:'center'}
                 ,{field:'createTime',title:'创建时间',align:'center'}

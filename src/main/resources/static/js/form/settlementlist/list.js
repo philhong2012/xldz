@@ -27,7 +27,7 @@ $(function() {
               /*  ,{field:'id', title:'ID', width:80, unresize: true, sort: true}*/
                 ,{field:'code', title:'合同编号'}
 
-
+                ,{field:'deptName', title:'部门'}
                 ,{field:'createTime', title: '创建日期',align:'center'}
                 ,{field:'createUserName', title: '创建人',align:'center'}
                 ,{field:'updateUserName', title: '更新人',align:'center'}

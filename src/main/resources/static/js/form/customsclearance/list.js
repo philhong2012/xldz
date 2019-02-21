@@ -28,7 +28,7 @@ $(function() {
                 ,{field:'contractNo', title:'合同编号'}
                 ,{field:'outerReceiver', title: '买方', }
                 ,{field:'innerSeller', title: '卖方',}
-
+                ,{field:'deptName', title:'部门'}
                 ,{field:'declareDate', title: '申报日期',align:'center'}
                 /*,{field:'isJob', title:'是否在职',width:95,align:'center',templet:'#jobTpl'}*/
                 ,{fixed:'right', title:'操作', width:140,align:'center', toolbar:'#optBar'}
