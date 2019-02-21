@@ -45,6 +45,14 @@
                 </div>
             </div>
 
+            <div class="layui-form-item">
+                <label class="layui-form-label">收/支日期</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="actualDate" id="actualDate" lay-verify="required" autocomplete="off"  th:value="${model}?${model.actualDate}:_"  class="layui-input">
+
+                </div>
+            </div>
+
 
 
             <div class="layui-form-item">

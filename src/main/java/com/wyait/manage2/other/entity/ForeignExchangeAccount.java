@@ -1,6 +1,7 @@
 package com.wyait.manage2.other.entity;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.io.Serializable;
 
@@ -73,6 +74,11 @@ public class ForeignExchangeAccount implements Serializable {
      * 创建人名称
      */
     private String createUserName;
+
+    /**
+     * 实际发生日期
+     */
+    private LocalDate actualDate;
 
 
 }

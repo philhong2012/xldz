@@ -7,3 +7,7 @@ ALTER TABLE settlement_list ADD selling_income_date5 date NULL COMMENT '销售�
 
 ALTER TABLE form_invoice ADD packing_mai_tou varchar(50) NULL COMMENT '装运口麦头';
 ALTER TABLE packing_list ADD packing_mai_tou varchar(50) NULL COMMENT '装运口麦头';
+
+ALTER TABLE foreign_exchange_account ADD actual_date date NULL COMMENT '实际发生日期';
+
+ALTER TABLE provider_account ADD actual_date date NULL COMMENT '实际发生日期';
