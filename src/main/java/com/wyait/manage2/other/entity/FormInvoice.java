@@ -76,5 +76,7 @@ public class FormInvoice implements Serializable {
 
     private String updateUserName;
 
+    private String packingMaiTou;
+
 
 }

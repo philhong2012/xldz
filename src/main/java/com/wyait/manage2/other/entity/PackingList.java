@@ -85,5 +85,7 @@ public class PackingList implements Serializable {
 
     private String updateUserName;
 
+    private String packingMaiTou;
+
 
 }

@@ -38,7 +38,12 @@
                     <input type="text" name="buyer" lay-verify="title" autocomplete="off" placeholder="请输入买方" th:value="${model}?${model.buyer}:_"  class="layui-input">
                 </div>
             </div>
-
+            <div class="layui-form-item">
+                <label class="layui-form-label">装运唛头</label>
+                <div class="layui-input-block">
+                    <input type="text" name="packingMaiTou" lay-verify="title" autocomplete="off" placeholder="请输入装运唛头"  th:value="${model}?${model.packingMaiTou}:_" class="layui-input">
+                </div>
+            </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">出口合同号</label>
                 <div class="layui-input-block">
