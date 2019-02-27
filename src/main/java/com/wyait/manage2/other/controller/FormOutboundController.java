@@ -334,7 +334,9 @@ public class FormOutboundController extends BaseController{
                 }
             }
 
-
+            if(!isCompanyRole()) {
+                queryWrapper.eq("dept_id",getCurrentUser().getDeptId());
+            }
             List<FormOutbound> formOutbounds = formOutboundService.list(queryWrapper);
             // 获取分页查询后的数据
             PageInfo<FormOutbound> pageInfo = new PageInfo<>(formOutbounds);

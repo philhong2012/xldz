@@ -262,7 +262,9 @@ public class FormInvoiceController extends BaseController{
                     queryWrapper.lt("sign_date",searchEntityVO.getEndSignDate());
                 }
             }
-
+            if(!isCompanyRole()) {
+                queryWrapper.eq("dept_id",getCurrentUser().getDeptId());
+            }
 
             List<FormInvoice> formInvoices = formInvoiceService.list(queryWrapper);
             // 获取分页查询后的数据
