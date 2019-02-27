@@ -150,8 +150,9 @@ public class FormController {
 
         else if("1".equals(type)) {
             if(contracts != null && contracts.size() >= 1) {
-                responseResult.setCode("-1");
-                responseResult.setMessage("已生成采购合同，不可再生成！");
+                //rq:一张售货合同，可以生成多个采购合同
+                //responseResult.setCode("-1");
+                //responseResult.setMessage("已生成采购合同，不可再生成！");
             }
 
         }
