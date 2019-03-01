@@ -75,6 +75,14 @@ public class StatisticsController extends BaseController{
             ed = LocalDate.parse(endDate);
         }
 
+
+            //如果没有选择部门，不是公司管理者，用登录人部门身份过滤数据
+            if(!isCompanyRole()) {
+                //queryWrapper.eq("dept_id",getCurrentUser().getDeptId());
+                deptId = getCurrentUser().getDeptId();
+            }
+
+
         Map<String,Object> map = new HashMap<>();
         List<Map<String,Object>> stats = statisticsService.getTurnOverExportAmountProfit(
                sd,ed,deptId

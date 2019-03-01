@@ -6,3 +6,6 @@ ALTER TABLE settlement_list ADD selling_income2 decimal(15,2) NULL COMMENT '销�
 ALTER TABLE settlement_list ADD selling_income3 decimal(15,2) NULL COMMENT '销售收入3';ALTER TABLE settlement_list ADD selling_income3 decimal(15,2) NULL COMMENT '销售收入3';
 ALTER TABLE settlement_list ADD selling_income4 decimal(15,2) NULL COMMENT '销售收入4';ALTER TABLE settlement_list ADD selling_income4 decimal(15,2) NULL COMMENT '销售收入4';
 ALTER TABLE settlement_list ADD selling_income5 decimal(15,2) NULL COMMENT '销售收入5';ALTER TABLE settlement_list ADD selling_income5 decimal(15,2) NULL COMMENT '销售收入5';
+
+
+ALTER TABLE settlement_list ADD total_selling_income decimal(15,2) NULL COMMENT '总销售收入';
