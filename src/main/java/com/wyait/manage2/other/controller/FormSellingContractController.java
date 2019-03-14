@@ -102,7 +102,7 @@ public class FormSellingContractController extends BaseController {
                 m.put("totalPrice",e.getTotalPrice());
                 mapList.add(m);
 
-                totalPrice = totalPrice.add(e.getTotalPrice());
+                totalPrice = totalPrice.add(e.getTotalPrice() == null ? BigDecimal.ZERO : e.getTotalPrice());
 
                 m.put("totalPrice",e.getPriceUnit() + (e.getTotalPrice() == null ? BigDecimal.ZERO : e.getTotalPrice().toString()));
             }

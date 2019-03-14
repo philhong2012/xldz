@@ -112,7 +112,7 @@ public class FormInvoiceController extends BaseController{
                 m.put("totalPrice",e.getTotalPrice());
                 mapList.add(m);
 
-                totalPrice = totalPrice.add(e.getTotalPrice());
+                totalPrice = totalPrice.add(e.getTotalPrice() == null ? BigDecimal.ZERO:e.getTotalPrice());
 
                 m.put("totalPrice",priceUnit + (e.getTotalPrice() == null ? "0": e.getTotalPrice().toString()));
             }
