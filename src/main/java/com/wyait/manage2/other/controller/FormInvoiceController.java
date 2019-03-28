@@ -1,8 +1,11 @@
 package com.wyait.manage2.other.controller;
 
 
+import cn.afterturn.easypoi.entity.vo.TemplateExcelConstants;
 import cn.afterturn.easypoi.entity.vo.TemplateWordConstants;
+import cn.afterturn.easypoi.excel.entity.TemplateExportParams;
 import cn.afterturn.easypoi.view.EasypoiTemplateWordView;
+import cn.afterturn.easypoi.view.PoiBaseView;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -126,12 +129,21 @@ public class FormInvoiceController extends BaseController{
         modelMap.put("checked"," X ");
         modelMap.put("unchecked","  ");
 
-        modelMap.put(TemplateWordConstants.FILE_NAME, formSellingContract.getContractNo());
-        modelMap.put(TemplateWordConstants.MAP_DATA, map);
-        modelMap.put(TemplateWordConstants.URL, "word/temp_发票.docx");
+        //modelMap.put(TemplateWordConstants.FILE_NAME, formSellingContract.getContractNo());
+        //modelMap.put(TemplateWordConstants.MAP_DATA, map);
+        //modelMap.put(TemplateWordConstants.URL, "word/temp_发票.docx");
+
+
+        TemplateExportParams params = new TemplateExportParams(
+                "word/temp_发票.xlsx");
+        modelMap.put(TemplateExcelConstants.FILE_NAME, formSellingContract.getContractNo());
+        modelMap.put(TemplateExcelConstants.PARAMS, params);
+        modelMap.put(TemplateExcelConstants.MAP_DATA, map);
+        PoiBaseView.render(modelMap, request, response,
+                TemplateExcelConstants.EASYPOI_TEMPLATE_EXCEL_VIEW);
+
         //EasypoiTemplateWordView
-        EasypoiTemplateWordView.render(modelMap, request, response,
-                TemplateWordConstants.EASYPOI_TEMPLATE_WORD_VIEW);
+        //EasypoiTemplateWordView.render(modelMap, request, response,TemplateWordConstants.EASYPOI_TEMPLATE_WORD_VIEW);
     }
 
 
